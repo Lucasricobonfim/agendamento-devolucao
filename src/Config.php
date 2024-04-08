@@ -2,7 +2,7 @@
 namespace src;
 
 class Config {
-    const BASE_DIR = '/mvc-master_tes/mvc-master/public';
+    const BASE_DIR = '/agendamento-devolucao/public';
     const DB_DRIVER = 'mysql';
     const DB_HOST = 'localhost';
     const DB_DATABASE = 'rdkaka';

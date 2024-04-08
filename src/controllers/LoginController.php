@@ -17,12 +17,13 @@ class LoginController extends Controller {
         $login = $_POST["login"];
         $senha = $_POST["senha"];
 
+        if($login && $senha){
+            $acesso = new Login();
+            $acesso->logar($login, $senha);    
+        }
         
-        $acesso = new Login();
-        $acesso->logar($login, $senha);
-
-        var_dump($acesso);
-
+        
+        
     }
 
 }
