@@ -30,12 +30,12 @@ function logar(dados) {
                 });
                 return
             }
-            Swal.fire({
-                title: "Sucesso!",
-                text: "Logado com Sucesso",
-                icon: "success"
-            })
-            // window.location.href = base+'/home';
+            // Swal.fire({
+            //     title: "Sucesso!",
+            //     text: "Logado com Sucesso",
+            //     icon: "success"
+            // })
+             window.location.href = base+'/home';
         
            
         }

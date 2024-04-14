@@ -1,1 +1,3 @@
-<p>AQUI È A HOME</p>
+<?php $render ('header')?>
+
+<script src="<?= $base; ?>/js/home.js"></script>
