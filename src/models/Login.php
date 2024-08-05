@@ -20,18 +20,8 @@ class Login extends Model
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-            if ($result == false) {
-                echo json_encode(array([
-                    "success" => false,
-                    "result" => $result
-                ]));
-                die;
-            }
-            echo json_encode(array([
-                "success" => true,
-                "result" => $result
-            ]));
-            die;
+            return $result;
+
         } catch (Throwable $error) {
             return 'Falha ao logar ' . $error->getMessage();
         }

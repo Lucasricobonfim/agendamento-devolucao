@@ -1,4 +1,10 @@
+
+var self = this;
+
 $(document).ready(function () {
+
+    
+
     $('#logar').on('click', function () {
         let dados = {
             login: $('#login').val(),
@@ -30,14 +36,8 @@ function logar(dados) {
                 });
                 return
             }
-            // Swal.fire({
-            //     title: "Sucesso!",
-            //     text: "Logado com Sucesso",
-            //     icon: "success"
-            // })
-             window.location.href = base+'/home';
-        
-           
+             window.location.href = base+'/dashboard';
+     
         }
     })
 }

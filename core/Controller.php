@@ -22,6 +22,8 @@ class Controller {
     }
 
     private function _render($folder, $viewName, $viewData = []) {
+        
+
         if(file_exists('../src/views/'.$folder.'/'.$viewName.'.php')) {
             extract($viewData);
             $render = fn($vN, $vD = []) => $this->renderPartial($vN, $vD);
