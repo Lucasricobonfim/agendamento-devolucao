@@ -36,7 +36,7 @@ function logar(dados) {
                 });
                 return
             }
-             window.location.href = base+'/dashboard';
+             window.location.href = base+'/transportadoras';
      
         }
     })
