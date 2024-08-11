@@ -1,0 +1,126 @@
+*{
+    font-family: 'inherit';
+    
+    
+}
+.negrito {
+   font-family: 'Roboto', sans-serif; 
+   font-weight: 700; /* Bold */
+}
+body {
+    margin-top: 100px;
+}
+
+.header {
+    
+    background-color:#397FD5;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 250px);
+    /* Deduz a largura da sidebar */
+    position: fixed;
+    top: 0;
+    left: 250px;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #ffff;
+    color: white;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    /* Espaço para o header */
+    border: solid 1px #dbe1e8;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    display: list-item;
+    /* border-bottom: 1px solid #34495e; */
+}
+
+.sidebar ul li a {
+    color: #000;
+    text-decoration: none;
+    /* display: block; */
+}
+
+.sidebar ul li a:hover {
+
+    padding-left: 10px;
+}
+
+.collapse-item {
+    
+    padding-left: 30px;
+    font-size: 0.9em;
+    color: #ecf0f1;
+}
+
+.collapse-item a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* .collapse-item a:hover {
+    text-decoration: underline;
+} */
+
+.content {
+    margin-top: 60px;
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+    /* Altura restante após header */
+    background-color: #ecf0f1;
+}
+
+/* Media query para telas menores */
+@media screen and (max-width: 768px) {
+    .header {
+        left: 0;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-top: 0;
+        box-shadow: none;
+    }
+
+    .content {
+        margin-top: 60px;
+        margin-left: 0;
+    }
+
+    .sidebar ul {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar ul li {
+        text-align: center;
+    }
+}

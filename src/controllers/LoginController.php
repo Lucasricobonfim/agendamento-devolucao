@@ -21,8 +21,9 @@ class LoginController extends Controller {
             $result = $acesso->logar($login, $senha);    
         }
         
+        
 
-        if ($result == false) {
+        if (!$result[0]['idusuario']) {
             
             echo json_encode(array([
                 "success" => false,
@@ -30,8 +31,11 @@ class LoginController extends Controller {
             ]));
             die;
         }else{
-            
+            // print_r($result);
+            // die;    
             $_SESSION['token'] = '123456'; 
+            $_SESSION['usuario'] = $result[0]['nome'];
+            $_SESSION['idgrupo'] = $result[0]['idgrupo'];
 
 
             // gerar token na seesion aqui

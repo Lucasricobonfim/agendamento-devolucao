@@ -14,11 +14,12 @@ class Login extends Model
     {
 
         try {
-            $sql = Database::getInstance()->prepare("SELECT * FROM usuarios WHERE login = :login and senha = :senha ");
+            $sql = Database::getInstance()->prepare("SELECT u.idusuario, u.nome, u.idgrupo FROM usuarios u WHERE login = :login and senha = :senha ");
             $sql->bindValue(':login', $login);
             $sql->bindValue(':senha', $senha);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
 
             return $result;
 

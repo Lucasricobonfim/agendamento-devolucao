@@ -1,0 +1,32 @@
+.form-container {
+    max-width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+}
+
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-footer button {
+    width: 120px;
+}
+
+.form-select, .form-control {
+    height: 38px;
+}
+
+.form-textarea {
+    resize: none;
+}
+
+
+/*  */
