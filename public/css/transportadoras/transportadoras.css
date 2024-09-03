@@ -28,5 +28,9 @@
     resize: none;
 }
 
-
+#mytable_filter label input{
+    margin-bottom: 25px !important;
+    width: 200px !important;
+    
+}
 /*  */

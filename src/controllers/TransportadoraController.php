@@ -58,4 +58,50 @@ class TransportadoraController extends Controller {
         
     }
 
+    public function deletar() {
+
+        $id = $_GET['id'];
+
+        $cad = new Transportadora();
+        $result = $cad->deletar($id);
+
+        if (!$result) {
+            echo json_encode(array([
+                "success" => false,
+                "result" => $result
+           ]));
+           die;
+       }else{
+           echo json_encode(array([
+               "success" => true,
+               "result" => $result
+           ]));
+           die;
+       }
+        
+    }
+
+    public function editar() {
+
+        $id = $_GET['id'];
+
+        $cad = new Transportadora();
+        // $result = $cad->deletar($id);
+
+    //     if (!$result) {
+    //         echo json_encode(array([
+    //             "success" => false,
+    //             "result" => $result
+    //        ]));
+    //        die;
+    //    }else{
+    //        echo json_encode(array([
+    //            "success" => true,
+    //            "result" => $result
+    //        ]));
+    //        die;
+    //    }
+        
+    }
+
 }
