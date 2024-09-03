@@ -1,30 +1,42 @@
-<?php $render('header');
-?>
-
-
+<?php $render('header');?> 
 <link rel="stylesheet" href="<?= $base; ?>/css/transportadoras/transportadoras.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
-    .form-header {
-        margin-bottom: 0;
-        float: right;
-    }
+        .form-header {
+            margin-bottom: 0;
+            float: right;
+        }
 
-    .form-header small {
-        font-weight: 500;
-        color: #6c757d;
-    }
+        .form-header small {
+            font-weight: 500;
+            color: #6c757d;
+        }
 
-    .table-c {
-        max-width: 50%;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        margin-top: 100px;
-    }
+        .table-c {
+            max-width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+        .dataTables_wrapper .dt-buttons {
+            float: left;
+        }
+        .dataTables_length {
+            float: right;
+            margin-right: 20px;
+        }
+        .dataTables_filter {
+            float: right;
+        }
 </style>
 
 <div class="form-container">
@@ -35,6 +47,7 @@
     <div style="margin-top: 50px;">
 
         <div class="row">
+            <input id="idtransportadora" type="text" class="form-control"  hidden placeholder="Nome">
             <div class="col-md-6 mb-3">
                 <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                 <input id="nome" type="text" class="form-control" placeholder="Nome">
@@ -68,45 +81,18 @@
         </div>
     </div>
 </div>
+ 
+<div class="form-container">
+<table id="mytable" class="table table-striped table-bordered" style="width:100%">
 
-<div class="table-c">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
+</table>
 </div>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-<script src="<?= $base; ?>/js/transportadoras.js"></script>
+<!-- </html> -->
+<script src="<?= $base; ?>/js/transportadoras.js" ></script>
+<!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
     const ret = '<?= $dados ?>';
-</script>
+</script> 

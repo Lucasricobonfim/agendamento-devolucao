@@ -59,13 +59,36 @@ class Transportadora extends Model
 
         try {
             $sql = Database::getInstance()->prepare("
-                select * from transportadoras
+                select
+                  t.*
+                 ,case when t.status = 1 then 'Ativo' else 'Inativo' end as descricao
+                from transportadoras t
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (Throwable $error) {
             return 'Falha ao carregar as transportadoras ' .
+                $error->getMessage();
+        }
+    }
+
+    public function deletar($id)
+    {
+
+        try {
+            $sql = Database::getInstance()->prepare("
+                delete from transportadoras
+                where idtransportadora = $id;
+
+                select 1;
+                
+           ");
+            $sql->execute();
+           
+            return true;
+        } catch (Throwable $error) {
+            return 'Falha ao deletar a transportadora ' .
                 $error->getMessage();
         }
     }

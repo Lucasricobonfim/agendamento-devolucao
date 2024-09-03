@@ -33,7 +33,63 @@ window.app = {
             }
         }
         return true;
+    },
+
+    callController : function (config) {
+        console.log('config ', config)
+        $.ajax({
+            url : config.url,
+            data : config.params,
+            autoAbort : false,
+            //disableCaching : true,
+            disableCaching : false,
+            timeout : 180000000,
+            type : config.method,
+            success : function (a, b, c) {
+                console.log('a= ', a)
+                // return
+                var tmp = JSON.parse(a);
+                 
+                if (tmp[0].success == true) {
+                    if (typeof config.onSuccess == 'function') {
+                        config.onSuccess(tmp);
+                    }
+                } else {
+                    if (typeof config.onFailure == 'function') {
+                        config.onFailure(tmp);
+                    }
+                }
+            }
+        });
     }
 
 
 }
+
+
+
+
+
+// callController : function (config) {
+//     Ext.Ajax.request({
+//         url : config.url || 'controller/geral.php',
+//         params : config.params,
+//         autoAbort : false,
+//         //disableCaching : true,
+//         disableCaching : false,
+//         timeout : 180000000,
+//         method : 'POST',
+//         success : function (a, b, c) {
+//             var tmp = Ext.decode(a.responseText, true);
+//             if (tmp.success == true) {
+//                 if (Ext.isFunction(config.onSuccess)) {
+//                     config.onSuccess(tmp);
+//                 }
+//             } else {
+//                 if (Ext.isFunction(config.onFailure)) {
+//                     config.onFailure(tmp);
+//                 }
+//             }
+//         }
+//     });
+// }
