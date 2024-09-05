@@ -95,6 +95,7 @@ const Table = function(ret){
                 url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
         buttons: [
+            /*
             {
                 extend: 'copyHtml5',
                 className: 'btn btn-primary'
@@ -119,6 +120,7 @@ const Table = function(ret){
                 extend: 'colvis',
                 className: 'btn btn-primary'
             }
+            */
         ],
         lengthMenu: [
             [10, 100, 500, -1],
@@ -190,8 +192,7 @@ function deletar(id){
 
 
 function setEditar(row){
-   
-    console.log(row)
+
    
     $('#idtransportadora').val(row.idtransportadora),
     $('#nome').val(row.nome),
