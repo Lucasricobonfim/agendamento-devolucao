@@ -37,6 +37,19 @@
         .dataTables_filter {
             float: right;
         }
+
+        .dataTables_wrapper {
+            width: 100% !important; 
+            overflow-x: auto !important;
+        }
+        .table-responsive {
+            width: 100% !important;
+            overflow-x: auto !important;
+        }
+
+
+        /* .form-container table { max-width: 1200px  !important} */
+
 </style>
 
 <div class="form-container">
@@ -83,13 +96,12 @@
 </div>
  
 <div class="form-container">
-<table id="mytable" class="table table-striped table-bordered" style="width:100%">
+    <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
-</table>
+    </table>
 </div>
 
 </body>
-<!-- </html> -->
 <script src="<?= $base; ?>/js/transportadoras.js" ></script>
 <!-- Bootstrap JS -->
 <script>

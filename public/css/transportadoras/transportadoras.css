@@ -1,5 +1,12 @@
+#mytable{
+    width: 100% !important;
+}
+#mytable_wrapper{
+    width: 100% !important;
+}
+
 .form-container {
-    max-width: 50%;
+    max-width: 62%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;

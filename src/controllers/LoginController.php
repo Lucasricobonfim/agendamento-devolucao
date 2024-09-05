@@ -20,10 +20,8 @@ class LoginController extends Controller {
             $acesso = new Login();
             $result = $acesso->logar($login, $senha);    
         }
-        
-        
-
-        if (!$result[0]['idusuario']) {
+                 
+        if (!$result) {
             
             echo json_encode(array([
                 "success" => false,
