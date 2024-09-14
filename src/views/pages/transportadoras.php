@@ -65,7 +65,7 @@
 <div class="form-container">
     <button id="novo" class="btn btn-primary" onclick="limparForm()">Novo</button>
     <div class="form-header">
-        <h5>Informações básicas </h5>
+        <h5>Informações básicas</h5>
     </div>
 
     <div style="margin-top: 50px;">
