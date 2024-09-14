@@ -11,7 +11,6 @@ class TransportadoraController extends Controller {
 
         $cad = new Transportadora();
         $result = $cad->getTransportadoras();
-        
         $this->render('transportadoras', ['base' => Config::BASE_DIR, 'dados' =>  json_encode($result)]);
     }
 
@@ -20,13 +19,8 @@ class TransportadoraController extends Controller {
         $cnpj_cpf = $_POST["cnpj_cpf"];
         $email = $_POST["email"];
         $telefone = $_POST["telefone"];
-        $status = $_POST["status"];
-
         $cad = new Transportadora();
-
         $existe =  $cad->verificarCpf_cnpj($cnpj_cpf);
-        // print_r($existe);
-        // die;
 
         if($existe[0]['existecpf'] == 1){
             echo json_encode(array([
@@ -36,11 +30,7 @@ class TransportadoraController extends Controller {
             die;
         }
 
-
-        $result = $cad->cadastro($nome, $cnpj_cpf, $email, $telefone, $status);
-    
-        // print_r($result);die;
-        /*chamar model para realizar o cadastro, depois pegar o resultado e retornar sucesso ou false para o javascript*/
+        $result = $cad->cadastro($nome, $cnpj_cpf, $email, $telefone);
 
          if ($result == false) {
              echo json_encode(array([
@@ -58,12 +48,43 @@ class TransportadoraController extends Controller {
         
     }
 
-    public function deletar() {
-
+    public function updateSituacaoTransportadora() {
         $id = $_GET['id'];
+        $idsituacao = $_GET['idsituacao'];
 
         $cad = new Transportadora();
-        $result = $cad->deletar($id);
+        $result = $cad->updateSituacao($id, $idsituacao);
+
+        if (!$result) {
+            
+            echo json_encode(array([
+                "success" => false,
+                "result" => $result
+           ]));
+           die;
+       }
+       else{
+           echo json_encode(array([
+               "success" => true,
+               "result" => $result
+           ]));
+           die;
+       }
+        
+    }
+
+    public function editar() {
+
+
+        
+        $idfilial = $_GET['idfilial'];
+        $nome = $_GET['nome'];
+        $cnpj_cpf = $_GET['cnpj_cpf'];
+        $email = $_GET['email'];
+        $telefone = $_GET['telefone'];
+
+        $editar = new Transportadora();
+        $result = $editar->editar($idfilial, $nome, $cnpj_cpf, $email, $telefone);
 
         if (!$result) {
             echo json_encode(array([
@@ -78,29 +99,6 @@ class TransportadoraController extends Controller {
            ]));
            die;
        }
-        
-    }
-
-    public function editar() {
-
-        $id = $_GET['id'];
-
-        $cad = new Transportadora();
-        // $result = $cad->deletar($id);
-
-    //     if (!$result) {
-    //         echo json_encode(array([
-    //             "success" => false,
-    //             "result" => $result
-    //        ]));
-    //        die;
-    //    }else{
-    //        echo json_encode(array([
-    //            "success" => true,
-    //            "result" => $result
-    //        ]));
-    //        die;
-    //    }
         
     }
 

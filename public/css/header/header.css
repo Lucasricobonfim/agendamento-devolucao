@@ -1,11 +1,14 @@
 *{
-    font-family: 'inherit';
+    padding: 0;
+    margin: 0;
     
     
 }
 .negrito {
    font-family: 'Roboto', sans-serif; 
    font-weight: 700; /* Bold */
+   color: #000;
+   text-decoration: none;
 }
 body {
     margin-top: 100px;
@@ -13,7 +16,7 @@ body {
 
 .header {
     
-    background-color:/*#397FD5*/blue;
+    background-color:blue;
     color: white;
     padding: 10px 20px;
     display: flex;

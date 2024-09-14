@@ -10,14 +10,18 @@ use Throwable;
 
 class Transportadora extends Model
 {
-    public function cadastro($nome, $cnpj_cpf, $email, $telefone, $status)
+    public function cadastro($nome, $cnpj_cpf, $email, $telefone)
     {
-
         try {
-
-            // escrever sql para inserir transportadora na tabela 
-            $sql = Database::getInstance()->prepare("insert into transportadoras (nome, cnpj_cpf, email, telefone, status)
-                select :nome, :cnpj_cpf, :email, :telefone, :status;
+            $sql = Database::getInstance()->prepare("
+                insert into filial (nome, cnpj_cpf, email, telefone, idsituacao, idtipofilial)
+                select 
+                    :nome
+                    ,:cnpj_cpf
+                    ,:email
+                    ,:telefone
+                    ,1
+                    ,2;
 
                 SELECT 1;
                 
@@ -26,8 +30,7 @@ class Transportadora extends Model
             $sql->bindValue(':cnpj_cpf', $cnpj_cpf);
             $sql->bindValue(':email', $email);
             $sql->bindValue(':telefone', $telefone);
-            $sql->bindValue(':status', $status);
-            
+
             $sql->execute();
             
             return true;
@@ -39,10 +42,9 @@ class Transportadora extends Model
 
     public function verificarCpf_cnpj($cnpj_cpf)
     {
-
         try {
             $sql = Database::getInstance()->prepare("
-                SELECT CASE WHEN EXISTS(select 1 from transportadoras where cnpj_cpf='$cnpj_cpf') then 1 else 0 end as existecpf
+                SELECT CASE WHEN EXISTS(select 1 from filial where cnpj_cpf='$cnpj_cpf') then 1 else 0 end as existecpf
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -56,13 +58,12 @@ class Transportadora extends Model
 
     public function getTransportadoras()
     {
-
         try {
             $sql = Database::getInstance()->prepare("
                 select
                   t.*
-                 ,case when t.status = 1 then 'Ativo' else 'Inativo' end as descricao
-                from transportadoras t
+                 ,case when t.idsituacao = 1 then 'Ativo' else 'Inativo' end as descricao
+                from filial t
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -73,24 +74,42 @@ class Transportadora extends Model
         }
     }
 
-    public function deletar($id)
+    public function updateSituacao($id, $idsituacao)
     {
 
-        try {
+         try {
             $sql = Database::getInstance()->prepare("
-                delete from transportadoras
-                where idtransportadora = $id;
-
-                select 1;
-                
+                update filial
+                    set idsituacao = $idsituacao
+                where idfilial = $id;
            ");
+            
             $sql->execute();
            
             return true;
         } catch (Throwable $error) {
             return 'Falha ao deletar a transportadora ' .
-                $error->getMessage();
+            $error->getMessage();
         }
     }
 
+    public function editar($idfilial, $nome, $cnpj_cpf, $email, $telefone){
+
+        $idfilial =  intval($idfilial);
+          try {
+            $sql = Database::getInstance()->prepare("
+                update filial
+                    set nome = '$nome',
+                    cnpj_cpf = '$cnpj_cpf',
+                    email = '$email',
+                    telefone = '$telefone'
+                where idfilial = $idfilial;
+            ");
+            $sql->execute();
+            return true;
+        } catch (Throwable $error) {
+            return 'Falha ao atualizar a transportadora ' .
+            $error->getMessage();
+        }
+    }
 }

@@ -63,14 +63,15 @@
 </style>
 
 <div class="form-container">
+    <button id="novo" class="btn btn-primary" onclick="limparForm()">Novo</button>
     <div class="form-header">
         <h5>Informações básicas </h5>
     </div>
 
     <div style="margin-top: 50px;">
-
         <div class="row">
-            <input id="idtransportadora" type="text" class="form-control"  hidden placeholder="Nome">
+            <input id="idfilial" type="text" class="form-control"  hidden>
+
             <div class="col-md-6 mb-3">
                 <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                 <input id="nome" type="text" class="form-control" placeholder="Nome">
@@ -89,15 +90,6 @@
                 <label for="branch" class="form-label">Telefone<span class="text-danger">*</span></label>
                 <input id="telefone" type="text" class="form-control" placeholder="Telefone">
             </div>
-        </div>
-
-        <div class="mb-3">
-            <label for="branch" class="form-label">Status<span class="text-danger">*</span></label>
-            <select id="status" class="form-select">
-                <option selected disabled>Selecione</option>
-                <option value="1">ATIVO</option>
-                <option value="2">INATIVO</option>
-            </select>
         </div>
         <div class="form-footer">
             <button id="cadastro" class="btn btn-primary">Gravar</button>

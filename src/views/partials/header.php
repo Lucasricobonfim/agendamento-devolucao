@@ -11,6 +11,10 @@ if (!isset($_SESSION['token'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
  
+
+    <!-- Font -->
+   
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -43,7 +47,7 @@ if (!isset($_SESSION['token'])) {
         </div>
 
         <!-- validar se é admin -->
-         <?php  if($_SESSION['idgrupo'] == 1) {  ?>
+        <?php  if($_SESSION['idgrupo'] == 1) {  ?>
             <div>
                 <a style="color:white; text-decoration:none;" href="">Usuários</a>  
             </div>
@@ -56,26 +60,23 @@ if (!isset($_SESSION['token'])) {
 
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" alt="texte" style="width:100%; padding: 10px;">
-        <hr style="color:#000;">
-        <ul>
-            <li>
-                <a href="#transportadoraMenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Transportadoras</a>
-                <ul class="collapse list-unstyled" id="transportadoraMenu">
-                    <li class="collapse-item">
-                        <a href="<?= $base; ?>/transportadoras">Manutenção</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <hr class='negrito'>
 
         <ul>
-            <li>
-                <a href="#transportadoraMenu1" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Devoluções</a>
-                <ul class="collapse list-unstyled" id="transportadoraMenu1">
-                    <li class="collapse-item">
-                        <a href="<?= $base; ?>/transportadoras">Agendar</a>
-                    </li>
-                </ul>
-            </li>
+            
+            <a class="negrito" href="<?= $base; ?>/t">Manutenção de Usuários</a>
+            
+        </ul>
+        <hr class='negrito'>
+        <ul>
+            <a class="negrito"href="<?= $base; ?>/">Inicio</a>
+        </ul>
+        <hr class='negrito'>
+        <ul>
+            <a class="negrito" href="<?= $base; ?>/transportadoras">Transportadoras</a>
+        </ul>
+        <hr class='negrito'>
+        <ul>
+            <a  class="negrito" href="<?= $base; ?>/transportadoras">Agendar</a>
         </ul>
     </aside>
