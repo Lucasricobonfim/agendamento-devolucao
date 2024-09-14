@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/08/2024 às 16:27
+-- Tempo de geração: 14/09/2024 às 18:25
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -20,39 +20,62 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `rdkaka`
 --
+CREATE DATABASE IF NOT EXISTS `rdkaka` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `rdkaka`;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `transportadoras`
+-- Estrutura para tabela `filial`
 --
 
-CREATE TABLE `transportadoras` (
-  `idtransportadora` bigint(20) UNSIGNED NOT NULL,
+CREATE TABLE `filial` (
+  `idfilial` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
   `cnpj_cpf` varchar(14) NOT NULL,
-  `email` varchar(200) NOT NULL,
-  `telefone` varchar(11) NOT NULL,
-  `status` int(11) NOT NULL
+  `email` varchar(200) DEFAULT NULL,
+  `telefone` varchar(11) DEFAULT NULL,
+  `idsituacao` smallint(6) NOT NULL COMMENT '1 - Ativo\r\n2 - Inativo',
+  `idtipofilial` smallint(6) NOT NULL COMMENT '2 - TRANSPORTADORA\r\n3 - CD'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `transportadoras`
+-- Despejando dados para a tabela `filial`
 --
 
-INSERT INTO `transportadoras` (`idtransportadora`, `nome`, `cnpj_cpf`, `email`, `telefone`, `status`) VALUES
-(1, 'Lucas Rico Bonfim', '12.345.678/000', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(4, 'Lucas Rico Bonfim', '12.345.6781111', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(7, 'Lucas Rico Bonfim', '12345678000195', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(8, 'Lucas Rico Bonfim', '12345678000177', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(9, 'Lucas Rico Bonfim', '12345678000178', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(11, 'Lucas Rico Bonfim', '12345678000110', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(12, 'Lucas Rico Bonfim', '11331494991234', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(13, 'Lucas Rico Bonfim', '11331494991239', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(21, 'Lucas Rico Bonfim', '1133142291239', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(22, 'Lucas Rico Bonfim', '1133142291237', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(23, 'Lucas Rico Bonfim', '11331422912372', 'lucasricobonfim@gmail.com', '44998487185', 1),
-(24, 'BONFIM', '12454678949122', 'bonfim@gazin.com.br', '44998487185', 1);
+INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsituacao`, `idtipofilial`) VALUES
+(1, 'Lucas Rico Bonfim', '11331494990123', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(2, 'Lucas Rico Bonfim', '11331494990121', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(3, 'Lucas Rico Bonfim', '11331494990125', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(4, 'GABRIEL', '11331494990129', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(5, 'Lucas Rico Bonfim', '11331494990126', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(6, 'Lucas Rico Bonfim', '11331494990100', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(7, 'LUKAO', '11331494990111', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(8, 'LEOZIN', '21331494990129', 'leozin@gmail.com', '44998487185', 1, 2),
+(9, 'fabricio da silva', '99331494990129', 'fabricio@gmail.com', '44998487185', 2, 2),
+(10, 'joao', '88331494990129', 'joao@gmail.com', '44998487185', 1, 2),
+(11, 'Lucas Rico Bonfim', '22631494990121', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(12, 'SECO NAA', '55331494990129', 'seco@gmail.com', '44998487185', 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `grupos`
+--
+
+CREATE TABLE `grupos` (
+  `idgrupo` int(11) NOT NULL,
+  `descricao` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `grupos`
+--
+
+INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
+(1, 'ADMIN'),
+(2, 'TRANSPORTADORA'),
+(3, 'CD');
 
 -- --------------------------------------------------------
 
@@ -65,26 +88,26 @@ CREATE TABLE `usuarios` (
   `nome` varchar(200) NOT NULL,
   `login` varchar(200) NOT NULL,
   `senha` varchar(200) NOT NULL,
-  `idgrupo` int(11) NOT NULL COMMENT '1 - admin\r\n2 - usuario'
+  `idgrupo` int(11) NOT NULL COMMENT '1 - admin\r\n2 - usuario',
+  `idfilial` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`) VALUES
-(1, 'Lucas Bonfim', 'kaka', '123', 1);
+INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`) VALUES
+(1, 'IDH', 'kaka', '123', 1, 0);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `transportadoras`
+-- Índices de tabela `filial`
 --
-ALTER TABLE `transportadoras`
-  ADD UNIQUE KEY `idtransportadora` (`idtransportadora`),
-  ADD UNIQUE KEY `cnpj_ind` (`cnpj_cpf`);
+ALTER TABLE `filial`
+  ADD PRIMARY KEY (`idfilial`);
 
 --
 -- Índices de tabela `usuarios`
@@ -97,10 +120,10 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de tabela `transportadoras`
+-- AUTO_INCREMENT de tabela `filial`
 --
-ALTER TABLE `transportadoras`
-  MODIFY `idtransportadora` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE `filial`
+  MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

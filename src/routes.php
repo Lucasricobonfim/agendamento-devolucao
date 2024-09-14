@@ -15,13 +15,9 @@ $router->get('/dashboard', 'DashboardController@index');
 //transportadoras
 $router->get('/transportadoras', 'TransportadoraController@index');
 $router->post('/cadtransportadoras', 'TransportadoraController@cadastro');
-$router->get('/deltransportadoras', 'TransportadoraController@deletar');
-$router->get('/editar', 'TransportadoraController@editar');
+$router->get('/updatesituacaotransportadora', 'TransportadoraController@updateSituacaoTransportadora');
+$router->get('/editartransportadora', 'TransportadoraController@editar');
 
 
+// cadastro usuario
 
-
-// REVO (de "Return" e "Voltar")
-// DEVO (de "Devolução")
-
-// AGN (de "Agenda")

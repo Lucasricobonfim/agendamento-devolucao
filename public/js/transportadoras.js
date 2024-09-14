@@ -2,21 +2,18 @@ $(document).ready(function () {
     Table(ret);
     // listar(ret);
     $('#cadastro').on('click', function () {
+        var idfilial = $('#idfilial').val()
         let dados = {
-            idtransportadora: $('#idtransportadora').val(),
             nome: $('#nome').val(),
             cnpj_cpf: $('#cnpj_cpf').val().replace(/[^\d]/g, ''),
             email: $('#email').val(),
-            telefone: $('#telefone').val(),
-            status: $('#status').val(),
+            telefone: $('#telefone').val()
         }
+        
      
-        if(dados.idtransportadora){
-            // chamar o editar
-            console.log('tem o id :',dados.idtransportadora)
-            return
-        }{
-         
+        if(idfilial){
+            dados.idfilial = idfilial
+            
             if (!app.validarCampos(dados)) {
                 Swal.fire({
                     icon: "warning",
@@ -33,37 +30,68 @@ $(document).ready(function () {
                 });
                 return false;
             }
+
             
+            editar(dados)
+
+
+
+        }else{ 
+            if (!app.validarCampos(dados)) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Preencha todos os campos!"
+                });
+                return
+            }
+            if(!app.validarCNPJ(dados.cnpj_cpf)){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "CNPJ Inválido!"
+                });
+                return false;
+            }
             cadastro(dados)
         }
+        
     })
+
+    
 })
 
+
+function limparForm(){
+    $('#idfilial').val('');
+    $('#nome').val('');
+    $('#cnpj_cpf').val('')
+    $('#email').val(''),
+    $('#telefone').val('')
+}
+
+
 function cadastro(dados){  
-    console.log('cadastro')
+    
     app.callController({
         method: 'POST',
         url: base + '/cadtransportadoras',
         params: dados,
-        onSuccess(res){
-            let data = JSON.parse(res);
-            
+        onSuccess(res){         
                  $('#nome').val('');
                  $('#cnpj_cpf').val('')
                  $('#email').val(''),
                  $('#telefone').val(''),
                  $('#status').val(''),
-
+                window.location.href = base+'/transportadoras';
                 Swal.fire({
                     icon: "success",
                     title: "Sucesso!",
                     text: "Cadastrado com sucesso!"
                 });
-                return
-            
         },
         onFailure(res){
-            console.log(res)
+            
                 if (res[0]['result'][0]['existecpf'] == 1) {
                     Swal.fire({
                         icon: "warning",
@@ -152,40 +180,49 @@ const Table = function(ret){
                 title: 'Ações',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function(data, type, row) {
+                    
                    dados = JSON.stringify(row).replace(/"/g, '&quot;');
                    
                     return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' +
-                           '<button class="btn btn-danger btn-sm" onclick="deletar('+ row.idtransportadora +')">Excluir</button>';
+                           '<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idfilial +','+ 2+','+row.idsituacao+')">Inativar</button> '+
+                           '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idfilial +','+ 1+','+row.idsituacao+')">Ativar</button>';
                 }
             }
         ],
         rowCallback: function(row, data) {
-            // console.log('r',row)
-            // console.log('data',data)
-            $(row).addClass('linha' + data.idtransportadora);
+            // 
+            // 
+            $(row).addClass('linha' + data.idfilial);
 
         }
     });
 
 }
 
-function deletar(id){
+function updateSituacao(id, idsituacao, atualsituacao){
    
-    console.log('id', id)
+    var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
+    if(idsituacao == atualsituacao){
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!",
+            text: "Transportadora já está " +  situacao
+        });
+        return
+    }
     
     app.callController({
         method: 'GET',
-        url: base + '/deltransportadoras',
+        url: base + '/updatesituacaotransportadora',
         params: {
-            id: id
+            id: id,
+            idsituacao: idsituacao
         },
         onSuccess(res){
-            console.log('S ',res)
-            $('.linha' + id).hide(500)
+            window.location.href = base+'/transportadoras';
         },
         onFailure(res){
-            console.log('F ',res)
-           
+            
         }
     })
 }
@@ -194,83 +231,34 @@ function deletar(id){
 function setEditar(row){
 
    
-    $('#idtransportadora').val(row.idtransportadora),
+    $('#idfilial').val(row.idfilial),
     $('#nome').val(row.nome),
     $('#cnpj_cpf').val(row.cnpj_cpf)
     $('#email').val(row.email),
-    $('#telefone').val(row.telefone),
-    $('#status').val(row.status)
-
-    // console.log('id', id)
-    
-
+    $('#telefone').val(row.telefone)
 }
 
 function editar(dados){
-
-    console.log('da', dados)
-
-
+    // console.log('dda; ',dados)
+    // return
     app.callController({
         method: 'GET',
-        url: base + '/deltransportadoras',
+        url: base + '/editartransportadora',
         params: {
-            id: id
+           nome: dados.nome,
+           cnpj_cpf: dados.cnpj_cpf,
+           email: dados.email,
+           telefone: dados.telefone,
+           idfilial: dados.idfilial
         },
         onSuccess(res){
-            console.log('S ',res)
-            $('.linha' + id).hide(500)
+            window.location.href = base+'/transportadoras';
+            
         },
         onFailure(res){
-            console.log('F ',res)
+            
+            console.log('Falha res ',res)
            
         }
     })
 }
-
-/*
-function cadastro(dados) {
-    $.ajax({
-        type: "post",
-        url: base + '/cadtransportadoras',
-        data: (
-            dados
-        ),
-        success: function (res) {
-            let data = JSON.parse(res);
-            if (data[0]['success'] != true) {
-                if (data[0]['result'][0]['existecpf'] == 1) {
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Atenção!!",
-                        text: "CNPJ já existe"
-                    });
-                    return
-                }
-                Swal.fire({
-                    icon: "error",
-                    title: "Atenção!!",
-                    text: "Dados Invalidos"
-                });
-                return
-            } else {
-                 $('#nome').val('');
-                 $('#cnpj_cpf').val('')
-                 $('#email').val(''),
-                 $('#telefone').val(''),
-                 $('#status').val(''),
-
-                Swal.fire({
-                    icon: "success",
-                    title: "Sucesso!",
-                    text: "Cadastrado com sucesso!"
-                });
-                return
-            }
-
-        }
-    })
-}
-
-
-    */
