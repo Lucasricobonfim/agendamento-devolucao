@@ -46,9 +46,19 @@
             width: 100% !important;
             overflow-x: auto !important;
         }
+        .table>thead>tr>th{
+            background-color: blue !important;
+            color: white !important;
+            border-radius: 5px !important;
+            border: none !important;
+            margin-left: 55px !important;
+        }
 
-
-        /* .form-container table { max-width: 1200px  !important} */
+        #mytable_filter label input{
+            width: 600px !important;
+            margin-right: 290px !important;
+            border-radius: 8px !important;
+        }
 
 </style>
 

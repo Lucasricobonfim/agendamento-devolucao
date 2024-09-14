@@ -18,7 +18,10 @@ class LoginController extends Controller {
 
         if($login && $senha){
             $acesso = new Login();
-            $result = $acesso->logar($login, $senha);    
+            $result = $acesso->logar($login, $senha);   
+            
+        }else{
+
         }
                  
         if (!$result) {
