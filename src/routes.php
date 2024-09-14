@@ -18,6 +18,7 @@ $router->post('/cadtransportadoras', 'TransportadoraController@cadastro');
 $router->get('/updatesituacaotransportadora', 'TransportadoraController@updateSituacaoTransportadora');
 $router->get('/editartransportadora', 'TransportadoraController@editar');
 
-
 // cadastro usuario
-
+$router->get('/usuario', 'UsuarioController@index');
+$router->post('/cadusuario', 'UsuarioController@cadastro');
+$router->get('/getusuarios', 'UsuarioController@getusuarios');
