@@ -21,10 +21,16 @@ class Login extends Model
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
-            return $result;
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
 
         } catch (Throwable $error) {
-            return 'Falha ao logar ' . $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao Logar: ' . $error->getMessage()         
+            ] ;
         }
     }
 }

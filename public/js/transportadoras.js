@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    Table(ret);
-    // listar(ret);
+
+    listar()
+    formatarCNPJ()
     $('#cadastro').on('click', function () {
         var idfilial = $('#idfilial').val()
         let dados = {
@@ -62,6 +63,42 @@ $(document).ready(function () {
 })
 
 
+function formatarCNPJ(){
+    var cnpj_cpf = document.getElementById('cnpj_cpf')
+     
+    cnpj_cpf.addEventListener('input', function (e) {
+       let value = e.target.value;
+       value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+       value = value.substring(0, 14); // Limita o número de dígitos
+
+       if (value.length > 12) {
+           value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+       }
+
+       e.target.value = value;
+   });
+}
+
+function listar(ret){
+    app.callController({
+      method: 'GET',
+      url: base + '/gettransportadoras',
+      params: null,
+      onSuccess(res){
+         
+         Table(res[0].ret)
+      },
+      onFailure(res){
+        Swal.fire({
+            icon: "error",
+            title: "Atenção!!",
+            text: "Erro ao listar Transportadora!"
+        });
+        return
+      }
+    })
+ }
+
 function limparForm(){
     $('#idfilial').val('');
     $('#nome').val('');
@@ -83,7 +120,7 @@ function cadastro(dados){
                  $('#email').val(''),
                  $('#telefone').val(''),
                  $('#status').val(''),
-                window.location.href = base+'/transportadoras';
+                listar()
                 Swal.fire({
                     icon: "success",
                     title: "Sucesso!",
@@ -92,33 +129,33 @@ function cadastro(dados){
         },
         onFailure(res){
             
-                if (res[0]['result'][0]['existecpf'] == 1) {
-                    Swal.fire({
-                        icon: "warning",
-                        title: "Atenção!!",
-                        text: "CNPJ já existe"
-                    });
-                    return
-                }
+            if (res[0]['ret']['result'][0]['existecpf'] == 1) {
                 Swal.fire({
-                    icon: "error",
+                    icon: "warning",
                     title: "Atenção!!",
-                    text: "Erro ao cadastrar Transportadora"
+                    text: "CNPJ já existe"
                 });
                 return
+            }
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao cadastrar Transportadora"
+            });
+            return
         }
     })
 
 }
-function listar(ret){
-    rec = JSON.parse(ret);  
-}
+
 
 const Table = function(ret){
-    var dados = JSON.parse(ret)
+    var dados = ret
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
+        stateSave: true,
+       "bDestroy": true,
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
@@ -190,10 +227,7 @@ const Table = function(ret){
             }
         ],
         rowCallback: function(row, data) {
-            // 
-            // 
             $(row).addClass('linha' + data.idfilial);
-
         }
     });
 
@@ -210,7 +244,6 @@ function updateSituacao(id, idsituacao, atualsituacao){
         });
         return
     }
-    
     app.callController({
         method: 'GET',
         url: base + '/updatesituacaotransportadora',
@@ -219,23 +252,28 @@ function updateSituacao(id, idsituacao, atualsituacao){
             idsituacao: idsituacao
         },
         onSuccess(res){
-            window.location.href = base+'/transportadoras';
+            listar()
+              
         },
         onFailure(res){
-            
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao atualizar situação da Transportadora!"
+            });
+            return
         }
     })
 }
 
 
 function setEditar(row){
-
-   
     $('#idfilial').val(row.idfilial),
     $('#nome').val(row.nome),
     $('#cnpj_cpf').val(row.cnpj_cpf)
     $('#email').val(row.email),
     $('#telefone').val(row.telefone)
+    formatarCNPJ()
 }
 
 function editar(dados){
@@ -252,12 +290,22 @@ function editar(dados){
            idfilial: dados.idfilial
         },
         onSuccess(res){
-            window.location.href = base+'/transportadoras';
+            listar()
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Editado com sucesso!"
+            });
             
         },
         onFailure(res){
-            
-            console.log('Falha res ',res)
+             
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao editar Transportadora!"
+            });
+            return
            
         }
     })

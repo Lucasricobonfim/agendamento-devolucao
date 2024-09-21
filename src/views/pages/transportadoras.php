@@ -23,19 +23,22 @@
             margin-top: 100px;
         }
 
+
+        /* DATABLES */
+
         .container {
-            max-width: 1000px;
-            margin: auto;
+            max-width: 1000px !important;
+            margin: auto !important;
         }
         .dataTables_wrapper .dt-buttons {
-            float: left;
+            float: left !important;
         }
         .dataTables_length {
-            float: right;
-            margin-right: 20px;
+            float: right !important;
+            margin-right: 20px !important;
         }
         .dataTables_filter {
-            float: right;
+            float: right !important;
         }
 
         .dataTables_wrapper {
@@ -54,10 +57,14 @@
             margin-left: 55px !important;
         }
 
+        /* pesquisar datables */
+        #mytable_filter label{
+            
+        }
         #mytable_filter label input{
-            width: 600px !important;
-            margin-right: 290px !important;
-            border-radius: 8px !important;
+            
+            /* margin-right: 290px !important; */
+            
         }
 
 </style>
@@ -108,5 +115,4 @@
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
-    const ret = '<?= $dados ?>';
 </script> 

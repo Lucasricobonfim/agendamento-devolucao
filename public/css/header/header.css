@@ -99,7 +99,7 @@ body {
 }
 
 /* Media query para telas menores */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: /* 768px*/ 1330px) {
     .header {
         left: 0;
         width: 100%;

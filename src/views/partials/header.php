@@ -64,7 +64,7 @@ if (!isset($_SESSION['token'])) {
 
         <ul>
             
-            <a class="negrito" href="<?= $base; ?>/t">Manutenção de Usuários</a>
+            <a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a>
             
         </ul>
         <hr class='negrito'>

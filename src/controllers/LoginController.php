@@ -18,32 +18,28 @@ class LoginController extends Controller {
 
         if($login && $senha){
             $acesso = new Login();
-            $result = $acesso->logar($login, $senha);   
-            
-        }else{
-
+            $result = $acesso->logar($login, $senha);      
         }
+              
+
+        
+        if ($result['sucesso'] == true) {
+
+             if(!empty($result['result'])){
                  
-        if (!$result) {
-            
+                $_SESSION['token'] = '123456'; 
+                $_SESSION['usuario'] = $result['result'][0]['nome'] ? $result['result'][0]['nome'] : '';
+                $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ? $result['result'][0]['idgrupo']: '';
+             }
             echo json_encode(array([
-                "success" => false,
-                "result" => $result
+                "success" => true,
+                "ret" => $result['result']
             ]));
             die;
         }else{
-            // print_r($result);
-            // die;    
-            $_SESSION['token'] = '123456'; 
-            $_SESSION['usuario'] = $result[0]['nome'];
-            $_SESSION['idgrupo'] = $result[0]['idgrupo'];
-
-
-            // gerar token na seesion aqui
-
             echo json_encode(array([
-                "success" => true,
-                "result" => $result
+                "success" => false,
+                "ret" => $result['result']
             ]));
             die;
         }
@@ -60,7 +56,7 @@ class LoginController extends Controller {
                 $params["secure"], $params["httponly"]
             );
         }
-    
+
         session_destroy();
         $this->render('login', ['base' => Config::BASE_DIR]);
     }
