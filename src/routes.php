@@ -14,6 +14,9 @@ $router->get('/dashboard', 'DashboardController@index');
 
 //transportadoras
 $router->get('/transportadoras', 'TransportadoraController@index');
+$router->get('/gettransportadoras', 'TransportadoraController@getTransportadora');
+
+
 $router->post('/cadtransportadoras', 'TransportadoraController@cadastro');
 $router->get('/updatesituacaotransportadora', 'TransportadoraController@updateSituacaoTransportadora');
 $router->get('/editartransportadora', 'TransportadoraController@editar');

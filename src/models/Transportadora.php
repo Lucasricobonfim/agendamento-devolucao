@@ -21,10 +21,7 @@ class Transportadora extends Model
                     ,:email
                     ,:telefone
                     ,1
-                    ,2;
-
-                SELECT 1;
-                
+                    ,2
             ");
             $sql->bindValue(':nome', $nome);
             $sql->bindValue(':cnpj_cpf', $cnpj_cpf);
@@ -32,11 +29,18 @@ class Transportadora extends Model
             $sql->bindValue(':telefone', $telefone);
 
             $sql->execute();
-            
-            return true;
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
         } catch (Throwable $error) {
-            return 'Falha ao cadastrar: ' . $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao cadastrar: ' . $error->getMessage()         
+            ] ;
+
         }
     }
 
@@ -48,10 +52,16 @@ class Transportadora extends Model
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
         } catch (Throwable $error) {
-            return 'Falha ao cadastrar o transportadora: ' .
-                $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' =>'Falha ao verificar Cnpj existente: ' .$error->getMessage()
+            ];
         }
     }
 
@@ -67,10 +77,18 @@ class Transportadora extends Model
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
         } catch (Throwable $error) {
-            return 'Falha ao carregar as transportadoras ' .
-                $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao buscar as transportadoras ' .$error->getMessage()
+            ];
+            
+                
         }
     }
 
@@ -85,17 +103,23 @@ class Transportadora extends Model
            ");
             
             $sql->execute();
-           
-            return true;
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
         } catch (Throwable $error) {
-            return 'Falha ao deletar a transportadora ' .
-            $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao atualizar situacao da transportadora ' .$error->getMessage()
+            ];
+            
         }
     }
 
     public function editar($idfilial, $nome, $cnpj_cpf, $email, $telefone){
 
-        $idfilial =  intval($idfilial);
+        $idfilial = intval($idfilial);
           try {
             $sql = Database::getInstance()->prepare("
                 update filial
@@ -106,10 +130,16 @@ class Transportadora extends Model
                 where idfilial = $idfilial;
             ");
             $sql->execute();
-            return true;
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
         } catch (Throwable $error) {
-            return 'Falha ao atualizar a transportadora ' .
-            $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao atualizar a transportadora  ' .$error->getMessage()
+            ];
         }
     }
 }

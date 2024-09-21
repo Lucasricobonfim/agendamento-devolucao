@@ -21,38 +21,24 @@ $(document).ready(function () {
         }
         logar(dados)
     })
-
-
 })
 
 function logar(dados) {
-
-    // $.ajax({
-    //     type: "post",
-    //     url: base + '/logar',
-    //     data: (
-    //         dados
-    //     ),
-    //     success: function (res) {
-    //         let data = JSON.parse(res);
-    //         if (data[0]['success'] != true) {
-    //             Swal.fire({
-    //                 icon: "error",
-    //                 title: "Atenção!!",
-    //                 text: "Dados Invalidos"
-    //             });
-    //             return
-    //         }
-    //          window.location.href = base+'/transportadoras';
-     
-    //     }
-    // })
 
     app.callController({
         method: 'POST',
         url: base + '/logar',
         params: dados,
         onSuccess(res){
+        
+            if(res[0].ret == ''){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Usuario ou senha invalidos!"
+                });
+                return
+            }
             
             window.location.href = base+'/transportadoras';
             
@@ -62,7 +48,7 @@ function logar(dados) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao Logar"
+                text: "Erro ao Logar Tente novmente mais tarde!"
             });
             return
         }

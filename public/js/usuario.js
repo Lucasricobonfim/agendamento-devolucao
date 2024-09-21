@@ -1,6 +1,6 @@
 $(document).ready(function () {
     listar()
-    Table()
+    // Table()
     // listar(ret);
     $('#cadastro').on('click', function () {
        
@@ -34,8 +34,9 @@ $(document).ready(function () {
                 params: null,
 
                 onSuccess(res){   
-
-                    Table(res[0].result)
+                    // console.log(res)
+                    // return
+                    Table(res[0].ret)
                     
                     console.log('sucesso', res)
                         
@@ -54,7 +55,8 @@ $(document).ready(function () {
                 url: base + '/cadusuario',
                 params: dados,
                 onSuccess(res){   
-                    
+                    // Table().destroy()
+                    listar()
                     console.log('sucesso', res)
                         //  $('#nome').val('');
                         //  $('#cnpj_cpf').val('')
@@ -62,11 +64,11 @@ $(document).ready(function () {
                         //  $('#telefone').val(''),
                         //  $('#status').val(''),
                         // window.location.href = base+'/transportadoras';
-                        // Swal.fire({
-                        //     icon: "success",
-                        //     title: "Sucesso!",
-                        //     text: "Cadastrado com sucesso!"
-                        // });
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso!",
+                        text: "Cadastrado com sucesso!"
+                    });
                 },
                 onFailure(res){
                     console.log('falha', res)
@@ -90,13 +92,15 @@ $(document).ready(function () {
 
 
 
-        const Table = function(ret){
+        const Table = function(dados){
 
-            console.log('aaa', ret)
+            console.log('aaa', dados)
             //var dados = JSON.parse(ret)
             $('#mytable').DataTable({
                 dom: 'Bfrtip',
                 responsive: true,
+                stateSave: true,
+                "bDestroy": true,
                     language: {
                         url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
                 },
@@ -132,7 +136,7 @@ $(document).ready(function () {
                     [10, 100, 500, -1],
                     [10, 100, 500, "All"]
                 ],
-                data: null, //dados,
+                data: dados,
                 columns: [
                     {
                         title: 'Nome',

@@ -20,18 +20,18 @@ class UsuarioController extends Controller {
         $idgrupo = $_POST["idgrupo"];
 
         $cad = new Usuario();
-        $result = $cad->cadastro($nome, $login, $senha, $idgrupo); 
-
-        if ($result == false) {
+        $ret = $cad->cadastro($nome, $login, $senha, $idgrupo); 
+        // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);  criptografar a senha 
+        if ($ret['sucesso'] == true) {
             echo json_encode(array([
-                "success" => false,
-                "result" => $result
+                "success" => true,
+                "ret" => $ret
            ]));
            die;
        }else{
            echo json_encode(array([
-               "success" => true,
-               "result" => $result
+               "success" => false,
+               "ret" => $ret
            ]));
            die;
         }
@@ -41,18 +41,18 @@ class UsuarioController extends Controller {
 
     public function getusuarios(){
         $list = new Usuario();
-        $result = $list->getusuarios();
+        $ret = $list->getusuarios();
         
-        if ($result == false) {
+        if ($ret['sucesso'] == false) {
             echo json_encode(array([
                 "success" => false,
-                "result" => $result
+                "ret" => $ret['result']
            ]));
            die;
        }else{
            echo json_encode(array([
                "success" => true,
-               "result" => $result
+               "ret" => $ret['result']
            ]));
            die;
         }

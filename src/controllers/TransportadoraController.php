@@ -9,9 +9,27 @@ class TransportadoraController extends Controller {
 
     public function index() {
 
+      
+        $this->render('transportadoras', ['base' => Config::BASE_DIR]);
+    }
+
+    public function getTransportadora (){
         $cad = new Transportadora();
-        $result = $cad->getTransportadoras();
-        $this->render('transportadoras', ['base' => Config::BASE_DIR, 'dados' =>  json_encode($result)]);
+        $ret = $cad->getTransportadoras();
+
+        if($ret['sucesso'] == true){
+            echo json_encode(array([
+                "success" => true,
+                "ret" => $ret['result']
+            ]));
+            die;
+        }else{
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+            ]));
+            die;
+        }
     }
 
     public function cadastro(){
@@ -22,30 +40,30 @@ class TransportadoraController extends Controller {
         $cad = new Transportadora();
         $existe =  $cad->verificarCpf_cnpj($cnpj_cpf);
 
-        if($existe[0]['existecpf'] == 1){
+        // print_r($existe);die;
+        if($existe['result'][0]['existecpf'] == 1){
             echo json_encode(array([
                     "success" => false,
-                    "result" => $existe
+                    "ret" => $existe
                 ]));
             die;
         }
 
-        $result = $cad->cadastro($nome, $cnpj_cpf, $email, $telefone);
+        $ret = $cad->cadastro($nome, $cnpj_cpf, $email, $telefone);
 
-         if ($result == false) {
-             echo json_encode(array([
-                 "success" => false,
-                 "result" => $result
+        if ($ret['sucesso'] == true) {
+            echo json_encode(array([
+                "success" => true,
+                "ret" => $ret
             ]));
             die;
         }else{
             echo json_encode(array([
-                "success" => true,
-                "result" => $result
+                "success" => false,
+                "ret" => $ret
             ]));
             die;
-        }
-        
+        }   
     }
 
     public function updateSituacaoTransportadora() {
@@ -53,20 +71,20 @@ class TransportadoraController extends Controller {
         $idsituacao = $_GET['idsituacao'];
 
         $cad = new Transportadora();
-        $result = $cad->updateSituacao($id, $idsituacao);
+        $ret = $cad->updateSituacao($id, $idsituacao);
 
-        if (!$result) {
-            
+        
+        if (!$ret['sucesso']) {
             echo json_encode(array([
                 "success" => false,
-                "result" => $result
+                "ret" => $ret
            ]));
            die;
        }
        else{
            echo json_encode(array([
                "success" => true,
-               "result" => $result
+               "ret" => $ret
            ]));
            die;
        }
@@ -86,7 +104,7 @@ class TransportadoraController extends Controller {
         $editar = new Transportadora();
         $result = $editar->editar($idfilial, $nome, $cnpj_cpf, $email, $telefone);
 
-        if (!$result) {
+        if (!$result['sucesso']) {
             echo json_encode(array([
                 "success" => false,
                 "result" => $result

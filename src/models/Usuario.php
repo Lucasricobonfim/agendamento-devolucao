@@ -30,11 +30,17 @@ class Usuario extends Model
             $sql->bindValue(':idgrupo', $idgrupo);
 
             $sql->execute();
-            
-            return true;
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
 
         } catch (Throwable $error) {
-            return 'Falha ao cadastrar: ' . $error->getMessage();
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao cadastrar: ' . $error->getMessage()         
+            ] ;
         }
     }
 
@@ -42,17 +48,20 @@ class Usuario extends Model
         try {
             $sql = Database::getInstance()->prepare("
                 SELECT * FROM usuarios;
-                
-                
             ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-
-            return true;
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
 
         } catch (Throwable $error) {
-            return 'Falha ao cadastrar: ' . $error->getMessage();
+          
+            return  [
+                'sucesso' => false,
+                'result' =>'Falha ao cadastrar: ' . $error->getMessage()
+            ] ;
         }
     }
 
