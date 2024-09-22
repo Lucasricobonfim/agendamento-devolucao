@@ -27,6 +27,7 @@ h5 {
 </style>
 
 <div class="form-container">
+<h1>Usuarios</h1>
     <div class="header-container">
         <button id="novo" class="btn btn-primary" onclick="limparForm()">Novo</button>
         <h5>Informações básicas</h5>
@@ -34,8 +35,7 @@ h5 {
 
     <div style="margin-top: 50px;">
         <div class="row">
-            <input id="idfilial" type="text" class="form-control"  hidden>
-
+        <input id="idusuario" type="text" class="form-control"  hidden>
             <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
@@ -47,10 +47,7 @@ h5 {
                     <div class="mb-3">
                         <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
                         <input type="password" class="form-control" id="senha" name="senha" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="idfilial" name="idfilial" required>
+                        <button class="btn btn-primary" onclick="mostrarSenha()" >OLHAR</button>
                     </div>
                     <div class="mb-3">
                         <label for="grupo" class="form-label">Grupo<span class="text-danger">*</span></label>
@@ -61,6 +58,18 @@ h5 {
                             <option value="3">CD</option>
                         </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
+                        <select class="form-select opp" id="idfilial" name="idfilial" required>
+                            <option value="">Selecionar</option>
+                        </select>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="idfilial" name="idfilial" required>
+                    </div> -->
+                    
         </div>
         <div class="form-footer">
             <button id="cadastro" class="btn btn-primary">Gravar</button>
