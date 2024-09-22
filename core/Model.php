@@ -56,4 +56,15 @@ class Model {
         return self::$_h->delete();
     }
 
+    public function switchParams($sql, $params){
+        
+        if(!empty($params)){
+            foreach($params as $nome => $valor){
+                @$rpl = str_replace('\"', "'", $valor);
+                $valor = is_string($valor) ? trim($rpl) : $valor;
+                @$sql = preg_replace( '/:'.(string)$nome.'\b/i', $valor, $sql);
+            };
+        }
+        return $sql;
+    }
 }
