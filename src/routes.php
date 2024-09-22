@@ -25,3 +25,12 @@ $router->get('/editartransportadora', 'TransportadoraController@editar');
 $router->get('/usuario', 'UsuarioController@index');
 $router->post('/cadusuario', 'UsuarioController@cadastro');
 $router->get('/getusuarios', 'UsuarioController@getusuarios');
+
+// Centro de distribuição
+$router->get('/centro-distribuicao','CentroDistribuicaoController@index');
+$router->get('/getcentro-distribuicao', 'CentroDistribuicaoController@getCentroDistribuicao');
+
+
+$router->post('/cadcentro-distribuicao','CentroDistribuicaoController@cadastro');
+$router->get('/editarcentro-distribuicao', 'CentroDistribuicaoController@editar');
+$router->get('/updatesituacaocentro-distribuicao', 'CentroDistribuicaoController@updatesituacaoCd');
