@@ -10,17 +10,18 @@ use Throwable;
 
 class Login extends Model
 {
-    public function logar($login, $senha)
-    {
+    public function logar($dados)
+    {       // and senha = ':senha'
+        $sql = "select u.idusuario, u.nome, u.idgrupo, u.idfilial, u.senha FROM usuarios u WHERE login = ':login'";
 
+        $sql= $this->switchParams($sql, $dados);
+
+        // print_r($sql);die;
+        
         try {
-            $sql = Database::getInstance()->prepare("SELECT u.idusuario, u.nome, u.idgrupo FROM usuarios u WHERE login = :login and senha = :senha ");
-            $sql->bindValue(':login', $login);
-            $sql->bindValue(':senha', $senha);
+            $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-
             return [
                 'sucesso' => true,
                 'result' => $result

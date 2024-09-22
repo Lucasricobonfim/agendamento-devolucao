@@ -30,18 +30,20 @@ function logar(dados) {
         url: base + '/logar',
         params: dados,
         onSuccess(res){
-        
-            if(res[0].ret == ''){
-                Swal.fire({
-                    icon: "warning",
-                    title: "Atenção!!",
-                    text: "Usuario ou senha invalidos!"
-                });
-                return
-            }
-            
+        var rec = res[0]
+        if(rec.idtipo == 1){
+            console.log('primeiro if')
             window.location.href = base+'/transportadoras';
-            
+        }
+
+        if(rec.idtipo == 2){
+            Swal.fire({
+                icon: "warning",
+                title: "Atenção!!",
+                text: "Usuario ou senha invalidos!"
+            });
+            return
+        }   
         },
         onFailure(res){
             
@@ -54,3 +56,11 @@ function logar(dados) {
         }
     })
 }
+function mostrarSenha(){
+    let inputSenha = $('#senha')
+    if (inputSenha.attr('type') === 'password') {
+         inputSenha.attr('type', 'text');
+     } else {
+         inputSenha.attr('type', 'password');
+     }
+ }

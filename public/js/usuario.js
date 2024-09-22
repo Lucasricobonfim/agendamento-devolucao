@@ -3,15 +3,16 @@ $(document).ready(function () {
     // Table()
     // listar(ret);
     $('#cadastro').on('click', function () {
-       
+        var idusuario = $('#idusuario').val()
+      
         let dados = {
-            nome: $('#nome').val(),
+            nome:  $('#nome').val(),
             login: $('#login').val(),
             senha: $('#senha').val(),
-            //idfilial: $('#idfilial').val(),
+            idfilial: $('#idfilial').val(),
             idgrupo: $('#idgrupo').val()
         }
-        console.log(dados)
+        
         if(!app.validarCampos(dados)){
             Swal.fire({
                 icon: "warning",
@@ -21,162 +22,249 @@ $(document).ready(function () {
             return
         }
 
-        cadastro(dados)
+        if(idusuario){
+            dados.idusuario = idusuario
+
+            editar(dados)
+
+        }else{
+
+            cadastro(dados)
+        }
+
+        
     })
     
 
+    $('#idgrupo').change(function() {
+        var idgrupo = $(this).val();
+
+        buscaFilial(idgrupo)
+    });
+
 })
 
-        function listar(){
-            app.callController({
-                method: 'GET',
-                url: base + '/getusuarios',
-                params: null,
+function mostrarSenha(){
+   let inputSenha = $('#senha')
+   if (inputSenha.attr('type') === 'password') {
+        inputSenha.attr('type', 'text');
+    } else {
+        inputSenha.attr('type', 'password');
+    }
+}
 
-                onSuccess(res){   
-                    // console.log(res)
-                    // return
-                    Table(res[0].ret)
-                    
-                    console.log('sucesso', res)
-                        
-                },
-                onFailure(res){
-                    console.log('falha', res)
-                   
-                }
-            })
-        }
+function limparForm(){
+    $('#nome').val(''),
+    $('#login').val(''),
+    $('#senha').val(''),
+    $('#idfilial').val(''),
+    $('#idgrupo').val('')
+}
 
-
-        function cadastro(dados){
-            app.callController({
-                method: 'POST',
-                url: base + '/cadusuario',
-                params: dados,
-                onSuccess(res){   
-                    // Table().destroy()
-                    listar()
-                    console.log('sucesso', res)
-                        //  $('#nome').val('');
-                        //  $('#cnpj_cpf').val('')
-                        //  $('#email').val(''),
-                        //  $('#telefone').val(''),
-                        //  $('#status').val(''),
-                        // window.location.href = base+'/transportadoras';
-                    Swal.fire({
-                        icon: "success",
-                        title: "Sucesso!",
-                        text: "Cadastrado com sucesso!"
-                    });
-                },
-                onFailure(res){
-                    console.log('falha', res)
-                        // if (res[0]['result'][0]['existecpf'] == 1) {
-                        //     Swal.fire({
-                        //         icon: "warning",
-                        //         title: "Atenção!!",
-                        //         text: "CNPJ já existe"
-                        //     });
-                        //     return
-                        // }
-                        // Swal.fire({
-                        //     icon: "error",
-                        //     title: "Atenção!!",
-                        //     text: "Erro ao cadastrar Transportadora"
-                        // });
-                        // return
-                }
-            })
-        }
-
-
-
-        const Table = function(dados){
-
-            console.log('aaa', dados)
-            //var dados = JSON.parse(ret)
-            $('#mytable').DataTable({
-                dom: 'Bfrtip',
-                responsive: true,
-                stateSave: true,
-                "bDestroy": true,
-                    language: {
-                        url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
-                },
-                buttons: [
-                    /*
-                    {
-                        extend: 'copyHtml5',
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'print',
-                        className: 'btn btn-primary'
-                    },
-                    {
-                        extend: 'colvis',
-                        className: 'btn btn-primary'
-                    }
-                    */
-                ],
-                lengthMenu: [
-                    [10, 100, 500, -1],
-                    [10, 100, 500, "All"]
-                ],
-                data: dados,
-                columns: [
-                    {
-                        title: 'Nome',
-                        data: 'nome',
-                    },
-                    {
-                        title: 'Login',
-                        data: 'login'
-                    },
-                    {
-                        title: 'Senha',
-                        data: 'senha'
-                    },
-                    {
-                        title: 'Filial',
-                        data: 'idfilial'
-                    },
-                    {
-                        title: 'Grupo',
-                        data: 'idgrupo',
-                    },
-                    {
-                        title: 'Ações',
-                        data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
-                        render: function(data, type, row) {
-                            
-                           dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                           
-                            return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' +
-                                   '<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idfilial +','+ 2+','+row.idsituacao+')">Inativar</button> '+
-                                   '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idfilial +','+ 1+','+row.idsituacao+')">Ativar</button>';
-                        }
-                    }
-                ],
-                rowCallback: function(row, data) {
-                    // 
-                    // 
-                    $(row).addClass('linha' + data.idfilial);
-        
-                }
+function listar(){
+    app.callController({
+        method: 'GET',
+        url: base + '/getusuarios',
+        params: null,
+        onSuccess(res){   
+            Table(res[0].ret)    
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar Usuarios!"
             });
-        
+            return
         }
+    })
+}
+
+function buscaFilial(idgrupo){
+    app.callController({
+        method: 'GET',
+        url: base + '/getfilialporgrupo',
+        params: {
+            idgrupo: idgrupo
+        },
+        onSuccess(res){   
+            var rec = res[0].ret
+            opp = $('.opp');
+            opp.html('');
+            if(rec != ''){
+                $.each(rec, function (i, el){
+                    console.log('el: ',el)
+                    opp.append("<option id='filial' value='"+el.idfilial+"' >"+el.descricao+"</option>")
+                })
+            }   
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao buscar Filial por Grupo!"
+            });
+            return
+        }
+    })
+}
+
+function cadastro(dados){
+    app.callController({
+        method: 'POST',
+        url: base + '/cadusuario',
+        params: dados,
+        onSuccess(res){   
+            listar()
+            limparForm()
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Cadastrado com sucesso!"
+            });
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao cadastrar Usuario!"
+            });
+            return
+        }
+})
+}
+
+
+
+const Table = function(dados){
+
+    //var dados = JSON.parse(ret)
+    $('#mytable').DataTable({
+        dom: 'Bfrtip',
+        responsive: true,
+        stateSave: true,
+        "bDestroy": true,
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        },
+        buttons: [
+            /*
+            {
+                extend: 'copyHtml5',
+                className: 'btn btn-primary'
+            },
+            {
+                extend: 'excelHtml5',
+                className: 'btn btn-primary'
+            },
+            {
+                extend: 'csvHtml5',
+                className: 'btn btn-primary'
+            },
+            {
+                extend: 'pdfHtml5',
+                className: 'btn btn-primary'
+            },
+            {
+                extend: 'print',
+                className: 'btn btn-primary'
+            },
+            {
+                extend: 'colvis',
+                className: 'btn btn-primary'
+            }
+            */
+        ],
+        lengthMenu: [
+            [10, 100, 500, -1],
+            [10, 100, 500, "All"]
+        ],
+        data: dados,
+        columns: [
+            {
+                title: 'Nome',
+                data: 'nome',
+            },
+            {
+                title: 'Login',
+                data: 'login'
+            },
+            {
+                title: 'Senha',
+                data: 'senha'
+            },
+            {
+                title: 'Filial',
+                data: 'filial'
+            },
+            {
+                title: 'Grupo',
+                data: 'grupo',
+            },
+            {
+                title: 'Ações',
+                data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
+                render: function(data, type, row) {
+                    
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;');
+
+                  
+                    return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' 
+                    // +'<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idusuario +','+ 2+','+row.idsituacao+')">Inativar</button> '+
+                            // '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idusuario +','+ 1+','+row.idsituacao+')">Ativar</button>';
+                }
+            }
+        ],
+        rowCallback: function(row, data) {
+            // 
+            // 
+            $(row).addClass('linha' + data.idfilial);
+
+        }
+    });
+
+}
+
+function setEditar(row){
+    $('#idusuario').val(row.idusuario),
+    $('#nome').val(row.nome),
+    $('#login').val(row.login),
+    $('#senha').val(row.senha),
+    $('#idfilial').val(row.idfilial),
+    $('#idgrupo').val(row.idgrupo)
+    // formatarCNPJ()
+}
+
+function editar(dados){
+    
+    app.callController({
+        method: 'GET',
+        url: base + '/editarusuario',
+        params: {
+           nome: dados.nome,   
+           idfilial: dados.idfilial,
+           idgrupo: dados.idgrupo,
+           login: dados.login,
+           senha: dados.senha,
+           idusuario: dados.idusuario
+        },
+        onSuccess(res){
+            listar()
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Editado com sucesso!"
+            });
+            
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao editar Usuario!"
+            });
+            return
+           
+        }
+    })
+}

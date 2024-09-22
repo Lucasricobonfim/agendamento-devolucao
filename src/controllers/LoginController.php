@@ -13,33 +13,60 @@ class LoginController extends Controller {
     }
 
     public function logar() {
-        $login = $_POST["login"];
-        $senha = $_POST["senha"];
 
-        if($login && $senha){
-            $acesso = new Login();
-            $result = $acesso->logar($login, $senha);      
-        }
-              
+
 
         
-        if ($result['sucesso'] == true) {
+        $dados = [];
+        $dados['login'] = $_POST["login"];
+        $dados['senha'] = $_POST["senha"];  
 
-             if(!empty($result['result'])){
-                 
-                $_SESSION['token'] = '123456'; 
-                $_SESSION['usuario'] = $result['result'][0]['nome'] ? $result['result'][0]['nome'] : '';
-                $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ? $result['result'][0]['idgrupo']: '';
-             }
-            echo json_encode(array([
-                "success" => true,
-                "ret" => $result['result']
-            ]));
-            die;
+        // print_r($dados);die;
+        if($dados['login'] && $dados['senha']){
+            $acesso = new Login();
+            $result = $acesso->logar($dados);      
+        }
+
+        if ($result['sucesso'] == true) { 
+
+            if(!empty($result['result'])){
+                    if (md5($dados['senha']) === $result['result'][0]['senha']) {
+                        
+                        $_SESSION['token'] = '123456'; 
+                        $_SESSION['usuario'] = $result['result'][0]['nome'] ? $result['result'][0]['nome'] : '';
+                        $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ? $result['result'][0]['idgrupo']: '';
+                        echo json_encode(array([
+                            "success" => true,
+                            "ret" => $result['result'],
+                            "idtipo" => 1
+                            // deu certo 
+                        ]));
+                        die;
+
+                    }else{
+                        echo json_encode(array([
+                            "success" => true,
+                            "ret" => $result['result'],
+                            "idtipo" => 2 // senha ou usuario errado
+                        ]));
+                        die;
+                    }
+                   
+                
+            }else{
+                echo json_encode(array([
+                    "success" => true,
+                    "ret" => $result['result'],
+                    "idtipo" => 2 // senha ou usuario errado
+                ]));
+                die;
+            }         
+                
         }else{
             echo json_encode(array([
                 "success" => false,
-                "ret" => $result['result']
+                "ret" => $result['result'],
+                "idtipo" => 3 // senha ou usuario errado
             ]));
             die;
         }

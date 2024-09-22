@@ -2,6 +2,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
+    
+
+    <!-- font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -87,14 +92,12 @@ body{
     background-color: #28d098;
     border-color: #28d098;
 }
+#toggleSenha {
+  font-size: 1.2rem;
+  color: black;
+}
+
 </style>
-
-
-
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
 
 <body>
 
@@ -108,12 +111,23 @@ body{
       <input type="text" name="login" id="login" placeholder="Digite seu login" required>
     </div>
 
+    <!-- <div class="col-sm-12 form-group">
+      <label for="senha">Senha</label>
+      <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required> 
+    </div>-->
+    
     <div class="col-sm-12 form-group">
       <label for="senha">Senha</label>
-      <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+      <div style="position: relative;">
+        <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+        <i onclick="mostrarSenha()" id="toggleSenha" class="fa fa-eye" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+      </div>
     </div>
-    <input type="button" value="Continuar" id="logar" class="btn">
-  </div>
+    <input type="button" value="Continuar" id="logar" class="btn"> 
+</div>
+
+ 
+
 </div>
 <script src="<?= $base; ?>/js/login.js"defer ></script>
 
