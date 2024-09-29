@@ -1,50 +1,46 @@
-*{
+* {
     padding: 0;
     margin: 0;
-    
-    
 }
-.negrito {
-   font-family: 'Roboto', sans-serif; 
-   font-weight: 700; /* Bold */
-   color: #000;
-   text-decoration: none;
-}
+
 body {
+    font-family: 'Roboto', sans-serif;
     margin-top: 100px;
+    background-color: #ecf0f1; /* Cor de fundo suave */
 }
 
 .header {
-    
-    background-color:blue;
+    background-color: #003366; /* Azul escuro */
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px; /* Um pouco mais de padding */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 250px);
-    /* Deduz a largura da sidebar */
+    width: calc(100% - 250px); /* Deduz a largura da sidebar */
     position: fixed;
     top: 0;
     left: 250px;
-    height: 60px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 70px; /* Altura do cabeçalho aumentada */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
     z-index: 1000;
+}
+
+.header h1 {
+    font-size: 1.5em; /* Tamanho do título */
 }
 
 .sidebar {
     width: 250px;
-    background-color: #ffff;
-    color: white;
+    background-color: #f0f0f0; /* Fundo claro */
+    color: #003366; /* Texto azul */
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 25px;
-    /* Espaço para o header */
-    border: solid 1px #dbe1e8;
+    padding-top: 25px; /* Espaço para o header */
+    border-right: 2px solid #dbe1e8; /* Borda direita */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -56,50 +52,36 @@ body {
 
 .sidebar ul li {
     padding: 15px;
-    display: list-item;
-    /* border-bottom: 1px solid #34495e; */
+    font-size: 1.1em; /* Aumentar o tamanho da fonte */
+    transition: background-color 0.3s, transform 0.3s; /* Transição suave para a cor e animação */
+}
+
+.sidebar ul li:hover {
+    background-color: #003366; /* Fundo azul ao passar o mouse */
+    transform: scale(1.02); /* Leve aumento de escala para destaque */
 }
 
 .sidebar ul li a {
-    color: #000;
+    color: #003366; /* Texto azul */
     text-decoration: none;
-    /* display: block; */
+    display: block; /* O link ocupa todo o espaço do li */
 }
 
 .sidebar ul li a:hover {
-
-    padding-left: 10px;
+    color: white; /* Texto branco ao passar o mouse */
 }
-
-.collapse-item {
-    
-    padding-left: 30px;
-    font-size: 0.9em;
-    color: #ecf0f1;
-}
-
-.collapse-item a {
-    color: #ecf0f1;
-    text-decoration: none;
-}
-
-/* .collapse-item a:hover {
-    text-decoration: underline;
-} */
 
 .content {
-    margin-top: 60px;
+    margin-top: 70px; /* Alinhado com a nova altura do cabeçalho */
     margin-left: 250px;
     padding: 20px;
     flex-grow: 1;
     overflow-y: auto;
-    height: calc(100vh - 60px);
-    /* Altura restante após header */
-    background-color: #ecf0f1;
+    height: calc(100vh - 70px); /* Altura restante após header */
 }
 
 /* Media query para telas menores */
-@media screen and (max-width: /* 768px*/ 1330px) {
+@media screen and (max-width: 1330px) {
     .header {
         left: 0;
         width: 100%;
