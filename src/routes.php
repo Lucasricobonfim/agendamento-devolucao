@@ -8,6 +8,8 @@ $router->get('/', 'LoginController@index');
 $router->post('/logar', 'LoginController@logar');
 $router->get('/deslogar', 'LoginController@deslogar');
 
+//inicio
+$router->get('/inicio', 'InicioController@index');
 
 // dashboard
 $router->get('/dashboard', 'DashboardController@index');
@@ -39,3 +41,5 @@ $router->get('/getusuarios', 'UsuarioController@getusuarios');
 $router->get('/editarusuario', 'UsuarioController@editar');
 $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');
 
+// Acompanhamento
+$router->get('/solicitacao-cd', 'SolicitacaoController@index');

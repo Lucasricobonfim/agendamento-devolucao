@@ -45,38 +45,22 @@ if (!isset($_SESSION['token'])) {
         <div>
             <h4>Agendamento de devoluções</h4>
         </div>
-
-        <!-- validar se é admin -->
-        <?php  if($_SESSION['idgrupo'] == 1) {  ?>
+        <?php if($_SESSION['idgrupo'] == 1) { ?>
             <div>
-                <a style="color:white; text-decoration:none;" href="">Usuários</a>  
+                <a style="color:white; text-decoration:none;" href="">Usuários</a>
             </div>
         <?php } ?>
         <div>
-        <i class="fa-solid fa-user"></i></i>  <?=$_SESSION['usuario'] ?>
+            <i class="fa-solid fa-user"></i> <?=$_SESSION['usuario'] ?>
             <a href="<?= $base; ?>/deslogar" style="color:white; text-decoration:none;">Sair</a>
         </div>
     </header>
-
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" alt="texte" style="width:100%; padding: 10px;">
-        <hr class='negrito'>
-
         <ul>
-            
-            <a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a>
-            
-        </ul>
-        <hr class='negrito'>
-        <ul>
-            <a class="negrito"href="<?= $base; ?>/">Inicio</a>
-        </ul>
-        <hr class='negrito'>
-        <ul>
-            <a class="negrito" href="<?= $base; ?>/transportadoras">Transportadoras</a>
-        </ul>
-        <hr class='negrito'>
-        <ul>
-            <a  class="negrito" href="<?= $base; ?>/transportadoras">Agendar</a>
+            <li><a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/inicio">Inicio</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/transportadoras">Transportadoras</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/agendar">Agendar</a></li>
         </ul>
     </aside>
