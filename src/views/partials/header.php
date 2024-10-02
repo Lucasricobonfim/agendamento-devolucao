@@ -58,9 +58,10 @@ if (!isset($_SESSION['token'])) {
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" alt="texte" style="width:100%; padding: 10px;">
         <ul>
-            <li><a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a></li>
             <li><a class="negrito" href="<?= $base; ?>/inicio">Inicio</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a></li>
             <li><a class="negrito" href="<?= $base; ?>/transportadoras">Transportadoras</a></li>
-            <li><a class="negrito" href="<?= $base; ?>/agendar">Agendar</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/centro-distribuicao">Centro de distribuição</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/solicitacao">Solicitação</a></li>
         </ul>
     </aside>

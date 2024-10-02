@@ -41,5 +41,5 @@ $router->get('/getusuarios', 'UsuarioController@getusuarios');
 $router->get('/editarusuario', 'UsuarioController@editar');
 $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');
 
-// Acompanhamento
-$router->get('/solicitacao-cd', 'SolicitacaoController@index');
+// Solicitação
+$router->get('/solicitacao', 'SolicitacaoController@index');

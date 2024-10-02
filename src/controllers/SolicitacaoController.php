@@ -8,7 +8,7 @@ use src\models\Solicitacao;
 class SolicitacaoController extends Controller {
 
     public function index() {
-        $this->render('solicitacao-cd', ['base' => Config::BASE_DIR]);
+        $this->render('solicitacao', ['base' => Config::BASE_DIR]);
     }
 
 }
