@@ -61,6 +61,6 @@ if (!isset($_SESSION['token'])) {
             <li><a class="negrito" href="<?= $base; ?>/usuario">Manutenção de Usuários</a></li>
             <li><a class="negrito" href="<?= $base; ?>/inicio">Inicio</a></li>
             <li><a class="negrito" href="<?= $base; ?>/transportadoras">Transportadoras</a></li>
-            <li><a class="negrito" href="<?= $base; ?>/agendar">Agendar</a></li>
+            <li><a class="negrito" href="<?= $base; ?>/solicitacao">Solicitação</a></li>
         </ul>
     </aside>
