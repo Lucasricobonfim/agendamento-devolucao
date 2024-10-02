@@ -27,8 +27,6 @@ h5 {
 </style>
 
 <div class="form-container">
-
-    <h1>CENTRO DE DISTRIBUIÇÃO</h1>
     <div class="header-container">
         <button id="novo" class="btn btn-primary" onclick="limparForm()">Novo</button>
         <h5>Informações básicas</h5>
