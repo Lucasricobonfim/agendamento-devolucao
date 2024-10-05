@@ -210,8 +210,8 @@ const Table = function(dados){
 
                   
                     return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' 
-                    // +'<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idusuario +','+ 2+','+row.idsituacao+')">Inativar</button> '+
-                            // '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idusuario +','+ 1+','+row.idsituacao+')">Ativar</button>';
+                     + '<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idusuario +','+ 2+','+row.idsituacao+')">Inativar</button> '+
+                       '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idusuario +','+ 1+','+row.idsituacao+')">Ativar</button>';
                 }
             }
         ],
@@ -265,6 +265,41 @@ function editar(dados){
             });
             return
            
+        }
+    })
+}
+
+
+
+function updateSituacao(id, idsituacao, atualsituacao){
+   
+    var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
+    if(idsituacao == atualsituacao){
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!",
+            text: "Transportadora já está " +  situacao
+        });
+        return
+    }
+    app.callController({
+        method: 'GET',
+        url: base + '/updatesituacaotransportadora',
+        params: {
+            id: id,
+            idsituacao: idsituacao
+        },
+        onSuccess(res){
+            listar()
+              
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao atualizar situação da Transportadora!"
+            });
+            return
         }
     })
 }

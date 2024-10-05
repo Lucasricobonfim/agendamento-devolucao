@@ -24,6 +24,42 @@
 h5 {
     margin: 0; /* remove o espaçamento padrão */
 }
+
+
+
+        /* tables responsive
+        .container {
+            max-width: 1000px !important;
+            margin: auto !important;
+        }
+        .dataTables_wrapper .dt-buttons {
+            float: left !important;
+        }
+        .dataTables_length {
+            float: right !important;
+            margin-right: 20px !important;
+        }
+        .dataTables_filter {
+            float: right !important;
+        }
+
+        .dataTables_wrapper {
+            width: 100% !important; 
+            overflow-x: auto !important;
+        }
+        .table-responsive {
+            width: 100% !important;
+            overflow-x: auto !important;
+        }
+        .table>thead>tr>th{
+            background-color: blue !important;
+            color: white !important;
+            border-radius: 5px !important;
+            border: none !important;
+            margin-left: 55px !important;
+        } */
+
+
 </style>
 
 <div class="form-container">

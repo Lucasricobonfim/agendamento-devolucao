@@ -71,7 +71,10 @@ class UsuarioController extends Controller {
         $dados['idusuario'] = $_GET['idusuario'];
         $dados['login'] = $_GET['login'];
         $dados['nome'] = $_GET['nome'];
-        $dados['senha'] = $_GET['senha'];
+
+        $hashedSenha = md5($_GET['senha']); 
+
+        $dados['senha'] =  $hashedSenha;
 
         $editar = new Usuario();
         $result = $editar->editar($dados);
@@ -110,6 +113,32 @@ class UsuarioController extends Controller {
            ]));
            die;
         }
+    }
+
+
+    public function updateSituacaoUsuario() {
+        $id = $_GET['id'];
+        $idsituacao = $_GET['idsituacao'];
+
+        $cad = new Usuario();
+        $ret = $cad->updateSituacao($id, $idsituacao);
+
+        
+        if (!$ret['sucesso']) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret
+           ]));
+           die;
+       }
+       else{
+           echo json_encode(array([
+               "success" => true,
+               "ret" => $ret
+           ]));
+           die;
+       }
+        
     }
 
 }

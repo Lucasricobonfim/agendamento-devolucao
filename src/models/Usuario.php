@@ -13,13 +13,15 @@ class Usuario extends Model
     public function cadastro($dados)
     {
 
-        $sql = "insert into usuarios (nome, login, senha, idgrupo, idfilial)
+        $sql = "insert into usuarios (nome, login, senha, idgrupo, idfilial, idsituacao)
                 select 
                      ':nome'
                     ,':login'
                     ,':senha'
                     ,:idgrupo
-                    ,:idfilial";
+                    ,:idfilial
+                    ,1
+                    ";
         $sql = $this->switchParams($sql, $dados);       
         try {
             $sql = Database::getInstance()->prepare($sql);
@@ -122,6 +124,31 @@ class Usuario extends Model
                 'sucesso' => false,
                 'result' => 'Falha ao atualizar a usuario  ' .$error->getMessage()
             ];
+        }
+    }
+
+    public function updateSituacao($id, $idsituacao)
+    {
+
+         try {
+            $sql = Database::getInstance()->prepare("
+                update usuario
+                    set idsituacao = $idsituacao
+                where idusuario = $id;
+           ");
+            
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao atualizar situacao do usuario ' .$error->getMessage()
+            ];
+            
         }
     }
 

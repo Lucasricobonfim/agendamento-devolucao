@@ -22,50 +22,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 100px;
         }
-
-
-        /* DATABLES */
-
-        .container {
-            max-width: 1000px !important;
-            margin: auto !important;
-        }
-        .dataTables_wrapper .dt-buttons {
-            float: left !important;
-        }
-        .dataTables_length {
-            float: right !important;
-            margin-right: 20px !important;
-        }
-        .dataTables_filter {
-            float: right !important;
-        }
-
-        .dataTables_wrapper {
-            width: 100% !important; 
-            overflow-x: auto !important;
-        }
-        .table-responsive {
-            width: 100% !important;
-            overflow-x: auto !important;
-        }
-        .table>thead>tr>th{
-            background-color: blue !important;
-            color: white !important;
-            border-radius: 5px !important;
-            border: none !important;
-            margin-left: 55px !important;
-        }
-
-        /* pesquisar datables */
-        #mytable_filter label{
-            
-        }
-        #mytable_filter label input{
-            
-            /* margin-right: 290px !important; */
-            
-        }
+ 
 
 </style>
 

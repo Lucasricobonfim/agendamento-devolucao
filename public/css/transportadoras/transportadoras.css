@@ -1,9 +1,9 @@
-#mytable{
+/* #mytable{
     width: 100% !important;
 }
 #mytable_wrapper{
     width: 100% !important;
-}
+} */
 
 .form-container {
     max-width: 62%;
@@ -16,18 +16,18 @@
     margin-top: 100px;
 }
 
-
+/* 
 .form-footer {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-}
+} */
 
-.form-footer button {
+/* .form-footer button {
     width: 120px;
-}
+} */
 
-.form-select, .form-control {
+/* .form-select, .form-control {
     height: 38px;
 }
 
@@ -38,6 +38,6 @@
 #mytable_filter label input{
     margin-bottom: 25px !important;
     width: 200px !important;
-    
-}
+     */
+/* } */
 /*  */

@@ -37,6 +37,7 @@ $router->get('/usuario', 'UsuarioController@index');
 $router->post('/cadusuario', 'UsuarioController@cadastro');
 $router->get('/getusuarios', 'UsuarioController@getusuarios');
 
+$router->get('/updatesituacaousuario', 'UsuarioController@updateSituacaoUsuario');
 
 $router->get('/editarusuario', 'UsuarioController@editar');
 $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');

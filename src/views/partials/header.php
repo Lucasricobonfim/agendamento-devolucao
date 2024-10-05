@@ -36,6 +36,7 @@ if (!isset($_SESSION['token'])) {
 
     <!-- css do arquivo -->
     <link rel="stylesheet" href="<?= $base; ?>/css/header/header.css">
+    <link rel="stylesheet" href="<?= $base; ?>/css/tabela/tabela-responsive.css">
 </head>
 <body style="background-color: #EDF2F6;">
     <header class="header">
