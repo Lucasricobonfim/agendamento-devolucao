@@ -11,17 +11,13 @@ class LoginController extends Controller {
     public function index() {
         $this->render('login', ['base' => Config::BASE_DIR]);
     }
-
     public function logar() {
 
-
-
-        
         $dados = [];
         $dados['login'] = $_POST["login"];
         $dados['senha'] = $_POST["senha"];  
 
-        // print_r($dados);die;
+        
         if($dados['login'] && $dados['senha']){
             $acesso = new Login();
             $result = $acesso->logar($dados);      
@@ -39,7 +35,6 @@ class LoginController extends Controller {
                             "success" => true,
                             "ret" => $result['result'],
                             "idtipo" => 1
-                            // deu certo 
                         ]));
                         die;
 
@@ -47,7 +42,7 @@ class LoginController extends Controller {
                         echo json_encode(array([
                             "success" => true,
                             "ret" => $result['result'],
-                            "idtipo" => 2 // senha ou usuario errado
+                            "idtipo" => 2 
                         ]));
                         die;
                     }
@@ -57,16 +52,15 @@ class LoginController extends Controller {
                 echo json_encode(array([
                     "success" => true,
                     "ret" => $result['result'],
-                    "idtipo" => 2 // senha ou usuario errado
+                    "idtipo" => 2 
                 ]));
                 die;
             }         
-                
         }else{
             echo json_encode(array([
                 "success" => false,
                 "ret" => $result['result'],
-                "idtipo" => 3 // senha ou usuario errado
+                "idtipo" => 3
             ]));
             die;
         }

@@ -8,7 +8,11 @@ use src\models\Usuario;
 class UsuarioController extends Controller {
 
     public function index() {
-        $this->render('usuario', ['base' => Config::BASE_DIR]);
+        if($_SESSION['idgrupo'] == 1){
+            $this->render('usuario', ['base' => Config::BASE_DIR]);
+        }else{
+            $this->render('404');
+        }
     }
 
     public function cadastro(){

@@ -33,7 +33,7 @@ function logar(dados) {
         var rec = res[0]
         if(rec.idtipo == 1){
             console.log('primeiro if')
-            window.location.href = base+'/transportadoras';
+            window.location.href = base+'/inicio';
         }
 
         if(rec.idtipo == 2){

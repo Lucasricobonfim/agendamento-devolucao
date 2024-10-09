@@ -8,7 +8,11 @@ use src\models\CentroDistribuicao;
 class CentroDistribuicaoController extends Controller {
 
     public function index() {
-        $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
+        if($_SESSION['idgrupo'] == 1){
+            $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
+        }else{
+            $this->render('404');
+        }
     }
 
     public function getCentroDistribuicao (){

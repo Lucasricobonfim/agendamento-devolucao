@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/09/2024 às 18:25
+-- Tempo de geração: 10/10/2024 às 00:21
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -29,6 +29,7 @@ USE `rdkaka`;
 -- Estrutura para tabela `filial`
 --
 
+DROP TABLE IF EXISTS `filial`;
 CREATE TABLE `filial` (
   `idfilial` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
@@ -46,16 +47,25 @@ CREATE TABLE `filial` (
 INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsituacao`, `idtipofilial`) VALUES
 (1, 'Lucas Rico Bonfim', '11331494990123', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
 (2, 'Lucas Rico Bonfim', '11331494990121', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(3, 'Lucas Rico Bonfim', '11331494990125', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(4, 'GABRIEL', '11331494990129', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(3, 'Lucas Rico Bonfim', '11331494990125', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(4, 'GABRIEL', '11331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
 (5, 'Lucas Rico Bonfim', '11331494990126', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
 (6, 'Lucas Rico Bonfim', '11331494990100', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
 (7, 'LUKAO', '11331494990111', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
 (8, 'LEOZIN', '21331494990129', 'leozin@gmail.com', '44998487185', 1, 2),
-(9, 'fabricio da silva', '99331494990129', 'fabricio@gmail.com', '44998487185', 2, 2),
-(10, 'joao', '88331494990129', 'joao@gmail.com', '44998487185', 1, 2),
+(9, 'Fabricio Silva TMJ', '99331494990129', 'fabricio@gmail.com.br', '44998487184', 1, 3),
+(10, 'joao', '88331494990129', 'joao@gmail.com', '44998487185', 2, 2),
 (11, 'Lucas Rico Bonfim', '22631494990121', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(12, 'SECO NAA', '55331494990129', 'seco@gmail.com', '44998487185', 1, 2);
+(12, 'SECO NAA', '55331494990129', 'seco@gmail.com', '44998487185', 1, 2),
+(13, 'Lucas Rico Bonfim', '29331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(14, 'Lucas Rico Bonfim', '27331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(15, 'Lucas Rico Bonfim', '95331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(16, 'Lucas Rico Bonfim', '45331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(17, 'Ze Adriando', '91131494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(18, 'LEO KLEN', '11131494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(19, 'Lucas Rico Bonfim', '11111111111111', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
+(20, 'Lucas Rico Bonfim', '93314949901298', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
+(21, 'Lucas Rico Bonfim', '99314949901295', 'lucasricobonfim@gmail.com', '44998487185', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -63,6 +73,7 @@ INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsi
 -- Estrutura para tabela `grupos`
 --
 
+DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE `grupos` (
   `idgrupo` int(11) NOT NULL,
   `descricao` varchar(200) NOT NULL
@@ -83,21 +94,25 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- Estrutura para tabela `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `idusuario` bigint(20) UNSIGNED NOT NULL,
   `nome` varchar(200) NOT NULL,
   `login` varchar(200) NOT NULL,
-  `senha` varchar(200) NOT NULL,
-  `idgrupo` int(11) NOT NULL COMMENT '1 - admin\r\n2 - usuario',
-  `idfilial` int(11) NOT NULL
+  `senha` varchar(300) NOT NULL,
+  `idgrupo` int(11) NOT NULL COMMENT '1 - admin\r\n2 - Transportadora\r\n3 - CD',
+  `idfilial` int(11) NOT NULL,
+  `idsituacao` int(11) NOT NULL COMMENT '1 - Ativo, 2 - Inativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`) VALUES
-(1, 'IDH', 'kaka', '123', 1, 0);
+INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`, `idsituacao`) VALUES
+(19, 'Lucas Admin', 'lucas.bonfim', '202cb962ac59075b964b07152d234b70', 1, 6, 2),
+(20, 'Lucas CD', 'lukao', '202cb962ac59075b964b07152d234b70', 3, 20, 2),
+(25, 'Lucas Transportadora', 'kaka', '202cb962ac59075b964b07152d234b70', 2, 18, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -123,13 +138,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `filial`
 --
 ALTER TABLE `filial`
-  MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
