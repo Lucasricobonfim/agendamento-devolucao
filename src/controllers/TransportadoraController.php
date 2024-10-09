@@ -9,8 +9,11 @@ class TransportadoraController extends Controller {
 
     public function index() {
 
-      
-        $this->render('transportadoras', ['base' => Config::BASE_DIR]);
+        if($_SESSION['idgrupo'] == 1){
+            $this->render('transportadoras', ['base' => Config::BASE_DIR]);
+        }else{
+            $this->render('404');
+        }
     }
 
     public function getTransportadora (){
