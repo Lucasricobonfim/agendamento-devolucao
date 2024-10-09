@@ -51,6 +51,8 @@ class Usuario extends Model
                 ,u.idgrupo
                 ,u.idfilial
                 ,g.descricao as grupo
+                ,u.idsituacao
+                ,case when u.idsituacao = 1 then '1 - Ativo' else '2 - Inativo' end as situacao
                 ,coalesce( f.nome, 'Filial não cadastrada') as filial
             from usuarios u 
             left join grupos g on g.idgrupo = u.idgrupo
@@ -132,7 +134,7 @@ class Usuario extends Model
 
          try {
             $sql = Database::getInstance()->prepare("
-                update usuario
+                update usuarios
                     set idsituacao = $idsituacao
                 where idusuario = $id;
            ");

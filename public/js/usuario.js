@@ -202,6 +202,10 @@ const Table = function(dados){
                 data: 'grupo',
             },
             {
+                title: 'Situação',
+                data: 'situacao',
+            },
+            {
                 title: 'Ações',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function(data, type, row) {
@@ -272,7 +276,6 @@ function editar(dados){
 
 
 function updateSituacao(id, idsituacao, atualsituacao){
-   
     var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
     if(idsituacao == atualsituacao){
         Swal.fire({
@@ -284,7 +287,7 @@ function updateSituacao(id, idsituacao, atualsituacao){
     }
     app.callController({
         method: 'GET',
-        url: base + '/updatesituacaotransportadora',
+        url: base + '/updatesituacaousuario',
         params: {
             id: id,
             idsituacao: idsituacao
