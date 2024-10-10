@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/10/2024 às 00:21
+-- Tempo de geração: 10/10/2024 às 02:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -91,6 +91,30 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `solicitacoes_agendamentos`
+--
+
+DROP TABLE IF EXISTS `solicitacoes_agendamentos`;
+CREATE TABLE `solicitacoes_agendamentos` (
+  `idsolicitacao` int(11) NOT NULL,
+  `idcd` int(11) NOT NULL,
+  `placa` varchar(20) NOT NULL,
+  `quantidadenota` int(11) NOT NULL,
+  `observacao` varchar(300) NOT NULL,
+  `idtransportadora` int(11) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `solicitacoes_agendamentos`
+--
+
+INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`) VALUES
+(1, 9, '222', 2, 'teste', 6, '2024-10-09');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `usuarios`
 --
 
@@ -125,6 +149,12 @@ ALTER TABLE `filial`
   ADD PRIMARY KEY (`idfilial`);
 
 --
+-- Índices de tabela `solicitacoes_agendamentos`
+--
+ALTER TABLE `solicitacoes_agendamentos`
+  ADD PRIMARY KEY (`idsolicitacao`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -139,6 +169,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `filial`
   MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
+--
+ALTER TABLE `solicitacoes_agendamentos`
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
