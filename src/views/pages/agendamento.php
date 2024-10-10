@@ -20,12 +20,11 @@
     margin-bottom: 20px; /* ajuste conforme necessário */
 }
 
-
 h5 {
     margin: 0; /* remove o espaçamento padrão */
 }
 
-textarea#obs {
+textarea#observacao {
         width: 100%;
         padding: 10px;
         border: 1px solid #ced4da;
@@ -47,11 +46,11 @@ textarea#obs {
         <div class="row">
         <input id="idusuario" type="text" class="form-control"  hidden>
             <div class="mb-3">
-            <label for="">Centro de Distribuição</label>
-            <select class="form-select" id="idgrupo" name="idgrupo" required>
-                <option value="">Selecione</option>
-            </select>
-            </div>
+                <label for="idfilial" class="form-label">Centro de Distuição<span class="text-danger">*</span></label>
+                <select class="form-select opp" id="idfilial" name="idfilial" required>
+                    <option value="">Selecionar</option>
+                </select>
+                </div>
             <div class="mb-3">
                 <label for="placa" class="form-label">Placa<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="placa" name="placa" required>
@@ -62,22 +61,22 @@ textarea#obs {
             </div>
             <div class="mb-3">
                 <label for="qtd" class="form-label">QTD de notas<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="qtd" name="qtd" value="3" min="1" required>
+                <input type="number" class="form-control" id="qtdnota" name="qtd" value="0" min="1" required>
             </div>
             <div class="mb-3">
                 <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>
-                <textarea id="obs" name="obs" placeholder="Informe observações"></textarea>
+                <textarea id="observacao" name="observacao" placeholder="Informe observações"></textarea>
             </div>
         </div>
         <div class="form-footer">
-            <button id="" class="btn btn-primary">Solicitar agendamento</button>
+            <button id="solicitar" class="btn btn-primary">Solicitar agendamento</button>
         </div>
     </div>
 </div>
 
 
 </body>
-<script src="<?= $base; ?>/js/solicitacao.js" ></script>
+<script src="<?= $base; ?>/js/agendamento.js" ></script>
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';

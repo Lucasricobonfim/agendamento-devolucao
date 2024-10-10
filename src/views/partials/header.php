@@ -70,7 +70,7 @@ if (!isset($_SESSION['token'])) {
         <?php } ?>  
 
         
-        <li><a class="negrito" href="<?= $base; ?>/solicitacao">Solicitação</a></li>
+        <li><a class="negrito" href="<?= $base; ?>/agendamento">Agendar</a></li>
         
         </ul>
     </aside>

@@ -124,7 +124,7 @@ class Usuario extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao atualizar a usuario  ' .$error->getMessage()
+                'result' => 'Falha ao bucar filial  ' .$error->getMessage()
             ];
         }
     }

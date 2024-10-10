@@ -31,6 +31,7 @@ class LoginController extends Controller {
                         $_SESSION['token'] = '123456'; 
                         $_SESSION['usuario'] = $result['result'][0]['nome'] ? $result['result'][0]['nome'] : '';
                         $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ? $result['result'][0]['idgrupo']: '';
+                        $_SESSION['idfilial'] = $result['result'][0]['idfilial'];
                         echo json_encode(array([
                             "success" => true,
                             "ret" => $result['result'],
