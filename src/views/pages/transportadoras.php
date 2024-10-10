@@ -52,7 +52,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label for="branch" class="form-label">Telefone<span class="text-danger">*</span></label>
-                <input id="telefone" type="text" class="form-control" placeholder="Telefone">
+                <input id="telefone" type="number" class="form-control" placeholder="Telefone">
             </div>
         </div>
         <div class="form-footer">
