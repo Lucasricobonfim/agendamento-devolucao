@@ -45,7 +45,7 @@ $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');
 // Solicitação
 $router->get('/agendamento', 'AgendamentoController@index');
 
-$router->get('/getcentro-distribuicao', 'AgendamentoController@getCd');
+$router->get('/getcentro-distribuicao-ativos', 'AgendamentoController@getCd');
 
 $router->post('/solicitar-agendamento', 'AgendamentoController@solicitar');
 

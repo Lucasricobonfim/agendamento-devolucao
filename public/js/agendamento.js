@@ -68,7 +68,7 @@ function solicitar(dados){
 function buscaCd(){
     app.callController({
         method: 'GET',
-        url: base + '/getcentro-distribuicao',
+        url: base + '/getcentro-distribuicao-ativos',
         params: null,
         onSuccess(res){   
             var rec = res[0].ret
