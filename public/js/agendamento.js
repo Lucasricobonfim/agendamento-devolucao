@@ -25,11 +25,18 @@ $(document).ready(function () {
 
 
      // validar se a data da solicitacao e menor que dia de HOJE
-
-
-
-
-
+     let dataSolicitacao = new Date(dados.data + 'T00:00:00'); // Garante a conversão correta da string para Date
+     let hoje = new Date(); 
+     hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas a data
+ 
+     if (dataSolicitacao < hoje) {
+         Swal.fire({
+             icon: "warning",
+             title: "Atenção!!",
+             text: "A data da solicitação não pode ser anterior à data de hoje!"
+         });
+         return;
+     }
     //  ---
 
     solicitar(dados)
