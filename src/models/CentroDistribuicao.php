@@ -84,7 +84,7 @@ class CentroDistribuicao extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao buscar as transportadoras ' .$error->getMessage()
+                'result' => 'Falha ao buscar os centros de distribuicao ' .$error->getMessage()
             ];
             
                 

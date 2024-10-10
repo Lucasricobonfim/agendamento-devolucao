@@ -93,7 +93,6 @@ function buscaFilial(idgrupo){
             opp.html('');
             if(rec != ''){
                 $.each(rec, function (i, el){
-                    console.log('el: ',el)
                     opp.append("<option id='filial' value='"+el.idfilial+"' >"+el.descricao+"</option>")
                 })
             }   
