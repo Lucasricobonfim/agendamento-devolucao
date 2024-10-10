@@ -123,7 +123,7 @@ body{
         <i onclick="mostrarSenha()" id="toggleSenha" class="fa fa-eye" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
       </div>
     </div>
-    <input type="button" value="Continuar" id="logar" class="btn"> 
+    <input type="button" value="Acessar" id="logar" class="btn"> 
 </div>
 
  
