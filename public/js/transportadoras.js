@@ -217,12 +217,11 @@ const Table = function(ret){
                 title: 'Ações',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function(data, type, row) {
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     
-                   dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                   
                     return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' +
-                           '<button class="btn btn-danger btn-sm" onclick="updateSituacao('+ row.idfilial +','+ 2+','+row.idsituacao+')">Inativar</button> '+
-                           '<button class="btn btn-success btn-sm" onclick="updateSituacao('+row.idfilial +','+ 1+','+row.idsituacao+')">Ativar</button>';
+                           '<button class="btn btn-danger btn-sm" onclick="confirmUpdateSituacao('+ row.idfilial +', 2,'+ row.idsituacao +', \'Inativar\')">Inativar</button> ' +
+                           '<button class="btn btn-success btn-sm" onclick="confirmUpdateSituacao('+ row.idfilial +', 1,'+ row.idsituacao +', \'Ativar\')">Ativar</button>';
                 }
             }
         ],
@@ -231,6 +230,35 @@ const Table = function(ret){
         }
     });
 
+}
+function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
+    var situacaoAtual = atualsituacao == 2 ? 'Inativa' : 'Ativa';
+    // Verifica se o centro de distribuição já está na situação desejada
+    if (idsituacao == atualsituacao) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!",
+            text: "Transportadora já está " + situacaoAtual
+        });
+        return; // Não continua com a confirmação
+    }
+    var mensagem = "Você tem certeza que deseja " + acao.toLowerCase() + " a transportadora?";
+    Swal.fire({
+        title: 'Confirmação',
+        text: mensagem,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Se o usuário confirmar, a função de update é chamada
+            updateSituacao(id, idsituacao, atualsituacao);
+        } else {
+            Swal.fire('Ação cancelada', '', 'info');
+        }
+    });
 }
 
 function updateSituacao(id, idsituacao, atualsituacao){
@@ -252,8 +280,14 @@ function updateSituacao(id, idsituacao, atualsituacao){
             idsituacao: idsituacao
         },
         onSuccess(res){
-            listar()
-              
+            listar(); 
+            // Terceiro alerta de sucesso
+            var novaSituacao = idsituacao == 2 ? 'inativado' : 'ativado';
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Transportadora " + novaSituacao + " com sucesso."
+            });  
         },
         onFailure(res){
             Swal.fire({
@@ -290,13 +324,21 @@ function editar(dados){
            idfilial: dados.idfilial
         },
         onSuccess(res){
-            listar()
+            listar(); // Atualiza a lista após o cadastro
+            
+            // Limpar os campos do formulário
+            $('#nome').val('');
+            $('#cnpj_cpf').val('');
+            $('#email').val('');
+            $('#telefone').val('');
+            $('#idfilial').val('');
+
+            // Mostrar alerta de sucesso
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
                 text: "Editado com sucesso!"
             });
-            
         },
         onFailure(res){
              
