@@ -72,5 +72,6 @@ if (!isset($_SESSION['token'])) {
         
         <li><a class="negrito" href="<?= $base; ?>/agendamento">Agendar</a></li>
         
+        <li><a class="negrito" href="<?= $base; ?>/agendamento-listar">Listar Agendamentos</a></li>
         </ul>
     </aside>
