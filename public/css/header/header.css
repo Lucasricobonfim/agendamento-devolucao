@@ -10,9 +10,9 @@ body {
 }
 
 .header {
-    background-color: #003366; /* Azul escuro */
-    color: white;
-    padding: 15px 30px; /* Um pouco mais de padding */
+    background-color: #ffffff; /* Azul escuro */
+    color: rgb(161 161 170/var(--tw-text-opacity));
+    padding: 15px 30px; /* Ajustado para um padding mais equilibrado */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,15 +20,13 @@ body {
     position: fixed;
     top: 0;
     left: 250px;
-    height: 70px; /* Altura do cabeçalho aumentada */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
+    height: 70px; /* Altura do cabeçalho */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2); /* Sombra */
     z-index: 1000;
 }
-
 .header h1 {
     font-size: 1.5em; /* Tamanho do título */
 }
-
 .sidebar {
     width: 250px;
     background-color: #f0f0f0; /* Fundo claro */
@@ -57,7 +55,7 @@ body {
 }
 
 .sidebar ul li:hover {
-    background-color: #003366; /* Fundo azul ao passar o mouse */
+    background-color: linear-gradient(to right, #003366, #0056b3); /* Gradiente azul */
     transform: scale(1.02); /* Leve aumento de escala para destaque */
 }
 
@@ -68,7 +66,7 @@ body {
 }
 
 .sidebar ul li a:hover {
-    color: white; /* Texto branco ao passar o mouse */
+    color: rgb(30, 9, 221); /* Texto branco ao passar o mouse */
 }
 
 .content {

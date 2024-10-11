@@ -320,11 +320,11 @@ function editar(dados){
             
             // Limpar os campos do formulário
             $('#nome').val('');
-            $('#cnpj_cpf').val('');
-            $('#email').val('');
-            $('#telefone').val('');
             $('#idfilial').val('');
-
+            $('#idgrupo').val('');
+            $('#login').val('');
+            $('#senha').val('');
+            $('#idusuario').val('');
             // Mostrar alerta de sucesso
             Swal.fire({
                 icon: "success",
