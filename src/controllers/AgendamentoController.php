@@ -11,13 +11,13 @@ class AgendamentoController extends Controller {
         $this->render('agendamento', ['base' => Config::BASE_DIR]);        
     }
 
+    public function listagem() {
+        $this->render('lista-agendamento', ['base' => Config::BASE_DIR]);        
+    }
 
     public function getCd() {
-
-        $cd = new Agendamento();
-
-        $ret = $cd->getCd();
-        
+        $agn = new Agendamento();
+        $ret = $agn->getCd();
       
        if ($ret['sucesso'] == false) {
             echo json_encode(array([
@@ -32,33 +32,86 @@ class AgendamentoController extends Controller {
            ]));
            die;
         }
-        
+    }
 
+    public function existePlaca($dados){
+
+        $agn = new Agendamento();
+        $rec = $agn->verificaPlaca($dados);
+        return $rec;
 
     }
 
-
-    
     public function solicitar() {
 
         $dados = [];
 
-        $dados['idcd'] = $_POST['idfilial'];
+        $dados['idagn'] = $_POST['idfilial'];
         $dados['placa'] = $_POST['placa'];
         $dados['data'] = $_POST['data'];
         $dados['quantidadenota'] = $_POST['quantidadenota'];
         $dados['observacao'] = $_POST['observacao'];
         $dados['idtransportadora'] = $_SESSION['idfilial'];
 
+
+        $existe = $this->existePlaca($dados);
+        // print_r($existe);die;
+        if($existe['result'][0]['existeplaca'] == 1){
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $existe['result']
+            ]));
+        die;
+        }
         
-        $cd = new Agendamento();
-        $cd->cadSolicitar($dados);
+        $agn = new Agendamento();
+        $ret = $agn->cadSolicitar($dados);
 
-        
-
-        
-
-
+        if ($ret['sucesso'] == false) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+        }else{
+           echo json_encode(array([
+               "success" => true,
+               "ret" => $ret['result']
+           ]));
+           die;
+        }
     }
+
+    // fim cadastro //
+
+
+    // listagem
+
+
+    public function getAgendamento() {
+
+        $dados['idtransportadora'] = $_SESSION['idfilial'];
+
+        $agn = new Agendamento();
+
+        $ret = $agn->getAgendamentos($dados);
+
+        
+        if ($ret['sucesso'] == false) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+        }else{
+           echo json_encode(array([
+               "success" => true,
+               "ret" => $ret['result']
+           ]));
+           die;
+        }
+        
+    }
+
 
 }
