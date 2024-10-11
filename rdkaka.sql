@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/10/2024 às 02:50
+-- Tempo de geração: 11/10/2024 às 02:54
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -91,6 +91,29 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `situacao`
+--
+
+DROP TABLE IF EXISTS `situacao`;
+CREATE TABLE `situacao` (
+  `idsituacao` int(11) NOT NULL,
+  `situacao` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `situacao`
+--
+
+INSERT INTO `situacao` (`idsituacao`, `situacao`) VALUES
+(1, 'PEDENTE CONFIRMAÇÂO'),
+(2, 'EM ANDAMENTO'),
+(3, 'FINALIZADO'),
+(4, 'RECUSADO'),
+(5, 'CANCELADO');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `solicitacoes_agendamentos`
 --
 
@@ -102,15 +125,27 @@ CREATE TABLE `solicitacoes_agendamentos` (
   `quantidadenota` int(11) NOT NULL,
   `observacao` varchar(300) NOT NULL,
   `idtransportadora` int(11) NOT NULL,
-  `data` date NOT NULL
+  `data` date NOT NULL,
+  `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `solicitacoes_agendamentos`
 --
 
-INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`) VALUES
-(1, 9, '222', 2, 'teste', 6, '2024-10-09');
+INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`) VALUES
+(1, 9, '222', 2, 'teste', 6, '2024-10-09', 1),
+(2, 21, 'TESTE15', 2, 'teste', 6, '2024-10-09', 1),
+(3, 21, 'TESTE15', 2, 'teste', 6, '2024-10-09', 1),
+(4, 9, '341', 1, '2222', 6, '2024-10-09', 1),
+(5, 9, '2321321', 1, 'teste', 6, '2024-10-10', 1),
+(6, 9, '31231', 1, 'teste', 6, '2024-10-23', 1),
+(7, 9, '31231', 1, 'teste', 6, '2024-10-23', 1),
+(8, 9, '2313', 1, '1', 6, '2024-10-10', 1),
+(9, 9, 'teste', 1, 'teste', 6, '2024-10-10', 1),
+(10, 9, 'yrste', 1, 'teste', 6, '2024-10-10', 1),
+(11, 9, 'teste', 2, 'teste', 6, '2024-10-10', 1),
+(12, 9, 'teste', 2, 'teste', 6, '2024-10-11', 1);
 
 -- --------------------------------------------------------
 
@@ -174,7 +209,7 @@ ALTER TABLE `filial`
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
