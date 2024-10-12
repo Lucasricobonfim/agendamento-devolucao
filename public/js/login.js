@@ -32,7 +32,6 @@ function logar(dados) {
         onSuccess(res){
         var rec = res[0]
         if(rec.idtipo == 1){
-            console.log('primeiro if')
             window.location.href = base+'/inicio';
         }
 

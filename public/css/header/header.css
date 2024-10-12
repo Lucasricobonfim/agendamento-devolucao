@@ -105,3 +105,17 @@ body {
         text-align: center;
     }
 }
+
+/* CSS CAMPO OBRIGATORIO */
+
+.erro {
+    border: 2px solid red; /* Define uma borda vermelha para os campos com erro */
+}
+
+.erro::after {
+    content: 'Este campo é obrigatório'; /* Mensagem de erro */
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}

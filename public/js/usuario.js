@@ -4,34 +4,44 @@ $(document).ready(function () {
     // listar(ret);
     $('#cadastro').on('click', function () {
         var idusuario = $('#idusuario').val()
-      
-        let dados = {
-            nome:  $('#nome').val(),
-            login: $('#login').val(),
-            senha: $('#senha').val(),
-            idfilial: $('#idfilial').val(),
-            idgrupo: $('#idgrupo').val()
-        }
-        
-        if(!app.validarCampos(dados)){
-            Swal.fire({
-                icon: "warning",
-                title: "Atenção!!",
-                text: "Preencha todos os campos!"
-            });
-            return
-        }
+        var senha = $('#senha').val()
 
         if(idusuario){
+            let dados = {
+                nome:  $('#nome').val(),
+                login: $('#login').val(),
+                idfilial: $('#idfilial').val(),
+                idgrupo: $('#idgrupo').val()
+            }
+            if(!app.validarCampos(dados)){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Preencha todos os campos!"
+                });
+                return
+            }
             dados.idusuario = idusuario
-
+            dados.senha = senha
             editar(dados)
-
         }else{
-
+            let dados = {
+                nome:  $('#nome').val(),
+                login: $('#login').val(),
+                senha: senha,
+                idfilial: $('#idfilial').val(),
+                idgrupo: $('#idgrupo').val()
+            }
+            if(!app.validarCampos(dados)){
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Preencha todos os campos!"
+                });
+                return
+            }
             cadastro(dados)
         }
-
         
     })
     
@@ -54,6 +64,7 @@ function mostrarSenha(){
 }
 
 function limparForm(){
+    $('#form-title').text('Cadastrando Usuários');
     $('#nome').val('');
     $('#idfilial').val('');
     $('#idgrupo').val('');
@@ -190,10 +201,6 @@ const Table = function(dados){
                 data: 'login'
             },
             {
-                title: 'Senha',
-                data: 'senha'
-            },
-            {
                 title: 'Filial',
                 data: 'filial'
             },
@@ -294,30 +301,27 @@ function updateSituacao(id, idsituacao, atualsituacao){
 }
 
 function setEditar(row){
+
+
+    buscaFilial(row.idgrupo)
+
+    $('#form-title').text('Editando Usuário').css('color', 'blue');;
+
+    $('#idfilial').val(row.idfilial),
+
     $('#idusuario').val(row.idusuario),
     $('#nome').val(row.nome),
-    $('#login').val(row.login),
-    $('#senha').val(row.senha),
-    $('#idfilial').val(row.idfilial),
+    $('#login').val(row.login),    
     $('#idgrupo').val(row.idgrupo)
     // formatarCNPJ()
+
+    $('html, body').animate({
+        scrollTop: $(".form-container").offset().top
+    }, 500); 
+    
 }
 
 function editar(dados) {
-    console.log("Iniciando edição com os dados:", dados);
-
-    // Atualiza o título para "Editar Usuário"
-    $('#form-title').text('Editar Usuário');
-    console.log("Título atualizado.");
-
-    // Mostra a mensagem de status
-    $('#status-message').show(); // Exibe a mensagem
-    console.log("Mensagem de status exibida.");
-
-    // Preenche os campos do formulário
-    setEditar(dados);
-    console.log("Campos do formulário preenchidos.");
-
     // Chama o controller para editar os dados
     app.callController({
         method: 'GET',

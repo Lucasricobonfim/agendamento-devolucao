@@ -100,6 +100,7 @@ function listar(ret){
  }
 
 function limparForm(){
+    $('#form-title').text('Cadastrando Transportadora').css('color', 'blue');;
     $('#nome').val('');
     $('#cnpj_cpf').val('');
     $('#email').val('');
@@ -115,11 +116,7 @@ function cadastro(dados){
         url: base + '/cadtransportadoras',
         params: dados,
         onSuccess(res){         
-                 $('#nome').val('');
-                 $('#cnpj_cpf').val('')
-                 $('#email').val(''),
-                 $('#telefone').val(''),
-                 $('#status').val(''),
+                limparForm()
                 listar()
                 Swal.fire({
                     icon: "success",
@@ -302,17 +299,23 @@ function updateSituacao(id, idsituacao, atualsituacao){
 
 
 function setEditar(row){
+
+    $('#form-title').text('Editando Transportadora').css('color', 'blue');;
+
     $('#idfilial').val(row.idfilial),
     $('#nome').val(row.nome),
     $('#cnpj_cpf').val(row.cnpj_cpf)
     $('#email').val(row.email),
     $('#telefone').val(row.telefone)
     formatarCNPJ()
+
+    $('html, body').animate({
+        scrollTop: $(".form-container").offset().top
+    }, 500); 
 }
 
 function editar(dados){
-    // console.log('dda; ',dados)
-    // return
+
     app.callController({
         method: 'GET',
         url: base + '/editartransportadora',
