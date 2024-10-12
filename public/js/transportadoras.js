@@ -100,11 +100,11 @@ function listar(ret){
  }
 
 function limparForm(){
-    $('#idfilial').val('');
     $('#nome').val('');
-    $('#cnpj_cpf').val('')
-    $('#email').val(''),
-    $('#telefone').val('')
+    $('#cnpj_cpf').val('');
+    $('#email').val('');
+    $('#telefone').val('');
+    $('#idfilial').val('');
 }
 
 
@@ -325,14 +325,8 @@ function editar(dados){
         },
         onSuccess(res){
             listar(); // Atualiza a lista após o cadastro
-            
             // Limpar os campos do formulário
-            $('#nome').val('');
-            $('#cnpj_cpf').val('');
-            $('#email').val('');
-            $('#telefone').val('');
-            $('#idfilial').val('');
-
+            limparForm()
             // Mostrar alerta de sucesso
             Swal.fire({
                 icon: "success",

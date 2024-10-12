@@ -54,11 +54,12 @@ function mostrarSenha(){
 }
 
 function limparForm(){
-    $('#nome').val(''),
-    $('#login').val(''),
-    $('#senha').val(''),
-    $('#idfilial').val(''),
-    $('#idgrupo').val('')
+    $('#nome').val('');
+    $('#idfilial').val('');
+    $('#idgrupo').val('');
+    $('#login').val('');
+    $('#senha').val('');
+    $('#idusuario').val('');
 }
 
 function listar(){
@@ -302,44 +303,50 @@ function setEditar(row){
     // formatarCNPJ()
 }
 
-function editar(dados){
-    
+function editar(dados) {
+    console.log("Iniciando edição com os dados:", dados);
+
+    // Atualiza o título para "Editar Usuário"
+    $('#form-title').text('Editar Usuário');
+    console.log("Título atualizado.");
+
+    // Mostra a mensagem de status
+    $('#status-message').show(); // Exibe a mensagem
+    console.log("Mensagem de status exibida.");
+
+    // Preenche os campos do formulário
+    setEditar(dados);
+    console.log("Campos do formulário preenchidos.");
+
+    // Chama o controller para editar os dados
     app.callController({
         method: 'GET',
         url: base + '/editarusuario',
         params: {
-           nome: dados.nome,   
-           idfilial: dados.idfilial,
-           idgrupo: dados.idgrupo,
-           login: dados.login,
-           senha: dados.senha,
-           idusuario: dados.idusuario
+            nome: dados.nome,   
+            idfilial: dados.idfilial,
+            idgrupo: dados.idgrupo,
+            login: dados.login,
+            senha: dados.senha,
+            idusuario: dados.idusuario
         },
-        onSuccess(res){
-            listar(); // Atualiza a lista após o cadastro
-            
-            // Limpar os campos do formulário
-            $('#nome').val('');
-            $('#idfilial').val('');
-            $('#idgrupo').val('');
-            $('#login').val('');
-            $('#senha').val('');
-            $('#idusuario').val('');
-            // Mostrar alerta de sucesso
+        onSuccess(res) {
+            listar(); // Atualiza a lista após a edição
+            limparForm();
+            $('#status-message').hide();
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
                 text: "Editado com sucesso!"
             });
         },
-        onFailure(res){
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao editar Usuario!"
+                text: "Erro ao editar Usuário!"
             });
-            return
-           
+            return;
         }
-    })
+    });
 }

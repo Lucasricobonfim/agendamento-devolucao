@@ -95,6 +95,14 @@ function listar() {
     });
 }
 
+function limparForm(){
+    $('#nome').val('');
+    $('#cnpj_cpf').val('');
+    $('#email').val('');
+    $('#telefone').val('');
+    $('#idfilial').val('');
+}
+
 function cadastro(dados) {  
     app.callController({
         method: 'POST',
@@ -310,14 +318,8 @@ function updateSituacao(id, idsituacao, atualsituacao){
             },
             onSuccess(res){
                 listar(); // Atualiza a lista após o cadastro
-            
                 // Limpar os campos do formulário
-                $('#nome').val('');
-                $('#cnpj_cpf').val('');
-                $('#email').val('');
-                $('#telefone').val('');
-                $('#idfilial').val('');
-    
+                limparForm()
                 // Mostrar alerta de sucesso
                 Swal.fire({
                     icon: "success",

@@ -31,9 +31,9 @@ if (!isset($_SESSION['token'])) {
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
 
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- css do arquivo -->
     <link rel="stylesheet" href="<?= $base; ?>/css/header/header.css">
     <link rel="stylesheet" href="<?= $base; ?>/css/tabela/tabela-responsive.css">
@@ -48,7 +48,9 @@ if (!isset($_SESSION['token'])) {
         </div>
         <div>
             <i class="fa-solid fa-user"></i> <?=$_SESSION['usuario'] ?>
-            <a href="<?= $base; ?>/deslogar" style="color:white; text-decoration:none;">Sair</a>
+            <a href="<?= $base; ?>/deslogar" style="color: rgb(161 161 170/var(--tw-text-opacity));">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
     </header>
     <aside class="sidebar">

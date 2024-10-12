@@ -1,5 +1,6 @@
 <?php $render('header');?> 
 
+
 <style>
 
 .form-container {
@@ -80,10 +81,10 @@ h5 {
                         <label for="login" class="form-label">Login<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="login" name="login" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" style="position: relative;">
                         <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="senha" name="senha" required>
-                        <button class="btn btn-primary" onclick="mostrarSenha()" >OLHAR</button>
+                        <input type="password" class="form-control pr-5" id="senha" name="senha" required>
+                        <i onclick="mostrarSenha()" class="fa fa-eye" style="position: absolute; top: 74%; right: 25px; transform: translateY(-50%); cursor: pointer;"></i>
                     </div>
                     <div class="mb-3">
                         <label for="grupo" class="form-label">Grupo<span class="text-danger">*</span></label>
