@@ -233,7 +233,7 @@ const Table = function(dados){
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function(data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Observação</button> ' 
+                    return '<button class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
                 }
             }
         ],
@@ -245,8 +245,22 @@ const Table = function(dados){
         ],
         rowCallback: function(row, data) {
             $(row).addClass('linha' + data.idfilial);
-
         }
     });
+
+}
+
+
+// Modal Observacao
+
+function abrirModalObs(dados){
+    
+    $('#conteudo_obs').text(dados.observacao)
+    $('#observacaoModal').modal('show');
+}
+
+function fechaModalObs(){
+    $('#conteudo_obs').text('')
+    $('#observacaoModal').modal('hide');
 
 }

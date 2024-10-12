@@ -8,6 +8,11 @@ use src\models\CentroDistribuicao;
 class CentroDistribuicaoController extends Controller {
 
     public function index() {
+
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
         if($_SESSION['idgrupo'] == 1){
             $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
         }else{

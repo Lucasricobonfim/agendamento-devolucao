@@ -43,7 +43,7 @@ class Agendamento extends Model{
     public function cadSolicitar($dados)
     {
         $sql = "
-                insert into solicitacoes_agendamentos(idcd, placa, quantidadenota, observacao, idtransportadora, data)
+                insert into solicitacoes_agendamentos(idcd, placa, quantidadenota, observacao, idtransportadora, data, idsituacao)
                 select
                      :idcd
                     ,':placa'
@@ -51,6 +51,7 @@ class Agendamento extends Model{
                     ,':observacao'
                     ,:idtransportadora
                     ,':data'
+                    ,1
             
         ";
 
