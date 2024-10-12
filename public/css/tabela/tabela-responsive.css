@@ -23,8 +23,8 @@
     width: 100% !important;
     overflow-x: auto !important;
 }
-.table>thead>tr>th{
-    background-color: blue !important;
+.table > thead > tr > th {
+    background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */
     color: white !important;
     border-radius: 5px !important;
     border: none !important;
