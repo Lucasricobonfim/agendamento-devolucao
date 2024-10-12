@@ -8,6 +8,10 @@ use src\models\Usuario;
 class UsuarioController extends Controller {
 
     public function index() {
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
         if($_SESSION['idgrupo'] == 1){
             $this->render('usuario', ['base' => Config::BASE_DIR]);
         }else{

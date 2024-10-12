@@ -46,7 +46,7 @@ class AgendamentoController extends Controller {
 
         $dados = [];
 
-        $dados['idagn'] = $_POST['idfilial'];
+        $dados['idcd'] = $_POST['idfilial'];
         $dados['placa'] = $_POST['placa'];
         $dados['data'] = $_POST['data'];
         $dados['quantidadenota'] = $_POST['quantidadenota'];
@@ -55,7 +55,6 @@ class AgendamentoController extends Controller {
 
 
         $existe = $this->existePlaca($dados);
-        // print_r($existe);die;
         if($existe['result'][0]['existeplaca'] == 1){
             echo json_encode(array([
                 "success" => false,
