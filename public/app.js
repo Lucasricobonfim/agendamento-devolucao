@@ -5,7 +5,7 @@ window.app = {
         return cnpj.length != 14 ? false : true
     },
 
-    validarCampos(obj) {
+    validarCampos_old(obj) {
         // Verifica se o objeto é realmente um objeto e não null
         if (typeof obj !== 'object' || obj === null) {
             throw new Error('O argumento deve ser um objeto.');
@@ -45,5 +45,34 @@ window.app = {
                 }
             }
         });
+    },
+
+    validarCampos(obj) {
+        // Verifica se o argumento é um objeto
+        if (typeof obj !== 'object' || obj === null) {
+            throw new Error('O argumento deve ser um objeto.');
+        }
+    
+        let valido = true;
+    
+        // Itera sobre as propriedades do objeto
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const valor = obj[key];
+                const campo = $('#' + key); // Seleciona o input pelo ID
+    
+                // Limpa os erros anteriores
+                campo.removeClass('erro');
+    
+                // Verifica se o valor é vazio ou não permitido
+                if (valor === undefined || valor === null || valor === '' || (typeof valor === 'string' && valor.trim() === '')) {
+                    valido = false;
+                    // Adiciona uma classe de erro ao campo vazio
+                    campo.addClass('erro');
+                }
+            }
+        }
+    
+        return valido;
     }
 }

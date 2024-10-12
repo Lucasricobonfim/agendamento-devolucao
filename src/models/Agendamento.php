@@ -109,7 +109,7 @@ class Agendamento extends Model{
                         ,sa.placa
                         ,sa.quantidadenota
                         ,sa.observacao
-                        ,sa.data
+                        ,DATE_FORMAT(sa.data, '%d/%m/%Y') as data
                         ,st.idsituacao
                         ,concat( st.idsituacao ,' - ',st.situacao) as situacao
                         ,sa.idsolicitacao

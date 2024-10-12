@@ -7,6 +7,14 @@
             float: right;
         }
 
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px; /* ajuste conforme necessário */
+        }
+
+
         .form-header small {
             font-weight: 500;
             color: #6c757d;
@@ -27,8 +35,9 @@
 </style>
 
 <div class="form-container">
-    <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>
-    <div class="form-header">
+    <div class="header-container">
+        <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>    
+        <h5 id="form-title">Cadastrando Transportadora</h5>
         <h5>Informações básicas</h5>
     </div>
 

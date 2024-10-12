@@ -67,10 +67,12 @@ h5 {
 <h1>Usuarios</h1>
     <div class="header-container">
         <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>
+        <h5 id="form-title">Cadastrando Usuários</h5>
         <h5>Informações básicas</h5>
     </div>
-
+ 
     <div style="margin-top: 50px;">
+    
         <div class="row">
         <input id="idusuario" type="text" class="form-control"  hidden>
             <div class="mb-3">
@@ -99,7 +101,7 @@ h5 {
                     <div class="mb-3">
                         <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
                         <select class="form-select opp" id="idfilial" name="idfilial" required>
-                            <option value="">Selecionar</option>
+                            <option id="" value="">Selecionar</option>
                         </select>
                     </div>
                     <!-- <div class="mb-3">

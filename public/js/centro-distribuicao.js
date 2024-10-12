@@ -11,7 +11,6 @@ $(document).ready(function () {
             telefone: $('#telefone').val()
         };
 
-        console.log(dados);
 
         if (idfilial) {
             dados.idfilial = idfilial;
@@ -81,7 +80,6 @@ function listar() {
         url: base + '/getcentro-distribuicao',
         params: null,
         onSuccess(res) {
-            //console.log(res[0].ret); // Adicione este log
             Table(res[0].ret)
         },
         onFailure(res) {
@@ -96,6 +94,8 @@ function listar() {
 }
 
 function limparForm(){
+    $('#form-title').text('Cadastrando CD').css('color', 'blue');;
+
     $('#nome').val('');
     $('#cnpj_cpf').val('');
     $('#email').val('');
@@ -109,11 +109,7 @@ function cadastro(dados) {
         url: base + '/cadcentro-distribuicao',
         params: dados,
         onSuccess(res) {         
-            $('#nome').val('');
-            $('#cnpj_cpf').val('');
-            $('#email').val('');
-            $('#telefone').val('');
-            $('#status').val('');
+           limparForm()
             listar(); // Atualiza a lista após o cadastro
             Swal.fire({
                 icon: "success",
@@ -296,16 +292,21 @@ function updateSituacao(id, idsituacao, atualsituacao){
 }
 
     function setEditar(row){
-    $('#idfilial').val(row.idfilial),
-    $('#nome').val(row.nome),
-    $('#cnpj_cpf').val(row.cnpj_cpf)
-    $('#email').val(row.email),
-    $('#telefone').val(row.telefone)
-    formatarCNPJ()
+
+        $('#form-title').text('Editando CD').css('color', 'blue');;
+
+        $('#idfilial').val(row.idfilial),
+        $('#nome').val(row.nome),
+        $('#cnpj_cpf').val(row.cnpj_cpf)
+        $('#email').val(row.email),
+        $('#telefone').val(row.telefone)
+        formatarCNPJ()
+        $('html, body').animate({
+            scrollTop: $(".form-container").offset().top
+        }, 500); 
     
-}
+    }
     function editar(dados){
-        //console.log('dda; ',dados)
         app.callController({
             method: 'GET',
             url: base + '/editarcentro-distribuicao',
