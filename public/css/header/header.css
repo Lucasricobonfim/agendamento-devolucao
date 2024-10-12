@@ -51,12 +51,10 @@ body {
 .sidebar ul li {
     padding: 15px;
     font-size: 1.1em; /* Aumentar o tamanho da fonte */
-    transition: background-color 0.3s, transform 0.3s; /* Transição suave para a cor e animação */
 }
 
 .sidebar ul li:hover {
-    background-color: linear-gradient(to right, #003366, #0056b3); /* Gradiente azul */
-    transform: scale(1.02); /* Leve aumento de escala para destaque */
+    background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */
 }
 
 .sidebar ul li a {
@@ -66,7 +64,7 @@ body {
 }
 
 .sidebar ul li a:hover {
-    color: rgb(30, 9, 221); /* Texto branco ao passar o mouse */
+    color: rgb(255, 255, 255); /* Texto branco ao passar o mouse */
 }
 
 .content {

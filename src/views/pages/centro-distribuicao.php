@@ -30,7 +30,7 @@ h5 {
 
 <div class="form-container">
     <div class="header-container">
-        <button id="novo" class="btn btn-primary" onclick="limparForm()">Novo</button>
+        <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>
         <h5>Informações básicas</h5>
     </div>
 
@@ -58,7 +58,7 @@ h5 {
             </div>
         </div>
         <div class="form-footer">
-            <button id="cadastro" class="btn btn-primary">Gravar</button>
+            <button id="cadastro" class="btn btn-primary" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Gravar</button>
         </div>
     </div>
 </div>
