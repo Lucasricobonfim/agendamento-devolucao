@@ -183,6 +183,9 @@ const Table = function(ret){
             {
                 title: 'Nome',
                 data: 'nome',
+                render: function(data) {
+                    return `<strong>${data}</strong>`; // Coloca o nome em negrito
+                }
             },
             {
                 title: 'CNPJ',
@@ -199,6 +202,11 @@ const Table = function(ret){
             {
                 title: 'Status',
                 data: 'descricao',
+                render: function(data) {
+                    // Adicione uma classe de status com base no valor
+                    const statusClass = data === 'Ativo' ? 'status-ativo' : 'status-inativo';
+                    return `<span class="${statusClass}">${data}</span>`;
+                }
             },
             {
                 title: 'Ações',
@@ -206,9 +214,16 @@ const Table = function(ret){
                 render: function(data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     
-                    return '<button class="btn btn-primary btn-sm" onclick="setEditar('+ dados +')">Editar</button> ' +
-                           '<button class="btn btn-danger btn-sm" onclick="confirmUpdateSituacao('+ row.idfilial +', 2,'+ row.idsituacao +', \'Inativar\')">Inativar</button> ' +
-                           '<button class="btn btn-success btn-sm" onclick="confirmUpdateSituacao('+ row.idfilial +', 1,'+ row.idsituacao +', \'Ativar\')">Ativar</button>';
+                    return '<div class="dropdown" style="display: inline-block; cursor: pointer;">' +
+                                '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
+                                    '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
+                                '</a>' +
+                                '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
+                                    '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
+                                    '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
+                                    '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
+                                '</ul>' +
+                            '</div>';
                 }
             }
         ],
@@ -220,7 +235,7 @@ const Table = function(ret){
 }
 
 function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
-    var situacaoAtual = atualsituacao == 2 ? 'Inativa' : 'Ativa';
+    var situacaoAtual = atualsituacao == 2 ? 'inativo' : 'ativo';
     // Verifica se o centro de distribuição já está na situação desejada
     if (idsituacao == atualsituacao) {
         Swal.fire({
@@ -254,7 +269,7 @@ function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
 
 function updateSituacao(id, idsituacao, atualsituacao){
    
-    var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
+    var situacao = atualsituacao == 2 ? 'inativo' : 'ativo'
     if(idsituacao == atualsituacao){
         Swal.fire({
             icon: "warning",
@@ -303,7 +318,7 @@ function updateSituacao(id, idsituacao, atualsituacao){
         formatarCNPJ()
         $('html, body').animate({
             scrollTop: $(".form-container").offset().top
-        }, 500); 
+        }, 100); 
     
     }
     function editar(dados){

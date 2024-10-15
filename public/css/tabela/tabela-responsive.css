@@ -23,14 +23,6 @@
     width: 100% !important;
     overflow-x: auto !important;
 }
-.table > thead > tr > th {
-    background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */
-    color: white !important;
-    border-radius: 5px !important;
-    border: none !important;
-    margin-left: 55px !important;
-}
-
 
 /* buttons datables */
 
@@ -40,20 +32,49 @@
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     padding: 01px !important;
-    
 }
-
+#mytable_filter {
+    float: left !important; /* Coloca o campo de busca à direita */
+    margin-right: 20px !important; /* Ajusta o espaçamento à direita */
+    margin-top: 20px;
+}
 /* pesquisar datables */
 #mytable_filter label{
+display: flex; /* Usa flexbox para ajustar o alinhamento */    
 margin-bottom:  20px !important;
 float: left !important;
-
 margin-right: 20px !important;
 }
 #mytable_filter label input{
     float: left !important;
     text-align: left !important;
     margin-right: 20px !important;
+    width: 250px !important; /* Ajuste a largura aqui */
 /* margin-right: 290px !important; */
-        
+}
+/* Remove o texto "Pesquisa" */
+#mytable_filter label::before {
+    content: '' !important; /* Remove o texto padrão */
+}
+/* Estilos para o status da tabela */
+.status-ativo {
+    color: white; /* Cor do texto */
+    background-color: rgb(51, 170, 51); /* Cor de fundo para "Ativo" */
+    padding: 0px 20px; /* Espaçamento interno */
+    border-radius: 15px; /* Bordas arredondadas */
+    display: inline-block; /* Para que o padding funcione corretamente */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Faz o span ocupar 100% da largura da célula */
+    font-size: 13px;
+}
+
+.status-inativo {
+    color: white; /* Cor do texto */
+    background-color: rgb(235, 43, 43); /* Cor de fundo para "Inativo" */
+    padding: 0px 20px; /* Espaçamento interno */
+    border-radius: 15px; /* Bordas arredondadas */
+    display: inline-block; /* Para que o padding funcione corretamente */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Faz o span ocupar 100% da largura da célula */
+    font-size: 13px;
 }
