@@ -3,13 +3,19 @@
 <style>
 
 .form-container {
-    max-width: 62%;
+    max-width: 68%;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: white;
     border: 1px solid #dee2e6;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+}
+.titulo-container {
+    max-width: 68%;
+    margin: 20px auto;
+    padding: 20px;
     margin-top: 100px;
 }
 
@@ -17,7 +23,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px; /* ajuste conforme necessário */
+    margin-bottom: 0; /* ajuste conforme necessário */
 }
 
 h5 {
@@ -35,13 +41,13 @@ textarea#observacao {
         min-height: 100px;
 }
 </style>
-
-<div class="form-container">
-    <h1>Agendamento de devolução</h1>
+<div class="titulo-container">
+        <h1>Agendamento de devolução</h1>
         <div class="header-container">
-            <h5>Informações básicas</h5>
+            <h5>Informe os dados abaixo para continuar sua solicitação.</h5>
         </div>
-
+</div>
+<div class="form-container">
     <div style="margin-top: 50px;">
         <div class="row">
         <input id="idusuario" type="text" class="form-control"  hidden>

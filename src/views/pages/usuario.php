@@ -64,7 +64,6 @@ h5 {
 </style>
 
 <div class="form-container">
-<h1>Usuarios</h1>
     <div class="header-container">
         <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>
         <h5 id="form-title">Cadastrando Usuários</h5>
@@ -117,7 +116,9 @@ h5 {
 </div>
 
 <div class="form-container">
-    <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
+    <h1><strong>Usuários</strong></h1>
+    Gestão de usuários e acessos
+    <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
         
     </table>
 </div>

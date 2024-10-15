@@ -71,8 +71,8 @@
 </div>
  
 <div class="form-container">
-    <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
-
+    <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
+        
     </table>
 </div>
 
