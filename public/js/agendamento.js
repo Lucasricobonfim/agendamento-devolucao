@@ -227,6 +227,11 @@ const Table = function(dados){
             {
                 title: 'Situação',
                 data: 'situacao',
+                render: function(data) {
+                    // Adicione uma classe de status com base no valor
+                    const statusClass = data === '1 - PEDENTE CONFIRMAÇÂO' ? 'status-pendente' : 'status-finalizado';
+                    return `<span class="${statusClass}">${data}</span>`;
+                }
             },
             {
                 title: 'Observação',
