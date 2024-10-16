@@ -53,13 +53,13 @@
         <div class="card">
             <h2>Agendamento</h2>
             <p>Solicitar um agendamento.</p>
-            <a href="#" class="card-button">Acessar</a>
+            <a href="#" class="btn-custom">Acessar</a>
         </div>
 
         <div class="card">
             <h2>Solicitações</h2>
             <p>Gestão de solicitações de agendamento.</p>
-            <a href="#" class="card-button">Acessar</a>
+            <a href="#" class="btn-custom">Acessar</a>
         </div>
     </div>
 </div>

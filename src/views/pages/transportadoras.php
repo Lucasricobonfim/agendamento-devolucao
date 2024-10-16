@@ -36,7 +36,7 @@
 
 <div class="form-container">
     <div class="header-container">
-        <button id="novo" class="btn btn-primary" onclick="limparForm()" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Novo</button>    
+        <button id="novo" class="btn-custom" onclick="limparForm()">Novo</button>    
         <h5 id="form-title">Cadastrando Transportadora</h5>
         <h5>Informações básicas</h5>
     </div>
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="form-footer">
-            <button id="cadastro" class="btn btn-primary" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Gravar</button>
+            <button id="cadastro" class="btn-custom">Gravar</button>
         </div>
     </div>
 </div>
