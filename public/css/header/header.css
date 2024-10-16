@@ -10,7 +10,7 @@ body {
 }
 
 .header {
-    background-color: #ffffff; /* Azul escuro */
+    background-color: #ffffff;  
     color: rgb(161 161 170/var(--tw-text-opacity));
     padding: 15px 30px; /* Ajustado para um padding mais equilibrado */
     display: flex;
@@ -30,7 +30,7 @@ body {
 .sidebar {
     width: 250px;
     background-color: #f0f0f0; /* Fundo claro */
-    color: #003366; /* Texto azul */
+    color: rgb(161 161 170/var(--tw-text-opacity));
     height: 100%;
     position: fixed;
     top: 0;
@@ -54,7 +54,7 @@ body {
 }
 
 .sidebar ul li:hover {
-    background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */
+    background-image: linear-gradient(to right, #211b72, #146dcc); /* Gradiente azul */
 }
 
 .sidebar ul li a {
@@ -119,3 +119,5 @@ body {
     display: block;
     margin-top: 5px;
 }
+
+ 

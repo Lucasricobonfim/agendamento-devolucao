@@ -75,7 +75,7 @@ textarea#observacao {
             </div>
         </div>
         <div class="form-footer">
-            <button id="solicitar" class="btn btn-primary" style='background-image: linear-gradient(to right, #090a4b, #146dcc); /* Gradiente azul */'>Solicitar agendamento</button>
+            <button id="solicitar" class="btn-custom">Solicitar agendamento</button>
         </div>
     </div>
 </div>
