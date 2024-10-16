@@ -216,7 +216,7 @@ const Table = function(dados){
                 data: 'situacao',
                 render: function(data) {
                     // Adicione uma classe de status com base no valor
-                    const statusClass = data === 'Ativo' ? 'status-ativo' : 'status-inativo';
+                    const statusClass = data === '1 - Ativo' ? 'status-ativo' : 'status-inativo';
                     return `<span class="${statusClass}">${data}</span>`;
                 }
             },
@@ -227,13 +227,13 @@ const Table = function(dados){
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     
                     return '<div class="dropdown" style="display: inline-block; cursor: pointer;">' +
-                                '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
+                                '<a class="text-secondary" id="actionsDropdown' + row.idusuario + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
                                     '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
                                 '</a>' +
-                                '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
+                                '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idusuario + '">' +
                                     '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
-                                    '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
-                                    '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
+                                    '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idusuario + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
+                                    '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idusuario + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
                                 '</ul>' +
                             '</div>';
                 }
@@ -278,15 +278,6 @@ function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
 }
 
 function updateSituacao(id, idsituacao, atualsituacao){
-    var situacao = atualsituacao == 2 ? 'Inativo' : 'Ativo'
-    if(idsituacao == atualsituacao){
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!",
-            text: "Usuario já está " +  situacao
-        });
-        return
-    }
     app.callController({
         method: 'GET',
         url: base + '/updatesituacaousuario',
