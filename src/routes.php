@@ -42,7 +42,7 @@ $router->get('/updatesituacaousuario', 'UsuarioController@updateSituacaoUsuario'
 $router->get('/editarusuario', 'UsuarioController@editar');
 $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');
 
-// Solicitação
+// Solicitação Agendamento
 $router->get('/agendamento', 'AgendamentoController@index');
 $router->get('/getcentro-distribuicao-ativos', 'AgendamentoController@getCd');
 $router->post('/solicitar-agendamento', 'AgendamentoController@solicitar');
@@ -51,3 +51,6 @@ $router->get('/agendamento-listar', 'AgendamentoController@listagem');
 $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
 
 
+//Pendente CD
+$router->get('/solicitacoes', 'SolicitacoesController@index');
+$router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
