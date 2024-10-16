@@ -2,6 +2,16 @@
 <link rel="stylesheet" href="<?= $base; ?>/css/transportadoras/transportadoras.css">
 
 <style>
+        .form-container {
+            max-width: 62%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+        }
         .form-header {
             margin-bottom: 0;
             float: right;

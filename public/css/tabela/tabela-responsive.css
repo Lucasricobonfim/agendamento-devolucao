@@ -78,3 +78,13 @@ margin-right: 20px !important;
     width: 100%; /* Faz o span ocupar 100% da largura da célula */
     font-size: 13px;
 }
+
+.status-pendente{
+    color: white; /* Cor do texto */
+    background-color: rgb(235, 190, 43); /* Cor de fundo para "Inativo" */
+    padding: 5px 10px; /* Espaçamento interno */
+    display: inline-block; /* Para que o padding funcione corretamente */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Faz o span ocupar 100% da largura da célula */
+    font-size: 13px;
+}
