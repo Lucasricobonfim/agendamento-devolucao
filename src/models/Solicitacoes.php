@@ -30,7 +30,6 @@ class Solicitacoes extends Model{
             
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            print_r($result);
 
             return [
                 'sucesso' => true,
