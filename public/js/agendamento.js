@@ -21,6 +21,16 @@ $(document).ready(function () {
         return
     }
 
+    // Validação do formato da placa
+    if (!validarPlaca(dados.placa)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Formato da placa inválido! Use o formato: ABC1D23."
+        });
+        return;
+    }
+
      // validar se a data da solicitacao e menor que dia de HOJE
      let dataSolicitacao = new Date(dados.data + 'T00:00:00'); // Garante a conversão correta da string para Date
      let hoje = new Date(); 
@@ -35,10 +45,30 @@ $(document).ready(function () {
          return;
      }
 
+     // Calcular a data limite (30 dias a partir de hoje)
+    let dataLimite = new Date(hoje);
+    dataLimite.setDate(hoje.getDate() + 20); // Adiciona 20 dias
+
+    // Validar se a data escolhida é maior que a data limite
+    if (dataSolicitacao > dataLimite) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "A data da solicitação não pode ser superior a 20 dias a partir de hoje!"
+        });
+        return;
+    }
+
     solicitar(dados)
 
     
 })
+
+function validarPlaca(placa) {
+    // Expressão regular para validar o formato da placa (ex: ABC1D23)
+    const regex = /^[A-Z]{3}\d{1}[A-Z]{1}\d{2}$/;
+    return regex.test(placa);
+}
 
 function limparCampos(){
     $('#idfilial').val(''),

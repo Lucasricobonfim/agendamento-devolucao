@@ -76,20 +76,20 @@ h5 {
         <input id="idusuario" type="text" class="form-control"  hidden>
             <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
                     </div>
                     <div class="mb-3">
                         <label for="login" class="form-label">Login<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="login" name="login" required>
+                        <input type="text" class="form-control" id="login" name="login" placeholder="Login">
                     </div>
                     <div class="mb-3" style="position: relative;">
                         <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
-                        <input type="password" class="form-control pr-5" id="senha" name="senha" required>
+                        <input type="password" class="form-control pr-5" id="senha" name="senha" placeholder="Senha">
                         <i onclick="mostrarSenha()" class="fa fa-eye" style="position: absolute; top: 74%; right: 25px; transform: translateY(-50%); cursor: pointer;"></i>
                     </div>
                     <div class="mb-3">
                         <label for="grupo" class="form-label">Grupo<span class="text-danger">*</span></label>
-                        <select class="form-select" id="idgrupo" name="idgrupo" required>
+                        <select class="form-select" id="idgrupo" name="idgrupo">
                             <option value="">Selecionar</option>
                             <option value="1">ADM</option>
                             <option value="2">Transportadora</option>
@@ -99,7 +99,7 @@ h5 {
 
                     <div class="mb-3">
                         <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
-                        <select class="form-select opp" id="idfilial" name="idfilial" required>
+                        <select class="form-select opp" id="idfilial" name="idfilial">
                             <option id="" value="">Selecionar</option>
                         </select>
                     </div>

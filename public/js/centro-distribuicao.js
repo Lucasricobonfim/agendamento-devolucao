@@ -31,7 +31,15 @@ $(document).ready(function () {
                 });
                 return false;
             }
-
+            // Validação do formato do e-mail
+            if (!validarEmail(dados.email)) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "E-mail inválido! Por favor, insira um e-mail válido."
+                });
+                return;
+            }
 
             editar(dados);
 
@@ -53,11 +61,43 @@ $(document).ready(function () {
                 });
                 return false;
             }
+            
+            if (!validarEmail(dados.email)) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "E-mail inválido! Por favor, insira um e-mail válido."
+                });
+                return;
+            }
+            // Validação do telefone para verificar a quantidade de dígitos
+            if (!validarQuantidadeNumeros(dados.telefone, 10, 11)) {
+                return; // A mensagem de alerta já será exibida dentro da função
+            }
+
             cadastro(dados);
         }
     });
 });
 
+// Função para validar e-mail
+function validarEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+// Função para validar a quantidade de dígitos
+function validarQuantidadeNumeros(numero, min, max) {
+    if (numero.length < min || numero.length > max) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: `Número inválido! O número deve ter entre ${min} e ${max} dígitos.`
+        });
+        return false;
+    }
+    return true; // Retorna true se a validação passar
+}
 function formatarCNPJ() {
     var cnpj_cpf = document.getElementById('cnpj_cpf');
 

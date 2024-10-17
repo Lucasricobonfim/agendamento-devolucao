@@ -45,7 +45,7 @@ h5 {
             </div>
             <div class="col-md-6 mb-3">
                 <label for="cnpj_cpf" class="form-label">CNPJ<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="cnpj_cpf" placeholder="Telefone">
+                <input type="text" class="form-control" id="cnpj_cpf" placeholder="CNPJ">
             </div>
         </div> 
         <div class="row">   
@@ -55,7 +55,7 @@ h5 {
             </div>
             <div class="col-md-6 mb-3">
                 <label for="telefone" class="form-label">Telefone<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="telefone" placeholder="Telefone">
+                <input type="text" class="form-control" id="telefone" placeholder="Telefone">
             </div>
         </div>
         <div class="form-footer">

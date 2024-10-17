@@ -7,7 +7,7 @@ $(document).ready(function () {
 function listar(){
     app.callController({
         method: 'GET',
-        url: base + '/getsolicitacoes',
+        url: base + '/getusuarios',
         params: null,
         onSuccess(res){   
             Table(res[0].ret)    
@@ -100,6 +100,17 @@ const Table = function(dados){
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     return '<button class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
                 }
+            },
+            {
+                title: 'Ações',
+                data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
+                render: function(data, type, row) {
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;'); // Codifica o objeto para uso em HTML
+                    return `
+                        <button class="btn btn-success btn-sm" onclick="aceitarSolicitacao('${row.idsolicitacao}')">Aceitar</button>
+                        <button class="btn btn-danger btn-sm" onclick="recusarSolicitacao('${row.idsolicitacao}')">Recusar</button>
+                    `;
+                }
             }
         ],
         rowCallback: function(row, data) {
@@ -109,6 +120,19 @@ const Table = function(dados){
 
 }
 
+// Modal Observacao
+
+function abrirModalObs(dados){
+    
+    $('#conteudo_obs').text(dados.observacao)
+    $('#observacaoModal').modal('show');
+}
+
+function fechaModalObs(){
+    $('#conteudo_obs').text('')
+    $('#observacaoModal').modal('hide');
+
+}
 
 
 
