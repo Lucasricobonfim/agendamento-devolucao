@@ -1,31 +1,29 @@
 $(document).ready(function () {
     listar()
-
-    
+    // Table()
+    // listar(ret);
 })
 
 function listar(){
     app.callController({
-      method: 'GET',
-      url: base + '/getsolicitacoes',
-      params: null,
-      onSuccess(res){
-         Table(res[0].ret)
-         
-      },
-      onFailure(res){
-        Swal.fire({
-            icon: "error",
-            title: "Atenção!!",
-            text: "Erro ao lista solicitações!"
-        });
-        return
-      }
+        method: 'GET',
+        url: base + '/getsolicitacoes',
+        params: null,
+        onSuccess(res){   
+            Table(res[0].ret)    
+        },
+        onFailure(res){
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar Usuarios!"
+            });
+            return
+        }
     })
- }
+}
 
-
- const Table = function(dados){
+const Table = function(dados){
 
     //var dados = JSON.parse(ret)
     $('#mytable').DataTable({
@@ -89,6 +87,11 @@ function listar(){
             {
                 title: 'Situação',
                 data: 'situacao',
+                render: function(data) {
+                    // Adicione uma classe de status com base no valor
+                    const statusClass = data === '1 - PEDENTE CONFIRMAÇÂO' ? 'status-pendente' : 'status-finalizado';
+                    return `<span class="${statusClass}">${data}</span>`;
+                }
             },
             {
                 title: 'Observação',
@@ -99,18 +102,15 @@ function listar(){
                 }
             }
         ],
-        columnDefs: [
-            { 
-                targets: [0], // Índice da coluna "Cód Solicitacao"
-                width: '50px' // Definindo a largura desejada
-            }
-        ],
         rowCallback: function(row, data) {
             $(row).addClass('linha' + data.idfilial);
         }
     });
 
 }
+
+
+
 
 
 

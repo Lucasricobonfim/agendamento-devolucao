@@ -225,6 +225,10 @@ const Table = function(dados){
                 data: 'data',
             },
             {
+                title: 'QTD Notas',
+                data: 'quantidadenota',
+            },
+            {
                 title: 'Situação',
                 data: 'situacao',
                 render: function(data) {

@@ -79,5 +79,7 @@ if (!isset($_SESSION['token'])) {
             <hr style="margin: 0;">
             <li><a class="negrito" href="<?= $base; ?>/agendamento-listar"><i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Listar Agendamentos</a></li>
             <hr style="margin: 0;">
+            <li><a class="negrito" href="<?= $base; ?>/solicitacoes"><i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Solicitações</a></li>
+            <hr style="margin: 0;">
         </ul>
     </aside>

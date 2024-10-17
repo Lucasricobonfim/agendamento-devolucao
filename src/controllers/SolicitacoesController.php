@@ -3,7 +3,7 @@ namespace src\controllers;
 
 use \core\Controller;
 use \src\Config;
-use src\models\Solicitacoes; // Certifique-se de que esta classe está correta
+use src\models\Solicitacoes;
 
 class SolicitacoesController extends Controller {
 
@@ -11,28 +11,22 @@ class SolicitacoesController extends Controller {
         $this->render('solicitacoes', ['base' => Config::BASE_DIR]);        
     }
 
-    public function getsolicitacoes(){
-        // Instancie a classe Solicitacoes, não Usuario
+    public function getsolicitacoes() {
         $list = new Solicitacoes();  
-        
-        // Chame o método getsolicitacoes da classe Solicitacoes
         $ret = $list->getsolicitacoes();
-        print_r($ret);
         
+        // Retorne em JSON corretamente
         if ($ret['sucesso'] == false) {
-            echo json_encode(array([
+            echo json_encode([
                 "success" => false,
                 "ret" => $ret['result']
-            ]));
-            die;
+            ]);
         } else {
-            echo json_encode(array([
+            echo json_encode([
                 "success" => true,
                 "ret" => $ret['result']
-            ]));
-            die;
+            ]);
         }
+        die; // Não esqueça do die para interromper a execução após enviar a resposta
     }
-
-
 }
