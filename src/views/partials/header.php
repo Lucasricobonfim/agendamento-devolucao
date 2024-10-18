@@ -45,6 +45,8 @@ if (!isset($_SESSION['token'])) {
     <link rel="stylesheet" href="<?= $base; ?>/css/header/botoes.css">
     <link rel="stylesheet" href="<?= $base; ?>/css/header/header.css">
     <link rel="stylesheet" href="<?= $base; ?>/css/tabela/tabela-responsive.css">
+    <!-- MaskPlugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </head>
 <body style="background-color: #EDF2F6;">
     <header class="header">

@@ -1,16 +1,18 @@
 $(document).ready(function () {
-    listar(); // Chama a função listar ao carregar a página
-    formatarCNPJ();
+    listar();
+
+    // Máscara para telefone e CNPJ aplicadas corretamente
+    $('#telefone').mask('(00) 00000-0000', { placeholder: '(  ) _____-____' });
+    $('#cnpj_cpf').mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' });
 
     $('#cadastro').on('click', function () {
         var idfilial = $('#idfilial').val();
         let dados = {
             nome: $('#nome').val(),
-            cnpj_cpf: $('#cnpj_cpf').val().replace(/[^\d]/g, ''),
+            cnpj_cpf: $('#cnpj_cpf').val().replace(/[^\d]/g, ''), // Removendo máscara antes de enviar
             email: $('#email').val(),
-            telefone: $('#telefone').val()
+            telefone: $('#telefone').val().replace(/[^\d]/g, '') // Removendo máscara antes de enviar
         };
-
 
         if (idfilial) {
             dados.idfilial = idfilial;
@@ -23,6 +25,7 @@ $(document).ready(function () {
                 });
                 return;
             }
+
             if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
                     icon: "warning",
@@ -31,7 +34,6 @@ $(document).ready(function () {
                 });
                 return false;
             }
-            // Validação do formato do e-mail
             if (!validarEmail(dados.email)) {
                 Swal.fire({
                     icon: "warning",
@@ -40,9 +42,11 @@ $(document).ready(function () {
                 });
                 return;
             }
+            if (!validarTelefone(dados.telefone)) {
+                return false;
+            }
 
             editar(dados);
-
 
         } else {
             if (!app.validarCampos(dados)) {
@@ -53,6 +57,7 @@ $(document).ready(function () {
                 });
                 return;
             }
+
             if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
                     icon: "warning",
@@ -61,7 +66,6 @@ $(document).ready(function () {
                 });
                 return false;
             }
-            
             if (!validarEmail(dados.email)) {
                 Swal.fire({
                     icon: "warning",
@@ -70,48 +74,47 @@ $(document).ready(function () {
                 });
                 return;
             }
-            // Validação do telefone para verificar a quantidade de dígitos
-            if (!validarQuantidadeNumeros(dados.telefone, 10, 11)) {
-                return; // A mensagem de alerta já será exibida dentro da função
+            if (!validarTelefone(dados.telefone)) {
+                return false;
             }
 
             cadastro(dados);
         }
     });
 });
-
+function validarNome(nome) {
+    // Verifica se o nome contém apenas letras e espaços
+    const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+    
+    // Verifica se o nome é válido
+    if (!nomeRegex.test(nome)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "O nome pode conter apenas letras e espaços."
+        });
+        return false;
+    }
+}
 // Função para validar e-mail
 function validarEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
+function validarTelefone(telefone) {
+    // Remove a máscara
+    const telefoneSemMascara = telefone.replace(/\D/g, ''); // Remove tudo que não é número
 
-// Função para validar a quantidade de dígitos
-function validarQuantidadeNumeros(numero, min, max) {
-    if (numero.length < min || numero.length > max) {
+    // Verifica se o telefone tem exatamente 11 dígitos (para celular) ou 10 (para fixo)
+    if (telefoneSemMascara.length !== 11 && telefoneSemMascara.length !== 10) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
-            text: `Número inválido! O número deve ter entre ${min} e ${max} dígitos.`
+            text: "Número de telefone inválido! Por favor, insira um número válido."
         });
         return false;
     }
-    return true; // Retorna true se a validação passar
-}
-function formatarCNPJ() {
-    var cnpj_cpf = document.getElementById('cnpj_cpf');
-
-    cnpj_cpf.addEventListener('input', function (e) {
-        let value = e.target.value;
-        value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-        value = value.substring(0, 14); // Limita o número de dígitos
-
-        if (value.length > 12) {
-            value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
-        }
-
-        e.target.value = value;
-    });
+    return true;
 }
 
 function listar() {
@@ -229,7 +232,12 @@ const Table = function(ret){
             },
             {
                 title: 'CNPJ',
-                data: 'cnpj_cpf'
+                data: 'cnpj_cpf',
+                render: function(data) {
+                    // Aplicando máscara no CNPJ
+                    const cnpjMascara = data.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+                    return cnpjMascara;
+                }
             },
             {
                 title: 'E-mail',
@@ -237,7 +245,22 @@ const Table = function(ret){
             },
             {
                 title: 'Telefone',
-                data: 'telefone'
+                data: 'telefone',
+                render: function(data) {
+                    if (data.length === 10) {
+                        // Telefone fixo sem o nono dígito
+                        return data.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+                    } else if (data.length === 11) {
+                        // Telefone celular com o nono dígito
+                        return data.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+                    } else if (data.length === 8) {
+                        // Telefone fixo local sem DDD
+                        return data.replace(/^(\d{4})(\d{4})$/, "$1-$2");
+                    } else {
+                        // Retorna o número sem máscara se não corresponder a nenhum formato conhecido
+                        return data;
+                    }
+                }
             },
             {
                 title: 'Status',
@@ -346,21 +369,29 @@ function updateSituacao(id, idsituacao, atualsituacao){
     })
 }
 
-    function setEditar(row){
+function setEditar(row) {
+    $('#form-title').text('Editando CD').css('color', 'blue');
+    $('#idfilial').val(row.idfilial);
+    $('#nome').val(row.nome);
 
-        $('#form-title').text('Editando CD').css('color', 'blue');;
-
-        $('#idfilial').val(row.idfilial),
-        $('#nome').val(row.nome),
-        $('#cnpj_cpf').val(row.cnpj_cpf)
-        $('#email').val(row.email),
-        $('#telefone').val(row.telefone)
-        formatarCNPJ()
-        $('html, body').animate({
-            scrollTop: $(".form-container").offset().top
-        }, 100); 
+    // Remover máscaras antes de setar novos valores
+    $('#cnpj_cpf').unmask();
+    $('#telefone').unmask();
     
-    }
+    // Setando o valor no campo CNPJ e Telefone
+    $('#cnpj_cpf').val(row.cnpj_cpf);
+    $('#email').val(row.email);
+    $('#telefone').val(row.telefone);
+
+    // Reaplicar as máscaras após os valores serem inseridos
+    $('#telefone').mask('(00) 00000-0000'); 
+    $('#cnpj_cpf').mask('00.000.000/0000-00');
+    
+    // Rolagem suave para o formulário
+    $('html, body').animate({
+        scrollTop: $(".form-container").offset().top
+    }, 100); 
+}
     function editar(dados){
         app.callController({
             method: 'GET',

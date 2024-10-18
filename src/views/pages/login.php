@@ -31,10 +31,11 @@
     width: 100%;
 }
 .image-gazin {
-    height: 80px;
+    height: 300px;
     max-height: 100%;
     display: block;
     margin: 0 auto 15px;
+    width: 300px;
 }
 hr{
     margin: 15px 0;
@@ -103,7 +104,7 @@ body{
 
 <div class="content">
   <div class="content-forms">
-    <img src="<?= $base; ?>/img/logo_topo.png" class="image-gazin img-responsive">
+    <img src="<?= $base; ?>/img/lukao.jpeg" class="image-gazin img-responsive">
     <hr>
 
     <div class="col-sm-12 form-group">
