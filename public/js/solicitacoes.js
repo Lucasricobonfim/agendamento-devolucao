@@ -7,7 +7,7 @@ $(document).ready(function () {
 function listar(){
     app.callController({
         method: 'GET',
-        url: base + '/getusuarios',
+        url: base + '/getsolicitacoes',
         params: null,
         onSuccess(res){   
             Table(res[0].ret)    
@@ -73,8 +73,8 @@ const Table = function(dados){
                 data: 'idsolicitacao',
             },
             {
-                title: 'CD',
-                data: 'centro_distribuicao'
+                title: 'Transportadora',
+                data: 'nome_transportadora'
             },
             {
                 title: 'Placa',
@@ -89,7 +89,7 @@ const Table = function(dados){
                 data: 'situacao',
                 render: function(data) {
                     // Adicione uma classe de status com base no valor
-                    const statusClass = data === '1 - PEDENTE CONFIRMAÇÂO' ? 'status-pendente' : 'status-finalizado';
+                    const statusClass = 'status-pendente'
                     return `<span class="${statusClass}">${data}</span>`;
                 }
             },
@@ -113,9 +113,7 @@ const Table = function(dados){
                 }
             }
         ],
-        rowCallback: function(row, data) {
-            $(row).addClass('linha' + data.idfilial);
-        }
+        rowCallback: function(row, data) { }
     });
 
 }

@@ -11,26 +11,35 @@ use Throwable;
 class Solicitacoes extends Model{
    
     public function getsolicitacoes(){
+
+        $params = [
+            "idfilial" => $_SESSION['idfilial']
+        ];
+
+        $sql = "
+            SELECT 
+                s.idsolicitacao, 
+                s.idcd, 
+                s.placa, 
+                s.quantidadenota, 
+                s.observacao, 
+                DATE_FORMAT(s.data, '%d/%m/%Y') as data,
+                s.idsituacao,   
+                st.situacao,
+                f.nome AS nome_transportadora
+            FROM solicitacoes_agendamentos s
+            LEFT JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
+            left join situacao st on st.idsituacao = s.idsituacao
+            where s.idcd = :idfilial
+            and s.idsituacao = 1
+        ";
+
+
+        $sql = $this->switchParams($sql, $params );
         try {
-            $sql = Database::getInstance()->prepare("
-                SELECT 
-                    s.idsolicitacao, 
-                    s.idcd, 
-                    s.placa, 
-                    s.quantidadenota, 
-                    s.observacao, 
-                    s.data, 
-                    s.idsituacao, 
-                    f.nome AS nome_transportadora
-                FROM 
-                    solicitacoes_agendamentos s
-                LEFT JOIN 
-                    filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora; -- Buscando transportadora
-            ");
-            
+            $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
             return [
                 'sucesso' => true,
                 'result' => $result
