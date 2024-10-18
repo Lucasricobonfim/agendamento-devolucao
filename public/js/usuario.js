@@ -23,6 +23,16 @@ $(document).ready(function () {
             }
             dados.idusuario = idusuario
             dados.senha = senha
+
+            if (!validarNome(dados.nome)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
+            if (!validarSenha(dados.senha)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
+            if (!validarLogin(dados.login)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
             editar(dados)
         }else{
             let dados = {
@@ -40,6 +50,15 @@ $(document).ready(function () {
                 });
                 return
             }
+            if (!validarNome(dados.nome)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
+            if (!validarSenha(dados.senha)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
+            if (!validarLogin(dados.login)) {
+                return; // Se alguma validação falhar, não prossegue
+            }
             cadastro(dados)
         }
         
@@ -53,6 +72,103 @@ $(document).ready(function () {
     });
 
 })
+
+function validarLogin(login) {
+    let mensagens = [];
+
+    // Verifica se o comprimento está entre 3 e 20 caracteres
+    if (login.length < 3 || login.length > 20) {
+        mensagens.push("O login deve ter entre 3 e 20 caracteres.");
+    }
+
+    // Verifica se o login começa com uma letra
+    if (!/^[a-zA-Z]/.test(login)) {
+        mensagens.push("O login deve começar com uma letra.");
+    }
+
+    // Verifica se o login contém apenas caracteres permitidos
+    if (!/^[a-zA-Z0-9_.]+$/.test(login)) {
+        mensagens.push("O login deve conter apenas letras, números, ponto ou sublinhado.");
+    }
+
+    // Verifica se o login contém espaços
+    if (/\s/.test(login)) {
+        mensagens.push("O login não pode conter espaços.");
+    }
+
+    // Se houver mensagens, exibe um alerta
+    if (mensagens.length > 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: mensagens.join(" ")
+        });
+        return false;
+    }
+
+    return true;
+}
+
+function validarSenha(senha) {
+    let mensagens = [];
+
+    // Verifica se a senha tem pelo menos 6 caracteres
+    if (senha.length < 8) {
+        mensagens.push("A senha deve ter pelo menos 8 caracteres.");
+    }
+
+    // Verifica se a senha contém pelo menos uma letra maiúscula
+    if (!/[A-Z]/.test(senha)) {
+        mensagens.push("A senha deve conter pelo menos uma letra maiúscula.");
+    }
+
+    // Verifica se a senha contém pelo menos um caractere especial
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        mensagens.push("A senha deve conter pelo menos um caractere especial.");
+    }
+
+    // Se houver mensagens, exibe um alerta
+    if (mensagens.length > 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: mensagens.join(" ") // Junta as mensagens em uma única string
+        });
+        return false;
+    }
+
+    return true;
+}
+
+function validarNome(nome) {
+    // Verifica se o nome contém apenas letras e espaços
+    const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+    
+    // Verifica se o nome é válido
+    if (!nomeRegex.test(nome)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "O nome pode conter apenas letras e espaços."
+        });
+        return false;
+    }
+
+    // Remove espaços em branco do início e do final
+    const partes = nome.trim().split(' ');
+
+    // Verifica se há pelo menos um nome e um sobrenome
+    if (partes.length < 2) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Insira pelo menos um nome e um sobrenome."
+        });
+        return false;
+    }
+
+    return true;
+}
 
 function mostrarSenha(){
    let inputSenha = $('#senha')

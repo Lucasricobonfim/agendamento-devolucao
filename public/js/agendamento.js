@@ -1,6 +1,11 @@
 $(document).ready(function () {
     listar()
     buscaCd()
+
+    // Aplicando a máscara no campo de placa, que aparece conforme o preenchimento
+    $('#placa').mask('SSS-0000', {placeholder: ''});
+
+
  })
 
  $('#solicitar').on('click', function () {
@@ -19,16 +24,6 @@ $(document).ready(function () {
             text: "Preencha todos os campos!"
         });
         return
-    }
-
-    // Validação do formato da placa
-    if (!validarPlaca(dados.placa)) {
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!!",
-            text: "Formato da placa inválido! Use o formato: ABC1D23."
-        });
-        return;
     }
 
      // validar se a data da solicitacao e menor que dia de HOJE
@@ -63,12 +58,6 @@ $(document).ready(function () {
 
     
 })
-
-function validarPlaca(placa) {
-    // Expressão regular para validar o formato da placa (ex: ABC1D23)
-    const regex = /^[A-Z]{3}\d{1}[A-Z]{1}\d{2}$/;
-    return regex.test(placa);
-}
 
 function limparCampos(){
     $('#idfilial').val(''),
