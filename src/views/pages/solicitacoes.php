@@ -37,11 +37,11 @@
     }
 </style>
 
-<div class="form-container">
-    <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
+    <div class="form-container">
+        <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
-    </table>
-</div>
+        </table>
+    </div>
 
 <!-- MODAL  -->
 

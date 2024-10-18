@@ -14,18 +14,20 @@ class SolicitacoesController extends Controller {
     public function getsolicitacoes() {
         $list = new Solicitacoes();  
         $ret = $list->getsolicitacoes();
-        
+    
         // Retorne em JSON corretamente
         if ($ret['sucesso'] == false) {
-            echo json_encode([
+            echo json_encode(array([
                 "success" => false,
                 "ret" => $ret['result']
-            ]);
+           ]));
+           die;
         } else {
-            echo json_encode([
+            echo json_encode(array([
                 "success" => true,
                 "ret" => $ret['result']
-            ]);
+            ]));
+            die;
         }
         die; // Não esqueça do die para interromper a execução após enviar a resposta
     }
