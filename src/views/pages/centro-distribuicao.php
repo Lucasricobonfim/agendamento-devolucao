@@ -65,6 +65,7 @@
     </div>
 
     <div class="form-container">
+        <h1><strong>Centro de Distribuição</strong></h1>
         <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
 
         </table>
