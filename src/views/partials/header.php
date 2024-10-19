@@ -53,7 +53,8 @@ if (!isset($_SESSION['token'])) {
 <body style="background-color: #EDF2F6;">
     <header class="header">
         <div>
-            <!-- deixar essa div vazia por enquanto -->
+            <!-- Ícone de menu hamburger -->
+            <i class="fas fa-bars hamburger" style="font-size: 22px;"></i>
         </div>
         <div style="display: flex; align-items: center;">
             <i class="fa-solid fa-user"></i> 
@@ -90,3 +91,4 @@ if (!isset($_SESSION['token'])) {
             <hr style="margin: 0;">
         </ul>
     </aside>
+

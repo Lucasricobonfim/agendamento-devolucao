@@ -81,6 +81,7 @@
 </div>
  
 <div class="form-container">
+    <h1><strong>Transportadoras</strong></h1>
     <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
         
     </table>

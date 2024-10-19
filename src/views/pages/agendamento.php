@@ -55,21 +55,21 @@
         <div style="margin-top: 50px;">
             <div class="row">
                 <input id="idusuario" type="text" class="form-control" hidden>
-                <div class="mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="idfilial" class="form-label">Centro de Distuição<span class="text-danger">*</span></label>
                     <select class="form-select opp" id="idfilial" name="idfilial" required>
                         <option value="">Selecionar</option>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="placa" class="form-label">Placa<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="placa" name="placa" required>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="data" class="form-label">Data<span class="text-danger">*</span></label>
                     <input type="date" class="form-control" id="data" name="data" required>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-6 mb-3">
                     <label for="qtd" class="form-label">QTD de notas<span class="text-danger">*</span></label>
                     <input type="number" class="form-control" id="qtdnota" name="qtd" value="0" min="1" required>
                 </div>
