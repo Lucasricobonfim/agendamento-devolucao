@@ -7,12 +7,16 @@ use src\models\CentroDistribuicao;
 
 class CentroDistribuicaoController extends Controller {
 
-    public function index() {
-
+    
+    public function __construct(){
         if (!isset($_SESSION['token'])) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
+    }
+
+    public function index() {
+
         if($_SESSION['idgrupo'] == 1){
             $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
         }else{

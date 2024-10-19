@@ -59,7 +59,7 @@ body {
     margin: 0;
 }
 
-.sidebar ul li {
+.sidebar ul li a {
     padding: 15px;
     font-size: 1.1em;
     /* Aumentar o tamanho da fonte */
@@ -144,4 +144,4 @@ body {
     font-size: 12px;
     display: block;
     margin-top: 5px;
-}
+}       
