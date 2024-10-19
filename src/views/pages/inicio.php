@@ -30,6 +30,8 @@
 
 <main class='main-div' style="width:100%; margin-left: 100px;">
 
+<h3 class="text-center">Dashboard</h3>
+
 <div class="container mt-5">
     <div class="row text-center">
         <!-- Card 1: Clicks -->

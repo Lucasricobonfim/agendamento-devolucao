@@ -7,13 +7,15 @@ use src\models\Inicio;
 
 class InicioController extends Controller {
 
-    public function index() {
-
+    
+    public function __construct(){
         if (!isset($_SESSION['token'])) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
+    }
 
+    public function index() {
         $this->render('inicio', ['base' => Config::BASE_DIR]);
     }
 

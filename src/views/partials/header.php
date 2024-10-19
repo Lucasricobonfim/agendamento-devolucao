@@ -53,11 +53,14 @@ if (!isset($_SESSION['token'])) {
 <body style="background-color: #EDF2F6;">
     <header class="header">
         <div>
-            <h1>AGN</h1>
+            <!-- deixar essa div vazia por enquanto -->
         </div>
-        <div>
-            <i class="fa-solid fa-user"></i> <?= $_SESSION['usuario'] ?>
-            <a href="<?= $base; ?>/deslogar" style="color: rgb(161 161 170/var(--tw-text-opacity)); margin-left: 7px;">
+        <div style="display: flex; align-items: center;">
+            <i class="fa-solid fa-user"></i> 
+            <span style="margin-left: 5px;"><?= $_SESSION['usuario'] ?></span>
+            <div style="border-left: 1px solid #ccc; height: 20px; margin: 0 10px;"></div>
+
+            <a href="<?= $base; ?>/deslogar" style="color: rgb(161, 161, 170); margin-left: 7px;">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>

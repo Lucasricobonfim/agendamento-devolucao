@@ -7,7 +7,16 @@ use src\models\Solicitacoes;
 
 class SolicitacoesController extends Controller {
 
+    public function __construct(){
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
+    }
+
+
     public function index() {
+        
         $this->render('solicitacoes', ['base' => Config::BASE_DIR]);        
     }
 
