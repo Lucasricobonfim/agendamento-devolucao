@@ -1,72 +1,95 @@
-<?php $render('header');?> 
+<?php $render('header'); ?>
 
 <style>
-.form-container {
-    max-width: 60%;
-    margin: 100px 300px;
-    padding: 50px;
-    font-size: 1.3rem;
-    line-height: 2.25rem;
-}
 
-.card-container {
-    display: flex; /* Para colocar os cards lado a lado */
-    gap: 30px; /* Espaço entre os cards */
-}
-
-.card {
-    background-color: white; /* Cor do fundo do card */
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
-    padding: 30px 80px 60px 20px;
-    min-width: 250px; /* Largura mínima para os cards */
-    display: flex;
-    flex-direction: column; /* Alinha título e descrição */
-}
-.card-button {
-    position: absolute; /* Posiciona o botão em relação ao card */
-    bottom: 10px; /* Distância da parte inferior do card */
-    right: 10px; /* Distância da direita do card */
-    background-color: blue; /* Cor de fundo do botão */
-    color: white; /* Cor do texto do botão */
-    border: none; /* Remove a borda padrão */
-    border-radius: 5px; /* Bordas arredondadas do botão */
-    padding: 1px 20px; /* Espaçamento interno do botão */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    font-size: 14px; /* Tamanho da fonte */
-    text-decoration: none; /* Remove a linha embaixo do texto */
-}
-
-.card-button:hover {
-    background-color: darkblue; /* Muda a cor ao passar o mouse */
-}
-
+        .card {
+            border-radius: 10px;
+        }
+        .icon-container {
+            background-color: #007bff;
+            border-radius: 50%;
+            padding: 10px;
+            color: white;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .percentage {
+            font-size: 0.9rem;
+        }
+        .up {
+            color: green;
+        }
+        .down {
+            color: red;
+        }
+   
 </style>
 
-<div class="form-container">
-    <span class="text-3xl font-bold">
-        <h1>Bem-vindo(a), Lucas</h1>
-        <h4>Centro de Distribuição</h4>
-    </span>
-    
-    <div class="card-container">
-        <div class="card">
-            <h2>Agendamento</h2>
-            <p>Solicitar um agendamento.</p>
-            <a href="#" class="btn-custom">Acessar</a>
-        </div>
 
-        <div class="card">
-            <h2>Solicitações</h2>
-            <p>Gestão de solicitações de agendamento.</p>
-            <a href="#" class="btn-custom">Acessar</a>
+<main class='main-div' style="width:100%; margin-left: 100px;">
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <!-- Card 1: Clicks -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="icon-container">
+                        <i class="fas fa-thumbs-up fa-2x"></i>
+                    </div>
+                    <div class="text-end">
+                        <p class="mb-0">Clicks</p>
+                        <p class="metric-value">71,897</p>
+                        <span class="percentage up">
+                            <i class="fas fa-arrow-up"></i> 5.4%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 2: Impressions -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="icon-container">
+                        <i class="fas fa-eye fa-2x"></i>
+                    </div>
+                    <div class="text-end">
+                        <p class="mb-0">Impressions</p>
+                        <p class="metric-value">146,926</p>
+                        <span class="percentage up">
+                            <i class="fas fa-arrow-up"></i> 8.3%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3: Average CTR -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="icon-container">
+                        <i class="fas fa-chart-pie fa-2x"></i>
+                    </div>
+                    <div class="text-end">
+                        <p class="mb-0">Average CTR</p>
+                        <p class="metric-value">24.57%</p>
+                        <span class="percentage down">
+                            <i class="fas fa-arrow-down"></i> 3.9%
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+</main>
 </body>
-<script src="<?= $base; ?>/js/inicio.js" ></script>
+<script src="<?= $base; ?>/js/inicio.js"></script>
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
-</script> 
+</script>

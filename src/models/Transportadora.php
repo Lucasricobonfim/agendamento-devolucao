@@ -74,6 +74,7 @@ class Transportadora extends Model
                   t.*
                  ,case when t.idsituacao = 1 then 'Ativo' else 'Inativo' end as descricao
                 from filial t
+                where t.idtipofilial = 2
            ");
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);

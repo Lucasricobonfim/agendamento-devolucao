@@ -12,12 +12,8 @@ class Login extends Model
 {
     public function logar($dados)
     {       // and senha = ':senha'
-        $sql = "select u.idusuario, u.nome, u.idgrupo, u.idfilial, u.senha FROM usuarios u WHERE login = ':login'";
-
+        $sql = "select u.idusuario, u.nome, u.idgrupo, u.idfilial, u.senha FROM usuarios u WHERE u.login = ':login' and u.idsituacao = 1 ";
         $sql= $this->switchParams($sql, $dados);
-
-        // print_r($sql);die;
-        
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
