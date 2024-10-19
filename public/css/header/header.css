@@ -6,30 +6,39 @@
 body {
     font-family: 'Roboto', sans-serif;
     margin-top: 100px;
-    background-color: #ecf0f1; /* Cor de fundo suave */
+    background-color: #ecf0f1;
+    /* Cor de fundo suave */
 }
 
 .header {
-    background-color: #ffffff;  
+    background-color: #ffffff;
     color: rgb(161 161 170/var(--tw-text-opacity));
-    padding: 15px 30px; /* Ajustado para um padding mais equilibrado */
+    padding: 15px 30px;
+    /* Ajustado para um padding mais equilibrado */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 250px); /* Deduz a largura da sidebar */
+    width: calc(100% - 250px);
+    /* Deduz a largura da sidebar */
     position: fixed;
     top: 0;
     left: 250px;
-    height: 70px; /* Altura do cabeçalho */
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2); /* Sombra */
+    height: 70px;
+    /* Altura do cabeçalho */
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    /* Sombra */
     z-index: 1000;
 }
+
 .header h1 {
-    font-size: 1.5em; /* Tamanho do título */
+    font-size: 1.5em;
+    /* Tamanho do título */
 }
+
 .sidebar {
     width: 250px;
-    background-color: #f0f0f0; /* Fundo claro */
+    background-color: #f0f0f0;
+    /* Fundo claro */
     color: rgb(161 161 170/var(--tw-text-opacity));
     height: 100%;
     position: fixed;
@@ -37,8 +46,10 @@ body {
     left: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 25px; /* Espaço para o header */
-    border-right: 2px solid #dbe1e8; /* Borda direita */
+    padding-top: 25px;
+    /* Espaço para o header */
+    border-right: 2px solid #dbe1e8;
+    /* Borda direita */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -50,30 +61,37 @@ body {
 
 .sidebar ul li {
     padding: 15px;
-    font-size: 1.1em; /* Aumentar o tamanho da fonte */
+    font-size: 1.1em;
+    /* Aumentar o tamanho da fonte */
 }
 
 .sidebar ul li:hover {
-    background-image: linear-gradient(to right, #211b72, #146dcc); /* Gradiente azul */
+    background-image: linear-gradient(to right, #211b72, #146dcc);
+    /* Gradiente azul */
 }
 
 .sidebar ul li a {
-    color: #003366; /* Texto azul */
+    color: #003366;
+    /* Texto azul */
     text-decoration: none;
-    display: block; /* O link ocupa todo o espaço do li */
+    display: block;
+    /* O link ocupa todo o espaço do li */
 }
 
 .sidebar ul li a:hover {
-    color: rgb(255, 255, 255); /* Texto branco ao passar o mouse */
+    color: rgb(255, 255, 255);
+    /* Texto branco ao passar o mouse */
 }
 
 .content {
-    margin-top: 70px; /* Alinhado com a nova altura do cabeçalho */
+    margin-top: 70px;
+    /* Alinhado com a nova altura do cabeçalho */
     margin-left: 250px;
     padding: 20px;
     flex-grow: 1;
     overflow-y: auto;
-    height: calc(100vh - 70px); /* Altura restante após header */
+    height: calc(100vh - 70px);
+    /* Altura restante após header */
 }
 
 /* Media query para telas menores */
@@ -104,20 +122,26 @@ body {
     .sidebar ul li {
         text-align: center;
     }
+
+    /* deixar no centro form e table */
+
+    .main-div {
+        margin: 20px auto !important;
+    }
 }
 
 /* CSS CAMPO OBRIGATORIO */
 
 .erro {
-    border: 2px solid red; /* Define uma borda vermelha para os campos com erro */
+    border: 2px solid red;
+    /* Define uma borda vermelha para os campos com erro */
 }
 
 .erro::after {
-    content: 'Este campo é obrigatório'; /* Mensagem de erro */
+    content: 'Este campo é obrigatório';
+    /* Mensagem de erro */
     color: red;
     font-size: 12px;
     display: block;
     margin-top: 5px;
 }
-
- 

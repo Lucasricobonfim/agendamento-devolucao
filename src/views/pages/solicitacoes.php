@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 62%;
+        max-width: 70%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -36,34 +36,35 @@
         min-height: 100px;
     }
 </style>
-
+<main class='main-div' style="width:100%; margin-left: 100px;">
     <div class="form-container">
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
         </table>
     </div>
 
-<!-- MODAL  -->
+    <!-- MODAL  -->
 
-<div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
-                <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Conteúdo da observação -->
-                <h4 id="conteudo_obs"></h4>
+    <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
+                    <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo da observação -->
+                    <h4 id="conteudo_obs"></h4>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+</main>
 
 
 </body>
