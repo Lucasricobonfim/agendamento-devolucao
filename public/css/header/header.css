@@ -8,6 +8,7 @@ body {
     margin-top: 100px;
     background-color: #ecf0f1;
     /* Cor de fundo suave */
+    overflow-x: hidden;
 }
 
 .header {
