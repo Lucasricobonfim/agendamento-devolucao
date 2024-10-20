@@ -12,13 +12,6 @@
         margin-top: 100px;
     }
 
-    .titulo-container {
-        max-width: 68%;
-        margin: 20px auto;
-        padding: 20px;
-        margin-top: 100px;
-    }
-
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -45,13 +38,14 @@
 </style>
 
 <main class='main-div' style="width:100%; margin-left: 100px;">
-    <div class="titulo-container">
-        <h1>Agendamento de devolução</h1>
-        <div class="header-container">
-            <h5>Informe os dados abaixo para continuar sua solicitação.</h5>
-        </div>
-    </div>
+    
     <div class="form-container">
+        <div class="titulo-container">
+            <h1><strong>Agendamento de devolução</strong></h1>
+            <div class="header-container">
+                <h5>Informe os dados abaixo para continuar sua solicitação.</h5>
+            </div>
+        </div>
         <div style="margin-top: 50px;">
             <div class="row">
                 <input id="idusuario" type="text" class="form-control" hidden>

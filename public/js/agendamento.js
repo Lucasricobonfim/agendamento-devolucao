@@ -3,21 +3,21 @@ $(document).ready(function () {
     buscaCd()
 
     // Aplicando a máscara no campo de placa, que aparece conforme o preenchimento
-    $('#placa').mask('SSS-0000', {placeholder: ''});
+    $('#placa').mask('SSS-0000', { placeholder: '' });
 
 
- })
+})
 
- $('#solicitar').on('click', function () {
+$('#solicitar').on('click', function () {
 
     let dados = {
-        idfilial:  $('#idfilial').val(),
+        idfilial: $('#idfilial').val(),
         placa: $('#placa').val(),
         data: $('#data').val(),
         quantidadenota: $('#qtdnota').val(),
         observacao: $('#observacao').val()
     }
-    if(!app.validarCampos(dados)){
+    if (!app.validarCampos(dados)) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
@@ -26,21 +26,21 @@ $(document).ready(function () {
         return
     }
 
-     // validar se a data da solicitacao e menor que dia de HOJE
-     let dataSolicitacao = new Date(dados.data + 'T00:00:00'); // Garante a conversão correta da string para Date
-     let hoje = new Date(); 
-     hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas a data
- 
-     if (dataSolicitacao < hoje) {
-         Swal.fire({
-             icon: "warning",
-             title: "Atenção!!",
-             text: "A data da solicitação não pode ser anterior à data de hoje!"
-         });
-         return;
-     }
+    // validar se a data da solicitacao e menor que dia de HOJE
+    let dataSolicitacao = new Date(dados.data + 'T00:00:00'); // Garante a conversão correta da string para Date
+    let hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas a data
 
-     // Calcular a data limite (30 dias a partir de hoje)
+    if (dataSolicitacao < hoje) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "A data da solicitação não pode ser anterior à data de hoje!"
+        });
+        return;
+    }
+
+    // Calcular a data limite (30 dias a partir de hoje)
     let dataLimite = new Date(hoje);
     dataLimite.setDate(hoje.getDate() + 20); // Adiciona 20 dias
 
@@ -56,41 +56,41 @@ $(document).ready(function () {
 
     solicitar(dados)
 
-    
+
 })
 
-function limparCampos(){
+function limparCampos() {
     $('#idfilial').val(''),
-    $('#placa').val(''),
-    $('#data').val(''),
-    $('#qtdnota').val(''),
-    $('#observacao').val('')
+        $('#placa').val(''),
+        $('#data').val(''),
+        $('#qtdnota').val(''),
+        $('#observacao').val('')
 }
 
 
-function solicitar(dados){
+function solicitar(dados) {
     app.callController({
         method: 'POST',
-        url: base+'/solicitar-agendamento',
-        params:{
+        url: base + '/solicitar-agendamento',
+        params: {
             idfilial: dados.idfilial,
             placa: dados.placa,
             data: dados.data,
             quantidadenota: dados.quantidadenota,
             observacao: dados.observacao
         },
-        onSuccess(res){   
+        onSuccess(res) {
             let rec = res[0]
 
-            
-            if(rec.success){
+
+            if (rec.success) {
                 Swal.fire({
                     icon: "success",
                     title: "Sucesso!",
                     text: "Agendamento Solicitado com sucesso!"
-                }); 
+                });
                 limparCampos()
-            }else{
+            } else {
                 Swal.fire({
                     icon: "error",
                     title: "Atenção!!",
@@ -98,20 +98,20 @@ function solicitar(dados){
                 });
                 limparCampos()
                 return
-            }            
+            }
         },
-        onFailure(res){
-           let rec = res[0].ret[0]
+        onFailure(res) {
+            let rec = res[0].ret[0]
 
 
-           if(rec.existeplaca == 1){
-            Swal.fire({
-                icon: "warning",
-                title: "Atenção!!",
-                text: "Já existe um agendamento para essa Data com essa Placa"
-            });
-            return;
-           }
+            if (rec.existeplaca == 1) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Já existe um agendamento para essa Data com essa Placa"
+                });
+                return;
+            }
 
             Swal.fire({
                 icon: "error",
@@ -125,23 +125,23 @@ function solicitar(dados){
 
 
 
-function buscaCd(){
+function buscaCd() {
     app.callController({
         method: 'GET',
         url: base + '/getcentro-distribuicao-ativos',
         params: null,
-        onSuccess(res){   
+        onSuccess(res) {
             let rec = res[0].ret
-            opp = $('.opp');   
+            opp = $('.opp');
             opp.html('');
-            if(rec != ''){
+            if (rec != '') {
                 opp.append("<option id='filial' value=''>Selecione</option>")
-                $.each(rec, function (i, el){
-                    opp.append("<option id='filial' value='"+el.idfilial+"' >"+el.descricao+"</option>")
+                $.each(rec, function (i, el) {
+                    opp.append("<option id='filial' value='" + el.idfilial + "' >" + el.descricao + "</option>")
                 })
-            }   
+            }
         },
-        onFailure(res){
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
@@ -158,16 +158,16 @@ function buscaCd(){
 // listagem 
 
 
-function listar(){
+function listar() {
     app.callController({
         method: 'GET',
         url: base + '/get-agendamento',
         params: null,
-        onSuccess(res){   
+        onSuccess(res) {
 
-            Table(res[0].ret)    
+            Table(res[0].ret)
         },
-        onFailure(res){
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
@@ -182,7 +182,7 @@ function listar(){
 
 
 
-const Table = function(dados){
+const Table = function (dados) {
 
     //var dados = JSON.parse(ret)
     $('#table-agend').DataTable({
@@ -190,8 +190,8 @@ const Table = function(dados){
         responsive: true,
         stateSave: true,
         "bDestroy": true,
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
         buttons: [
             /*
@@ -250,28 +250,49 @@ const Table = function(dados){
             {
                 title: 'Situação',
                 data: 'situacao',
-                render: function(data) {
-                    // Adicione uma classe de status com base no valor
-                    const statusClass = data === '1 - PEDENTE CONFIRMAÇÂO' ? 'status-pendente' : 'status-finalizado';
+                render: function (data, type, row) {
+                    let statusClass = '';
+
+                    // Usando switch case para definir a classe de acordo com a situação
+                    switch (row.idsituacao) {
+                        case 1:
+                            statusClass = 'status-pendente';
+                            break;
+                        case 2:
+                            statusClass = 'status-andamento';
+                            break;
+                        case 3:
+                            statusClass = 'status-finalizado';
+                            break;
+                        case 4:
+                            statusClass = 'status-recusado';
+                            break;
+                        case 5:
+                            statusClass = 'status-cancelado';
+                            break;
+                        default:
+                            statusClass = ''; // Sem classe se não houver correspondência
+                    }
+
                     return `<span class="${statusClass}">${data}</span>`;
                 }
             },
             {
                 title: 'Observação',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    return '<button class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
+                    return '<button style="width: 100%;" class="btn btn-primary btn-sm" onclick="abrirModalObs(' + dados + ')">Observação</button> '
                 }
             }
         ],
         columnDefs: [
-            { 
+            {
                 targets: [0], // Índice da coluna "Cód Solicitacao"
                 width: '50px' // Definindo a largura desejada
             }
         ],
-        rowCallback: function(row, data) {
+        rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
         }
     });
@@ -281,13 +302,13 @@ const Table = function(dados){
 
 // Modal Observacao
 
-function abrirModalObs(dados){
-    
+function abrirModalObs(dados) {
+
     $('#conteudo_obs').text(dados.observacao)
     $('#observacaoModal').modal('show');
 }
 
-function fechaModalObs(){
+function fechaModalObs() {
     $('#conteudo_obs').text('')
     $('#observacaoModal').modal('hide');
 

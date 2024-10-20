@@ -70,11 +70,6 @@
                         <option id="" value="">Selecionar</option>
                     </select>
                 </div>
-                <!-- <div class="mb-3">
-                        <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="idfilial" name="idfilial" required>
-                    </div> -->
-
             </div>
             <div class="form-footer">
                 <button id="cadastro" class="btn-custom">Gravar</button>

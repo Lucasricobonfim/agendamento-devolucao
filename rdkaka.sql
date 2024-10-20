@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/10/2024 às 02:54
+-- Tempo de geração: 20/10/2024 às 19:23
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,35 +37,26 @@ CREATE TABLE `filial` (
   `email` varchar(200) DEFAULT NULL,
   `telefone` varchar(11) DEFAULT NULL,
   `idsituacao` smallint(6) NOT NULL COMMENT '1 - Ativo\r\n2 - Inativo',
-  `idtipofilial` smallint(6) NOT NULL COMMENT '2 - TRANSPORTADORA\r\n3 - CD'
+  `idtipofilial` smallint(6) NOT NULL COMMENT '1 - ADMIN\r\n2 - TRANSPORTADORA\r\n3 - CD'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Tabela truncada antes do insert `filial`
+--
+
+TRUNCATE TABLE `filial`;
 --
 -- Despejando dados para a tabela `filial`
 --
 
 INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsituacao`, `idtipofilial`) VALUES
-(1, 'Lucas Rico Bonfim', '11331494990123', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(2, 'Lucas Rico Bonfim', '11331494990121', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(3, 'Lucas Rico Bonfim', '11331494990125', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(4, 'GABRIEL', '11331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(5, 'Lucas Rico Bonfim', '11331494990126', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(6, 'Lucas Rico Bonfim', '11331494990100', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(7, 'LUKAO', '11331494990111', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(8, 'LEOZIN', '21331494990129', 'leozin@gmail.com', '44998487185', 1, 2),
-(9, 'Fabricio Silva TMJ', '99331494990129', 'fabricio@gmail.com.br', '44998487184', 1, 3),
-(10, 'joao', '88331494990129', 'joao@gmail.com', '44998487185', 2, 2),
-(11, 'Lucas Rico Bonfim', '22631494990121', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(12, 'SECO NAA', '55331494990129', 'seco@gmail.com', '44998487185', 1, 2),
-(13, 'Lucas Rico Bonfim', '29331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(14, 'Lucas Rico Bonfim', '27331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(15, 'Lucas Rico Bonfim', '95331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(16, 'Lucas Rico Bonfim', '45331494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(17, 'Ze Adriando', '91131494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(18, 'LEO KLEN', '11131494990129', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(19, 'Lucas Rico Bonfim', '11111111111111', 'lucasricobonfim@gmail.com', '44998487185', 2, 2),
-(20, 'Lucas Rico Bonfim', '93314949901298', 'lucasricobonfim@gmail.com', '44998487185', 1, 2),
-(21, 'Lucas Rico Bonfim', '99314949901295', 'lucasricobonfim@gmail.com', '44998487185', 1, 3);
+(1, 'Matriz', '11331494990123', 'lucas.dossantos@gazin.com.br', '44998487185', 1, 1),
+(22, 'IDH', '11111111111111', 'idh@transportes.com', '44111111111', 1, 2),
+(23, 'ALFA', '22222222222222', 'alfa@transportes.com', '44222222222', 1, 2),
+(24, 'RODONAVES', '33333333333333', 'rodonaves@transportes.com', '44333333333', 1, 2),
+(25, 'DOURADINA', '44444444444444', 'douradina@transportes.com', '44444444444', 1, 3),
+(26, 'IPAMERI', '55555555555555', 'ipameri@transportes.com', '55555555555', 1, 3),
+(27, 'FEIRA DE SANTANA', '66666666666666', 'feira@transportes.com', '66666666666', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -79,6 +70,11 @@ CREATE TABLE `grupos` (
   `descricao` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Tabela truncada antes do insert `grupos`
+--
+
+TRUNCATE TABLE `grupos`;
 --
 -- Despejando dados para a tabela `grupos`
 --
@@ -100,6 +96,11 @@ CREATE TABLE `situacao` (
   `situacao` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Tabela truncada antes do insert `situacao`
+--
+
+TRUNCATE TABLE `situacao`;
 --
 -- Despejando dados para a tabela `situacao`
 --
@@ -130,22 +131,19 @@ CREATE TABLE `solicitacoes_agendamentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Tabela truncada antes do insert `solicitacoes_agendamentos`
+--
+
+TRUNCATE TABLE `solicitacoes_agendamentos`;
+--
 -- Despejando dados para a tabela `solicitacoes_agendamentos`
 --
 
 INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`) VALUES
-(1, 9, '222', 2, 'teste', 6, '2024-10-09', 1),
-(2, 21, 'TESTE15', 2, 'teste', 6, '2024-10-09', 1),
-(3, 21, 'TESTE15', 2, 'teste', 6, '2024-10-09', 1),
-(4, 9, '341', 1, '2222', 6, '2024-10-09', 1),
-(5, 9, '2321321', 1, 'teste', 6, '2024-10-10', 1),
-(6, 9, '31231', 1, 'teste', 6, '2024-10-23', 1),
-(7, 9, '31231', 1, 'teste', 6, '2024-10-23', 1),
-(8, 9, '2313', 1, '1', 6, '2024-10-10', 1),
-(9, 9, 'teste', 1, 'teste', 6, '2024-10-10', 1),
-(10, 9, 'yrste', 1, 'teste', 6, '2024-10-10', 1),
-(11, 9, 'teste', 2, 'teste', 6, '2024-10-10', 1),
-(12, 9, 'teste', 2, 'teste', 6, '2024-10-11', 1);
+(17, 25, 'ABC-1234', 12, 'Ok', 22, '2024-10-21', 2),
+(18, 26, 'ABC-1345', 12, 'Condutor: Antonio', 22, '2024-10-21', 1),
+(19, 27, 'ASD-1234', 12, 'Condutor: Marjuri', 22, '2024-10-22', 1),
+(20, 25, 'ASF-1234', 12, 'Teste: Lucas', 1, '2024-10-22', 1);
 
 -- --------------------------------------------------------
 
@@ -165,13 +163,23 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Tabela truncada antes do insert `usuarios`
+--
+
+TRUNCATE TABLE `usuarios`;
+--
 -- Despejando dados para a tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`, `idsituacao`) VALUES
-(19, 'Lucas Admin', 'lucas.bonfim', '202cb962ac59075b964b07152d234b70', 1, 6, 2),
-(20, 'Lucas CD', 'lukao', '202cb962ac59075b964b07152d234b70', 3, 20, 2),
-(25, 'Lucas Transportadora', 'kaka', '202cb962ac59075b964b07152d234b70', 2, 18, 1);
+(28, 'Lucas Gabriel', 'lucas.gabriel', '28284886917f9a2fa6952251e64ebea3', 1, 1, 1),
+(29, 'Lucas Rico', 'lucas.bonfim', '7e246b7e60e825d99c65351fdd25752d', 1, 1, 1),
+(30, 'Robson Alves', 'robson.alves', '7e246b7e60e825d99c65351fdd25752d', 2, 22, 1),
+(31, 'Amanda Dias', 'amanda.dias', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1),
+(32, 'Luana Delgado', 'luana.delgado', '28284886917f9a2fa6952251e64ebea3', 2, 23, 1),
+(33, 'Altair Neves', 'altair.neves', '7e246b7e60e825d99c65351fdd25752d', 3, 25, 1),
+(34, 'Tenisson Ben', 'ben.tenisson', '7e246b7e60e825d99c65351fdd25752d', 3, 26, 1),
+(35, 'Tailan Loro', 'tailan.loro', '7e246b7e60e825d99c65351fdd25752d', 3, 27, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -203,19 +211,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `filial`
 --
 ALTER TABLE `filial`
-  MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

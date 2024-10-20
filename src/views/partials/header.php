@@ -45,9 +45,12 @@ if (!isset($_SESSION['token'])) {
     <!-- Arquivos CSS personalizados -->
     <link rel="stylesheet" href="<?= $base; ?>/css/header/botoes.css">
     <link rel="stylesheet" href="<?= $base; ?>/css/header/header.css">
+    <link rel="stylesheet" href="<?= $base; ?>/css/header/body.css">
     <link rel="stylesheet" href="<?= $base; ?>/css/tabela/tabela-responsive.css">
     <!-- MaskPlugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body style="background-color: #EDF2F6;">
@@ -93,12 +96,6 @@ if (!isset($_SESSION['token'])) {
         </ul>
     </aside>
     <script>
-        //   $('.hamburger').on('click', function () {
-        //         $('.sidebar').toggleClass('open');
-        //         $('body').toggleClass('sidebar-open'); 
-        //         $('.header').toggleClass('sidebar-open'); 
-        //       });
-
         $('.hamburger').on('click', function() {
             $('.sidebar').toggleClass('open');
             $('body').toggleClass('sidebar-open');

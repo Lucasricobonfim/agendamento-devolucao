@@ -87,9 +87,30 @@ const Table = function(dados){
             {
                 title: 'Situação',
                 data: 'situacao',
-                render: function(data) {
-                    // Adicione uma classe de status com base no valor
-                    const statusClass = 'status-pendente'
+                render: function (data, type, row) {
+                    let statusClass = '';
+
+                    // Usando switch case para definir a classe de acordo com a situação
+                    switch (row.idsituacao) {
+                        case 1:
+                            statusClass = 'status-pendente';
+                            break;
+                        case 2:
+                            statusClass = 'status-andamento';
+                            break;
+                        case 3:
+                            statusClass = 'status-finalizado';
+                            break;
+                        case 4:
+                            statusClass = 'status-recusado';
+                            break;
+                        case 5:
+                            statusClass = 'status-cancelado';
+                            break;
+                        default:
+                            statusClass = ''; // Sem classe se não houver correspondência
+                    }
+
                     return `<span class="${statusClass}">${data}</span>`;
                 }
             },
@@ -98,7 +119,7 @@ const Table = function(dados){
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function(data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    return '<button class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
+                    return '<button style="width: 100%; " class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
                 }
             },
             {
@@ -175,27 +196,13 @@ function confimarSolicitacao(){
         onSuccess(res){   
             fechaModalAceitar()
             listar()
-
-
+            
             Swal.fire({
-                position: "top-end",
-                title: "TESE",
-                icon: 'none', 
-                width: 200,
-                timer: 4000,  //tempo
-                showConfirmButton: false,
-                heightAuto: false, 
-                backdrop: false, 
-                allowOutsideClick: true
-            }); //configurar esses para avisos de sucesso e error
-
-
-            // Swal.fire({
-            //     icon: "success",
-            //     title: "Sucesso!",
-            //     text: "Solicitação Confirmada com Sucesso!"
-            // });
-            // return
+                icon: "success",
+                title: "Sucesso!",
+                text: "Solicitação Confirmada com Sucesso!"
+            });
+            return
         },
         onFailure(res){
             
