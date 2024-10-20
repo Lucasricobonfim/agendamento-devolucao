@@ -103,12 +103,12 @@ const Table = function(dados){
             },
             {
                 title: 'Ações',
-                data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
+                data: null, 
                 render: function(data, type, row) {
-                    dados = JSON.stringify(row).replace(/"/g, '&quot;'); // Codifica o objeto para uso em HTML
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;'); 
                     return `
-                        <button class="btn btn-success btn-sm" onclick="aceitarSolicitacao('${row.idsolicitacao}')">Aceitar</button>
-                        <button class="btn btn-danger btn-sm" onclick="recusarSolicitacao('${row.idsolicitacao}')">Recusar</button>
+                        <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2)">Aceitar</button>
+                        <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4)">Recusar</button>
                     `;
                 }
             }
@@ -130,6 +130,83 @@ function fechaModalObs(){
     $('#conteudo_obs').text('')
     $('#observacaoModal').modal('hide');
 
+}
+
+
+
+function abrirModalAceitar(idsolicitacao, idsituacao){
+    $('#modalAceitacao').modal('show');
+    if(parseInt(idsituacao)== 2){
+        $('#tituloModalObs').text('Aceitar Solicitação - Observação')
+    }else{
+        $('#tituloModalObs').text('Recusar Solicitação - Observação')
+    }
+    $('#idsolicitacao').val(idsolicitacao)
+    $('#idsituacao').val(idsituacao)
+  
+}
+
+function fechaModalAceitar(){
+    $('#modalAceitacao').modal('hide');
+}
+
+
+function confimarSolicitacao(){
+    let dados = {
+        observacao:  $('#observacaoact').val(),
+        idsolicitacao: $('#idsolicitacao').val(),
+        idsituacao: $('#idsituacao').val()
+    }
+    let textoslt = parseInt(dados.idsituacao) == 2 ? 'Aceitar' : 'Recusar'
+    if(!dados.observacao){
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Preencha com uma Observação!"
+        });
+        $('#observacaoact').toggleClass('erro');
+        return 
+    }
+
+    app.callController({
+        method: 'POST',
+        url: base + '/updatesolicitacao',
+        params: dados,
+        onSuccess(res){   
+            fechaModalAceitar()
+            listar()
+
+
+            Swal.fire({
+                position: "top-end",
+                title: "TESE",
+                icon: 'none', 
+                width: 200,
+                timer: 4000,  //tempo
+                showConfirmButton: false,
+                heightAuto: false, 
+                backdrop: false, 
+                allowOutsideClick: true
+            }); //configurar esses para avisos de sucesso e error
+
+
+            // Swal.fire({
+            //     icon: "success",
+            //     title: "Sucesso!",
+            //     text: "Solicitação Confirmada com Sucesso!"
+            // });
+            // return
+        },
+        onFailure(res){
+            
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao "+textoslt+" Solicitação!"
+            });
+            return
+        }
+    })
 }
 
 

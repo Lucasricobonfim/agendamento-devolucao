@@ -65,6 +65,33 @@
         </div>
     </div>
 
+    <!-- FIM MODAL -->
+
+    <!-- MODAL ACEITACAO -->
+
+        <div class="modal fade" id="modalAceitacao" tabindex="-1" aria-labelledby="tituloModalObs" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloModalObs">Observação</h5>
+                        <button type="button" onclick="fechaModalAceitar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Conteúdo da observação -->
+                        <input hidden  name="" id="idsolicitacao"></input>
+                        <input hidden  name="" id="idsituacao"></input>
+                        <textarea class="form-control" name="" id="observacaoact"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="confimarSolicitacao()" class="btn btn-secondary" >Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- FIM MODAL ACEITACAO -->
+
 </main>
 
 
