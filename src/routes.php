@@ -54,3 +54,4 @@ $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
 //Pendente CD
 $router->get('/solicitacoes', 'SolicitacoesController@index');
 $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
+$router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao');

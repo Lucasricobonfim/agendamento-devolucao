@@ -53,5 +53,38 @@ class Solicitacoes extends Model{
         }
     }
 
+    public function updatesolicitacao($dados){
+
+        $params = [
+            "observacao" => $dados['observacao'],
+            "idsolicitacao" => $dados['idsolicitacao'],
+            "idsituacao" => $dados['idsituacao']
+        ];
+
+        $sql = "
+          update solicitacoes_agendamentos 
+            set idsituacao = :idsituacao
+           ,observacao = ':observacao'
+          where idsolicitacao = :idsolicitacao
+        ";
+        $sql = $this->switchParams($sql, $params );
+
+        try {
+            $sql = Database::getInstance()->prepare($sql);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+    
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' =>'Falha ao buscar solicitações: ' . $error->getMessage()
+            ];
+        }
+    }
+
 
 }

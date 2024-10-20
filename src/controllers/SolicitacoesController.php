@@ -38,6 +38,28 @@ class SolicitacoesController extends Controller {
             ]));
             die;
         }
-        die; // Não esqueça do die para interromper a execução após enviar a resposta
+      
+    }
+
+    public function updateSolicitacao(){
+        $dados = $_POST;
+        $slt = new Solicitacoes();
+        $ret = $slt->updatesolicitacao($dados);
+
+        if ($ret['sucesso'] == false) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+        } else {
+            echo json_encode(array([
+                "success" => true,
+                "ret" => $ret['result']
+            ]));
+            die;
+        }
+
+
     }
 }
