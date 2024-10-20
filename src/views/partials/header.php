@@ -48,6 +48,89 @@ if (!isset($_SESSION['token'])) {
     <link rel="stylesheet" href="<?= $base; ?>/css/tabela/tabela-responsive.css">
     <!-- MaskPlugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <style>
+
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            left: 0; 
+            transition: left 0.3s ease;
+            z-index: 2;
+        }
+
+
+        .header i {
+            font-size: 22px;
+        }
+
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+        .hamburger {
+            font-size: 24px;
+            cursor: pointer;
+        }
+    
+        body.sidebar-open {
+            margin-left: 250px; 
+        }
+
+        .header.sidebar-open {
+            margin-left: 250px; 
+        }
+
+       
+        .content {
+            margin-top: 50px; 
+            transition: margin-left 0.3s ease; 
+        }
+
+        .content.sidebar-open {
+            margin-left: 250px; 
+        }
+
+        @media screen and (max-width: 1425px) {
+
+            .sair-icon{
+                    margin-right: 280px;
+            }
+        }
+
+        
+    </style>
+
 </head>
 
 <body style="background-color: #EDF2F6;">
@@ -56,7 +139,7 @@ if (!isset($_SESSION['token'])) {
             <!-- Ícone de menu hamburger -->
             <i class="fas fa-bars hamburger" style="font-size: 22px;"></i>
         </div>
-        <div style="display: flex; align-items: center;">
+        <div class="sair-icon" style="display: flex; align-items: center;">
             <i class="fa-solid fa-user"></i> 
             <span style="margin-left: 5px;"><?= $_SESSION['usuario'] ?></span>
             <div style="border-left: 1px solid #ccc; height: 20px; margin: 0 10px;"></div>
@@ -91,4 +174,26 @@ if (!isset($_SESSION['token'])) {
             <hr style="margin: 0;">
         </ul>
     </aside>
+<script>
+    //   $('.hamburger').on('click', function () {
+    //         $('.sidebar').toggleClass('open');
+    //         $('body').toggleClass('sidebar-open'); 
+    //         $('.header').toggleClass('sidebar-open'); 
+    //       });
 
+        $('.hamburger').on('click', function () {
+        $('.sidebar').toggleClass('open');
+        $('body').toggleClass('sidebar-open');
+        $('.header').toggleClass('sidebar-open');
+
+           if ($('.sidebar').hasClass('open')) {
+            $('.sidebar').css('left', '0');
+            $('body').css('margin-left', '250px');
+            $('.header').css('margin-left', '250px');
+        } else {
+            $('.sidebar').css('left', '-250px');
+            $('body').css('margin-left', '0');
+            $('.header').css('margin-left', '0');
+        }
+});
+</script>

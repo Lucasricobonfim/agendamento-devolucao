@@ -7,39 +7,53 @@ body {
     font-family: 'Roboto', sans-serif;
     margin-top: 100px;
     background-color: #ecf0f1;
-    /* Cor de fundo suave */
-    overflow-x: hidden;
+
+    overflow-x: hidden; 
+    transition: margin-left 0.3s ease; 
+    margin-left: 250px; 
 }
 
-.header {
+/* .header {
     background-color: #ffffff;
     color: rgb(161 161 170/var(--tw-text-opacity));
     padding: 15px 30px;
-    /* Ajustado para um padding mais equilibrado */
     display: flex;
-    align-items: center;
     justify-content: space-between;
     width: calc(100% - 250px);
-    /* Deduz a largura da sidebar */
     position: fixed;
     top: 0;
     left: 250px;
     height: 70px;
-    /* Altura do cabeçalho */
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-    /* Sombra */
+
     z-index: 1000;
+} */
+
+
+.header {  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    transition: margin-left 0.3s ease; 
+    margin-left: 250px;
 }
+
 
 .header h1 {
     font-size: 1.5em;
     /* Tamanho do título */
 }
-
-.sidebar {
+ .sidebar {
     width: 250px;
     background-color: #f0f0f0;
-    /* Fundo claro */
     color: rgb(161 161 170/var(--tw-text-opacity));
     height: 100%;
     position: fixed;
@@ -47,12 +61,24 @@ body {
     left: 0;
     display: flex;
     flex-direction: column;
-    padding-top: 25px;
-    /* Espaço para o header */
-    border-right: 2px solid #dbe1e8;
-    /* Borda direita */
+    /* padding-top: 25px; */
+     border-right: 2px solid #dbe1e8;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+} 
+
+
+/* .sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0; 
+    transition: left 0.3s ease;
+    z-index: 2;
+} */
+
+
 
 .sidebar ul {
     list-style-type: none;
@@ -96,12 +122,13 @@ body {
 }
 
 /* Media query para telas menores */
-@media screen and (max-width: 1330px) {
+@media screen and (max-width: 1425px) {
     .header {
         left: 0;
         width: 100%;
     }
 
+    
     .sidebar {
         width: 100%;
         height: auto;
@@ -109,6 +136,7 @@ body {
         padding-top: 0;
         box-shadow: none;
     }
+
 
     .content {
         margin-top: 60px;
