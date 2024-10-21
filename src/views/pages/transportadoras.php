@@ -28,16 +28,15 @@
             font-weight: 500;
             color: #6c757d;
         }
-
-
- 
-
+        .form-cad{
+            margin-left: 100px;
+        }
 </style>
 <main class='main-div' style="width:100%; margin-left: 100px;">
 <div class="form-container">
     <div class="header-container">
         <button id="novo" class="btn-custom" onclick="limparForm()">Novo</button>    
-        <h5 id="form-title">Cadastrando Transportadora</h5>
+        <h5 id="form-title" class="form-cad">Cadastrando Transportadora</h5>
         <h5>Informações básicas</h5>
     </div>
 

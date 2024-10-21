@@ -153,20 +153,6 @@ function validarNome(nome) {
         });
         return false;
     }
-
-    // Remove espaços em branco do início e do final
-    const partes = nome.trim().split(' ');
-
-    // Verifica se há pelo menos um nome e um sobrenome
-    if (partes.length < 2) {
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!!",
-            text: "Insira pelo menos um nome e um sobrenome."
-        });
-        return false;
-    }
-
     return true;
 }
 

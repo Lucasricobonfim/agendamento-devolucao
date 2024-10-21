@@ -22,9 +22,9 @@
     font-size: 24px;
     cursor: pointer;
 }
- .sidebar {
+.sidebar {
     width: 250px;
-    background-color: #f8f9fa;
+    background-color: #fff;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -41,9 +41,11 @@
 }
 
 .sidebar img {
-    width: 100%;
+    max-width: 80%;
     margin-bottom: 20px;
-    padding: 15px
+    padding: 15px;
+    display: block;
+    margin: 0 auto;
 }
 
 .sidebar ul {
@@ -52,7 +54,7 @@
     margin: 0;
 }
 .sidebar ul li a {
-    padding: 15px;
+    padding: 18px;
     font-size: 1.1em;
     display: flex;
     align-items: center;
@@ -100,10 +102,10 @@ hr{
         width: 100%;
     }
 
-    /* .content {
+    .content {
         margin-top: 60px;
         margin-left: 0;
-    } */
+    } 
     .content {
         margin-left: 0;
         padding: 20px;
@@ -115,8 +117,26 @@ hr{
 }      
 
 .sair-icon{
-    position: absolute; 
+    position: fixed; 
     top: 8px; 
     right: 20px; 
     z-index: 3;
+}
+@media (max-width: 468px) {
+    .sair-icon {
+        position: fixed; 
+        top: 1px; 
+        left: 300px; 
+        flex-direction: row; 
+        justify-content: flex-end;
+    }
+}
+@media (max-width: 430px) {
+    .sair-icon {
+        position: fixed; 
+        top: 1px; 
+        left: 400px; 
+        flex-direction: row; 
+        justify-content: flex-end;
+    }
 }

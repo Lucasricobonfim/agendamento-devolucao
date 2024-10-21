@@ -27,7 +27,9 @@ $(document).ready(function () {
                 });
                 return
             }
-
+            if (!validarNome(dados.nome)) {
+                return; 
+            }
             if(!app.validarCNPJ(dados.cnpj_cpf)){
                 Swal.fire({
                     icon: "warning",
@@ -61,7 +63,9 @@ $(document).ready(function () {
                 });
                 return
             }
-
+            if (!validarNome(dados.nome)) {
+                return; 
+            }
             if(!app.validarCNPJ(dados.cnpj_cpf)){
                 Swal.fire({
                     icon: "warning",
@@ -102,6 +106,7 @@ function validarNome(nome) {
         });
         return false;
     }
+    return true;
 }
 // Função para validar e-mail
 function validarEmail(email) {

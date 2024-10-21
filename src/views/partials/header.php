@@ -71,28 +71,20 @@ if (!isset($_SESSION['token'])) {
     </header>
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" class="img-fluid" alt="texte">
-        <hr>
         <ul>
             <li><a class="negrito" href="<?= $base; ?>/inicio"><i class="fa-solid fa-house" style="margin-right: 10px; font-size: 22px;"></i>Inicio</a></li>
-            <hr>
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li><a class="negrito" href="<?= $base; ?>/usuario"><i class="fa-solid fa-users-gear" style="margin-right: 10px; font-size: 22px;"></i>Manutenção de Usuários</a></li>
             <?php } ?>
-            <hr>
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li><a class="negrito" href="<?= $base; ?>/transportadoras"><i class="fa-solid fa-truck" style="margin-right: 10px; font-size: 22px;"></i>Transportadoras</a></li>
             <?php } ?>
-            <hr>
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li><a class="negrito" href="<?= $base; ?>/centro-distribuicao"><i class="fa-solid fa-arrow-right-to-bracket" style="margin-right: 10px; font-size: 22px;"></i>Centro de distribuição</a></li>
             <?php } ?>
-            <hr>
             <li><a class="negrito" href="<?= $base; ?>/agendamento"><i class="fa-solid fa-clipboard-list" style="margin-right: 10px; font-size: 22px;"></i>Agendar</a></li>
-            <hr>
-            <li><a class="negrito" href="<?= $base; ?>/agendamento-listar"><i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Listar Agendamentos</a></li>
-            <hr>
+            <li><a class="negrito" href="<?= $base; ?>/agendamento-listar"><i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Listar Agendamentos</a></li>         
             <li><a class="negrito" href="<?= $base; ?>/solicitacoes"><i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Solicitações</a></li>
-            <hr>
         </ul>
     </aside>
     <script>

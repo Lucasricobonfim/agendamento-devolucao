@@ -9,8 +9,30 @@ function listar(){
         method: 'GET',
         url: base + '/getsolicitacoes',
         params: null,
-        onSuccess(res){   
+        onSuccess(res){
+            const dados = res[0].ret;   
             Table(res[0].ret)    
+            // Contar as solicitações por situação
+            let pendentesCount = 0;
+            let finalizadasCount = 0;
+            let canceladasCount = 0;
+            let andamentoCount = 0;
+            
+            dados.forEach(solicitacao => {
+                switch (solicitacao.idsituacao) {
+                    case 1: pendentesCount++; break; // Pendente
+                    case 2: andamentoCount++; break; // Em andamento
+                    case 3: finalizadasCount++; break; // Finalizado
+                    case 4: canceladasCount++; break; // Recusado
+                    case 5: canceladasCount++; break; // Cancelado
+                }
+            });
+
+            // Atualizar os cards com as contagens
+            $('#pendentesCount').text(`${pendentesCount} solicitações pendentes`);
+            $('#finalizadasCount').text(`${finalizadasCount} solicitações finalizadas`);
+            $('#canceladasCount').text(`${canceladasCount} solicitações canceladas`);
+            $('#andamentoCount').text(`${andamentoCount} solicitações em andamento`);
         },
         onFailure(res){
             Swal.fire({
@@ -92,23 +114,12 @@ const Table = function(dados){
 
                     // Usando switch case para definir a classe de acordo com a situação
                     switch (row.idsituacao) {
-                        case 1:
-                            statusClass = 'status-pendente';
-                            break;
-                        case 2:
-                            statusClass = 'status-andamento';
-                            break;
-                        case 3:
-                            statusClass = 'status-finalizado';
-                            break;
-                        case 4:
-                            statusClass = 'status-recusado';
-                            break;
-                        case 5:
-                            statusClass = 'status-cancelado';
-                            break;
-                        default:
-                            statusClass = ''; // Sem classe se não houver correspondência
+                        case 1: statusClass = 'status-pendente';break;
+                        case 2: statusClass = 'status-andamento';break;
+                        case 3: statusClass = 'status-finalizado';break;
+                        case 4: statusClass = 'status-recusado';break;
+                        case 5: statusClass = 'status-cancelado';break;
+                        default: statusClass = ''; // Sem classe se não houver correspondência
                     }
 
                     return `<span class="${statusClass}">${data}</span>`;

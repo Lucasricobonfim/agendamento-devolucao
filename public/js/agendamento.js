@@ -165,7 +165,29 @@ function listar() {
         params: null,
         onSuccess(res) {
 
-            Table(res[0].ret)
+            const dados = res[0].ret;   
+            Table(res[0].ret)    
+            // Contar as solicitações por situação
+            let pendentesCount = 0;
+            let finalizadasCount = 0;
+            let canceladasCount = 0;
+            let andamentoCount = 0;
+            
+            dados.forEach(solicitacao => {
+                switch (solicitacao.idsituacao) {
+                    case 1: pendentesCount++; break; // Pendente
+                    case 2: andamentoCount++; break; // Em andamento
+                    case 3: finalizadasCount++; break; // Finalizado
+                    case 4: canceladasCount++; break; // Recusado
+                    case 5: canceladasCount++; break; // Cancelado
+                }
+            });
+
+            // Atualizar os cards com as contagens
+            $('#pendentesCount').text(`${pendentesCount} solicitações pendentes`);
+            $('#finalizadasCount').text(`${finalizadasCount} solicitações finalizadas`);
+            $('#canceladasCount').text(`${canceladasCount} solicitações canceladas`);
+            $('#andamentoCount').text(`${andamentoCount} solicitações em andamento`);
         },
         onFailure(res) {
             Swal.fire({
@@ -185,7 +207,7 @@ function listar() {
 const Table = function (dados) {
 
     //var dados = JSON.parse(ret)
-    $('#table-agend').DataTable({
+    $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
         stateSave: true,
