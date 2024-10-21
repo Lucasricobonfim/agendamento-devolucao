@@ -35,12 +35,54 @@
         resize: vertical;
         min-height: 100px;
     }
-</style>
+    .cards {
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
 
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        flex: 1;
+        margin: 0 10px;
+    }
+
+    .card:hover {
+        background-color: #0e5caa;
+        transform: translateY(-5px);
+    }
+</style>
+<div class="cards">
+    <div class="card" style="background-color: #ffa5002e;">
+        <h5 style="color: orange"><strong>Solicitações Pendentes</strong></h5>
+        <p id="pendentesCount">0 solicitações pendentes</p>
+    </div>
+
+    <div class="card" style="background-color: #0000ff1a;">
+        <h5 style="color: blue"><strong>Solicitações Em andamento</strong></h5>
+        <p id="andamentoCount">0 solicitações em andamento</p> <!-- Corrigido ID -->
+    </div>
+
+    <div class="card" style="background-color: #00800024;">
+        <h5 style="color: green"><strong>Solicitações Finalizadas</strong></h5>
+        <p id="finalizadasCount">0 solicitações finalizadas</p> <!-- Corrigido ID -->
+    </div>
+
+    <div class="card" style="background-color: #ff000029;">
+        <h5 style="color: red"><strong>Solicitações Canceladas/Recusadas</strong></h5>
+        <p id="canceladasCount">0 solicitações canceladas</p> <!-- Corrigido ID -->
+    </div>
+</div>
 <main class='main-div' style="width:100%; margin-left: 100px;">
     <div class="form-container">
         <h1><strong>Agendamento Transportadora</strong></h1>
-        <table id="table-agend" class="table table-striped table-bordered display nowrap" style="width:100%">
+        <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
         </table>
     </div>

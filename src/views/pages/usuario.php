@@ -26,6 +26,9 @@
         margin: 0;
         /* remove o espaçamento padrão */
     }
+    .form-cad{
+        margin-left: 100px;
+    }
 </style>
 
 <main class='main-div' style="width:100%; margin-left: 100px;">
@@ -33,7 +36,7 @@
     <div class="form-container">
         <div class="header-container">
             <button id="novo" class="btn-custom" onclick="limparForm()">Novo</button>
-            <h5 id="form-title">Cadastrando Usuários</h5>
+            <h5 id="form-title" class="form-cad">Cadastrando Usuários</h5>
             <h5>Informações básicas</h5>
         </div>
 

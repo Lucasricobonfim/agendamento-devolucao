@@ -28,7 +28,7 @@ class Solicitacoes extends Model{
                 st.situacao,
                 f.nome AS nome_transportadora
             FROM solicitacoes_agendamentos s
-            LEFT JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
+            INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             left join situacao st on st.idsituacao = s.idsituacao
             where s.idcd = :idfilial
             and s.idsituacao = 1

@@ -112,12 +112,12 @@ class Agendamento extends Model{
                         ,sa.observacao
                         ,DATE_FORMAT(sa.data, '%d/%m/%Y') as data
                         ,st.idsituacao
-                        ,concat( st.idsituacao ,' - ',st.situacao) as situacao
+                        ,st.situacao as situacao
                         ,sa.idsolicitacao
                 from solicitacoes_agendamentos sa 
                 left join filial fcd on fcd.idfilial = sa.idcd
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
-                left join situacao st on  st.idsituacao = sa.idsituacao
+                left join situacao st on st.idsituacao = sa.idsituacao
                 #where sa.idtransportadora = :idtransportadora
         ";
 
