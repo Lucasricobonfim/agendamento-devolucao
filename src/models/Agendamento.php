@@ -103,6 +103,7 @@ class Agendamento extends Model{
 
     public function getAgendamentos($dados)
     {
+       
         $sql = "                
                 select 
                          concat( fcd.idfilial, ' - ', fcd.nome) as centro_distribuicao
@@ -118,9 +119,9 @@ class Agendamento extends Model{
                 left join filial fcd on fcd.idfilial = sa.idcd
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
                 left join situacao st on st.idsituacao = sa.idsituacao
-                #where sa.idtransportadora = :idtransportadora
+                where sa.idsituacao = :idsituacao AND sa.idtransportadora = :idtransportadora;
         ";
-
+        
         $sql = $this->switchParams($sql, $dados);
         try {
             $sql = Database::getInstance()->prepare($sql);

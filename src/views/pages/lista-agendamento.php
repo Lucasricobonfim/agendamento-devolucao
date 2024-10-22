@@ -59,24 +59,24 @@
     }
 </style>
 <div class="cards">
-    <div class="card" style="background-color: #ffa5002e;">
+    <div class="card" style="background-color: #ffa5002e;" data-idsituacao="1">
         <h5 style="color: orange"><strong>Solicitações Pendentes</strong></h5>
         <p id="pendentesCount">0 solicitações pendentes</p>
     </div>
 
-    <div class="card" style="background-color: #0000ff1a;">
+    <div class="card" style="background-color: #0000ff1a;" data-idsituacao="2">
         <h5 style="color: blue"><strong>Solicitações Em andamento</strong></h5>
-        <p id="andamentoCount">0 solicitações em andamento</p> <!-- Corrigido ID -->
+        <p id="andamentoCount">0 solicitações em andamento</p>
     </div>
 
-    <div class="card" style="background-color: #00800024;">
+    <div class="card" style="background-color: #00800024;" data-idsituacao="3">
         <h5 style="color: green"><strong>Solicitações Finalizadas</strong></h5>
-        <p id="finalizadasCount">0 solicitações finalizadas</p> <!-- Corrigido ID -->
+        <p id="finalizadasCount">0 solicitações finalizadas</p>
     </div>
 
-    <div class="card" style="background-color: #ff000029;">
+    <div class="card" style="background-color: #ff000029;" data-idsituacao="4">
         <h5 style="color: red"><strong>Solicitações Canceladas/Recusadas</strong></h5>
-        <p id="canceladasCount">0 solicitações canceladas</p> <!-- Corrigido ID -->
+        <p id="canceladasCount">0 solicitações canceladas</p>
     </div>
 </div>
 <main class='main-div' style="width:100%; margin-left: 100px;">

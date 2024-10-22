@@ -1,15 +1,22 @@
 $(document).ready(function () {
-    listar()
-    // Table()
-    // listar(ret);
+    listar(idsituacao);  
+    // Adicionar evento de clique para os cards
+    $('.card').on('click', function() {
+        const idsituacao = $(this).data('idsituacao');  // Obtém o 'idsituacao' do card clicado
+        console.log('card que foi selecionado:', idsituacao);  // Verifica o valor
+        listar(idsituacao);  // Chama a função listar com o valor correto
+    });
 })
 
-function listar(){
+function listar(idsituacao){
+    console.log('id que esta vindo:', idsituacao);  
     app.callController({
         method: 'GET',
         url: base + '/getsolicitacoes',
-        params: null,
+        params: { idsituacao: idsituacao },
         onSuccess(res){
+            console.log('Resposta do servidor:', res);
+            
             const dados = res[0].ret;   
             Table(res[0].ret)    
             // Contar as solicitações por situação

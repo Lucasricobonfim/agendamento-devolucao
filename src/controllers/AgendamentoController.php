@@ -96,9 +96,9 @@ class AgendamentoController extends Controller {
 
 
     public function getAgendamento() {
-
         $dados['idtransportadora'] = $_SESSION['idfilial'];
-
+        $dados['idsituacao'] = $_GET['idsituacao'] ? $_GET['idsituacao'] : 1;
+        
         $agn = new Agendamento();
 
         $ret = $agn->getAgendamentos($dados);

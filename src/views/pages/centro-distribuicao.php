@@ -69,6 +69,7 @@
 
     <div class="form-container">
         <h1><strong>Centro de Distribuição</strong></h1>
+        Gestão de centros de distribuição
         <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
 
         </table>

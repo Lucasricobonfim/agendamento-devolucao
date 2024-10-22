@@ -1,7 +1,13 @@
 $(document).ready(function () {
-    listar()
     buscaCd()
-
+    let idsituacao = 1;
+    listar(idsituacao);  // Chama a função listar com o valor correto
+    // Adicionar evento de clique para os cards
+    $('.card').on('click', function() {
+        const idsituacao = $(this).data('idsituacao');  // Obtém o 'idsituacao' do card clicado
+        console.log('card que foi selecionado:', idsituacao);  // Verifica o valor
+        listar(idsituacao);  // Chama a função listar com o valor correto
+    });
     // Aplicando a máscara no campo de placa, que aparece conforme o preenchimento
     $('#placa').mask('SSS-0000', { placeholder: '' });
 
@@ -158,21 +164,23 @@ function buscaCd() {
 // listagem 
 
 
-function listar() {
+function listar(idsituacao) {
+    console.log('id que esta vindo:', idsituacao);  
     app.callController({
         method: 'GET',
         url: base + '/get-agendamento',
-        params: null,
+        params: { idsituacao: idsituacao },
         onSuccess(res) {
-
-            const dados = res[0].ret;   
-            Table(res[0].ret)    
-            // Contar as solicitações por situação
+            console.log('Resposta do servidor:', res);  
+            const dados = res[0].ret;
+            Table(res[0].ret)
+             
+            
             let pendentesCount = 0;
             let finalizadasCount = 0;
             let canceladasCount = 0;
             let andamentoCount = 0;
-            
+
             dados.forEach(solicitacao => {
                 switch (solicitacao.idsituacao) {
                     case 1: pendentesCount++; break; // Pendente
@@ -195,9 +203,9 @@ function listar() {
                 title: "Atenção!!",
                 text: "Erro ao listar Agendamentos!"
             });
-            return
+            return;
         }
-    })
+    });
 }
 
 
