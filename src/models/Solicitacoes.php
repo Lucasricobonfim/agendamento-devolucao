@@ -10,10 +10,13 @@ use Throwable;
 
 class Solicitacoes extends Model{
    
-    public function getsolicitacoes(){
+    public function getsolicitacoes($dados){
 
+        
+        
         $params = [
-            "idfilial" => $_SESSION['idfilial']
+            "idfilial" => $_SESSION['idfilial'],
+            "idsituacao" => $dados['idsituacao']
         ];
 
         $sql = "
@@ -31,7 +34,7 @@ class Solicitacoes extends Model{
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             left join situacao st on st.idsituacao = s.idsituacao
             where s.idcd = :idfilial
-            and s.idsituacao = 1
+              and s.idsituacao = :idsituacao
         ";
 
 

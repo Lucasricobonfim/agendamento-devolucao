@@ -21,9 +21,14 @@ class SolicitacoesController extends Controller {
     }
 
     public function getsolicitacoes() {
+        $dados = [];
         $list = new Solicitacoes();  
-        $ret = $list->getsolicitacoes();
+        
+        $dados['idsituacao'] = $_GET['idsituacao'];
+        $ret = $list->getsolicitacoes($dados);
+
     
+        
         // Retorne em JSON corretamente
         if ($ret['sucesso'] == false) {
             echo json_encode(array([

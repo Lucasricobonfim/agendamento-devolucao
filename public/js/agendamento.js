@@ -1,14 +1,12 @@
 $(document).ready(function () {
     buscaCd()
     let idsituacao = 1;
-    listar(idsituacao);  // Chama a função listar com o valor correto
-    // Adicionar evento de clique para os cards
+    listar(idsituacao);  
     $('.card').on('click', function() {
-        const idsituacao = $(this).data('idsituacao');  // Obtém o 'idsituacao' do card clicado
-        console.log('card que foi selecionado:', idsituacao);  // Verifica o valor
-        listar(idsituacao);  // Chama a função listar com o valor correto
+        const idsituacao = $(this).data('idsituacao'); 
+        
+        listar(idsituacao);  
     });
-    // Aplicando a máscara no campo de placa, que aparece conforme o preenchimento
     $('#placa').mask('SSS-0000', { placeholder: '' });
 
 
