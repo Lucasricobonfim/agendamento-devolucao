@@ -2,6 +2,8 @@ $(document).ready(function () {
     buscaCd()
     let idsituacao = 1;
     listar(idsituacao);  
+    // Contar as solicitações para todos os cards ao carregar a página
+    contarSolicitacoes();
     $('.card').on('click', function() {
         const idsituacao = $(this).data('idsituacao'); 
         
@@ -171,29 +173,8 @@ function listar(idsituacao) {
         onSuccess(res) {
             console.log('Resposta do servidor:', res);  
             const dados = res[0].ret;
-            Table(res[0].ret)
-             
-            
-            let pendentesCount = 0;
-            let finalizadasCount = 0;
-            let canceladasCount = 0;
-            let andamentoCount = 0;
+            Table(dados)
 
-            dados.forEach(solicitacao => {
-                switch (solicitacao.idsituacao) {
-                    case 1: pendentesCount++; break; // Pendente
-                    case 2: andamentoCount++; break; // Em andamento
-                    case 3: finalizadasCount++; break; // Finalizado
-                    case 4: canceladasCount++; break; // Recusado
-                    case 5: canceladasCount++; break; // Cancelado
-                }
-            });
-
-            // Atualizar os cards com as contagens
-            $('#pendentesCount').text(`${pendentesCount} solicitações pendentes`);
-            $('#finalizadasCount').text(`${finalizadasCount} solicitações finalizadas`);
-            $('#canceladasCount').text(`${canceladasCount} solicitações canceladas`);
-            $('#andamentoCount').text(`${andamentoCount} solicitações em andamento`);
         },
         onFailure(res) {
             Swal.fire({
@@ -205,9 +186,6 @@ function listar(idsituacao) {
         }
     });
 }
-
-
-
 
 
 const Table = function (dados) {
@@ -340,4 +318,46 @@ function fechaModalObs() {
     $('#conteudo_obs').text('')
     $('#observacaoModal').modal('hide');
 
+}
+
+// Função para contar as solicitações para todos os cards no carregamento
+function contarSolicitacoes() {
+    // Verifica a contagem de cada tipo de situação (1: pendentes, 2: andamento, etc.)
+    [1, 2, 3, 4].forEach(idsituacao => {
+        app.callController({
+            method: 'GET',
+            url: base + '/get-agendamento',
+            params: { idsituacao: idsituacao },
+            onSuccess(res) {
+                const dados = res[0].ret;
+
+                // Contar as solicitações para o card específico
+                let count = dados.length;
+
+                // Atualizar o contador do card correspondente
+                atualizarContador(idsituacao, count);
+            },
+            onFailure() {
+                console.error('Erro ao contar solicitações para a situação:', idsituacao);
+            }
+        });
+    });
+}
+// Função para atualizar o contador no card específico
+function atualizarContador(idsituacao, count) {
+    switch (idsituacao) {
+        case 1: 
+            $('#pendentesCount').text(`${count} solicitações pendentes`);
+            break;
+        case 2: 
+            $('#andamentoCount').text(`${count} solicitações em andamento`);
+            break;
+        case 3: 
+            $('#finalizadasCount').text(`${count} solicitações finalizadas`);
+            break;
+        case 4:
+        case 5:
+            $('#canceladasCount').text(`${count} solicitações canceladas`);
+            break;
+    }
 }
