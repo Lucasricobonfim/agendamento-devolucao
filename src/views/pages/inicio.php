@@ -28,7 +28,7 @@
 </style>
 
 
-<main class='main-div' style="width:100%; margin-left: 100px;">
+<main class='main-div' style="width:100%;">
 
 <h3 class="text-center">Dashboard</h3>
 

@@ -37,7 +37,7 @@
     }
 </style>
 
-<main class='main-div' style="width:100%; margin-left: 100px;">
+<main class='main-div' style="width:100%;">
     
     <div class="form-container">
         <div class="titulo-container">
@@ -52,7 +52,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="idfilial" class="form-label">Centro de Distuição<span class="text-danger">*</span></label>
                     <select class="form-select opp" id="idfilial" name="idfilial" required>
-                        <option value="">Selecionar</option>
+                        <option value="">Selecione</option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
