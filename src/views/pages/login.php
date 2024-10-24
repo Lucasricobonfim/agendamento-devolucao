@@ -38,7 +38,7 @@
   }
 
   h1 {
-    font-size: 28px;
+    font-size: 35px;
     color: #1f4a7c;
     margin-bottom: 20px;
   }
