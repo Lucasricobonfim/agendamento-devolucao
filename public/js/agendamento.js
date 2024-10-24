@@ -9,10 +9,24 @@ $(document).ready(function () {
         
         listar(idsituacao);  
     });
-    $('#placa').mask('SSS-0000', { placeholder: '' });
-
-
 })
+$("#placa").inputmask({
+    mask: ["AAA-9*99"], // Formato Mercosul
+    definitions: {
+        'A': {
+            validator: "[A-Za-z]", // Aceita somente letras
+            casing: "upper" // Força para maiúsculas
+        },
+        '9': {
+            validator: "[0-9]" // Aceita somente números
+        },
+        '*': {
+            validator: "[A-Za-z0-9]", // Aceita letras e números
+            casing: "upper" // Força para maiúsculas
+        }
+    },
+    autoUnmask: true, // Remove a máscara ao enviar o formulário
+});
 
 $('#solicitar').on('click', function () {
 
@@ -32,6 +46,15 @@ $('#solicitar').on('click', function () {
         return
     }
 
+    // Validação de placa
+    if (!validarPlaca(dados.placa)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Placa inválida!",
+            text: "Por favor, insira uma placa válida nos formatos ABC-1234 ou ABC1D23."
+        });
+        return;
+    }
     // validar se a data da solicitacao e menor que dia de HOJE
     let dataSolicitacao = new Date(dados.data + 'T00:00:00'); // Garante a conversão correta da string para Date
     let hoje = new Date();
@@ -65,6 +88,16 @@ $('#solicitar').on('click', function () {
 
 })
 
+function validarPlaca(placa) {
+    // Regex para placa antiga (ABC-1234)
+    const placaAntiga = /^[A-Z]{3}-[0-9]{4}$/;
+    
+    // Regex para placa Mercosul (ABC-1D23)
+    const placaMercosul = /^[A-Z]{3}-[0-9]{1}[A-Z]{1}[0-9]{2}$/;
+    
+    return placaAntiga.test(placa) || placaMercosul.test(placa);
+}
+
 function limparCampos() {
     $('#idfilial').val(''),
         $('#placa').val(''),
@@ -72,7 +105,6 @@ function limparCampos() {
         $('#qtdnota').val(''),
         $('#observacao').val('')
 }
-
 
 function solicitar(dados) {
     app.callController({
