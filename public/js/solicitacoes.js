@@ -1,21 +1,21 @@
 $(document).ready(function () {
     let idsituacao = 1
-    listar(idsituacao);  
+    listar(idsituacao);
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
 
     // Adicionar evento de clique para os cards
-    $('.card').on('click', function() {
-        const idsituacao = $(this).data('idsituacao');  
-       
-        console.log('aaa',idsituacao)
-        listar(idsituacao); 
+    $('.card').on('click', function () {
+        const idsituacao = $(this).data('idsituacao');
+
+        console.log('aaa', idsituacao)
+        listar(idsituacao);
     });
 })
 // Função para contar as solicitações para todos os cards no carregamento
 function contarSolicitacoes() {
     // Verifica a contagem de cada tipo de situação (1: pendentes, 2: andamento, etc.)
-    [1, 2, 3, 4].forEach(idsituacao => {
+    [1, 2, 3, 4, 5].forEach(idsituacao => {
         app.callController({
             method: 'GET',
             url: base + '/getsolicitacoes',
@@ -38,44 +38,45 @@ function contarSolicitacoes() {
 // Função para atualizar o contador no card específico
 function atualizarContador(idsituacao, count) {
     switch (idsituacao) {
-        case 1: 
+        case 1:
             $('#pendentesCount').text(`${count} solicitações pendentes`);
             break;
-        case 2: 
+        case 2:
             $('#andamentoCount').text(`${count} solicitações em andamento`);
             break;
-        case 3: 
+        case 3:
             $('#finalizadasCount').text(`${count} solicitações finalizadas`);
             break;
         case 4:
-        case 5:
             $('#canceladasCount').text(`${count} solicitações canceladas`);
             break;
+        case 5:
     }
 }
 
-function listar(idsituacao){-
-    app.callController({
-        method: 'GET',
-        url: base + '/getsolicitacoes',
-        params: { idsituacao: idsituacao },
-        onSuccess(res){
+function listar(idsituacao) {
+    -
+        app.callController({
+            method: 'GET',
+            url: base + '/getsolicitacoes',
+            params: { idsituacao: idsituacao },
+            onSuccess(res) {
 
-            const dados = res[0].ret; 
-            Table(dados)    
-        },
-        onFailure(res){
-            Swal.fire({
-                icon: "error",
-                title: "Atenção!!",
-                text: "Erro ao listar Usuarios!"
-            });
-            return
-        }
-    })
+                const dados = res[0].ret;
+                Table(dados, idsituacao); // Passar também a idsituacao para a tabela
+            },
+            onFailure(res) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Atenção!!",
+                    text: "Erro ao listar Agendamentos!"
+                });
+                return
+            }
+        })
 }
 
-const Table = function(dados){
+const Table = function (dados, idsituacao) {
 
     //var dados = JSON.parse(ret)
     $('#mytable').DataTable({
@@ -83,8 +84,8 @@ const Table = function(dados){
         responsive: true,
         stateSave: true,
         "bDestroy": true,
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
         buttons: [{
             extend: 'copyHtml5',
@@ -139,13 +140,13 @@ const Table = function(dados){
                     let statusClass = '';
 
                     // Usando switch case para definir a classe de acordo com a situação
-                    switch ( parseInt(row.idsituacao)) {
-                        case 1: statusClass = 'status-pendente';break;
-                        case 2: statusClass = 'status-andamento';break;
-                        case 3: statusClass = 'status-finalizado';break;
-                        case 4: statusClass = 'status-recusado';break;
-                        case 5: statusClass = 'status-cancelado';break;
-                        default: statusClass = ''; // Sem classe se não houver correspondência
+                    switch (parseInt(row.idsituacao)) {
+                        case 1: statusClass = 'status-pendente'; break;
+                        case 2: statusClass = 'status-andamento'; break;
+                        case 3: statusClass = 'status-finalizado'; break;
+                        case 4: statusClass = 'status-recusado'; break;
+                        case 5: statusClass = 'status-cancelado'; break;
+                        default: statusClass = '';
                     }
 
                     return `<span class="${statusClass}">${data}</span>`;
@@ -154,24 +155,33 @@ const Table = function(dados){
             {
                 title: 'Observação',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    return '<button style="width: 100%; " class="btn btn-primary btn-sm" onclick="abrirModalObs('+ dados +')">Observação</button> ' 
+                    return '<button style="width: 100%; " class="btn btn-primary btn-sm" onclick="abrirModalObs(' + dados + ')">Observação</button> '
                 }
             },
             {
                 title: 'Ações',
-                data: null, 
-                render: function(data, type, row) {
-                    dados = JSON.stringify(row).replace(/"/g, '&quot;'); 
-                    return `
+                data: null,
+                render: function (data, type, row) {
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;');
+                    if (idsituacao === 1) {
+                        return `
                         <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2)">Aceitar</button>
                         <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4)">Recusar</button>
                     `;
+                    } else if (idsituacao === 2) { // Para "Em Andamento"
+                        return `
+                            <button class="btn btn-success btn-sm" onclick="finalizarSolicitacao('${row.idsolicitacao}')">Finalizar</button>
+                            <button class="btn btn-danger btn-sm" onclick="cancelarSolicitacao('${row.idsolicitacao}')">Cancelar</button>
+                        `;
+                    }
+                    // Adicione mais condições se necessário para outros estados
+                    return ''; // Retorna vazio se não houver ações para o estado atual
                 }
             }
         ],
-        rowCallback: function(row, data) { }
+        rowCallback: function (row, data) { }
     });
 
     if (!$('#kt_datatable_example_export_menu').data('events-bound')) {
@@ -184,7 +194,7 @@ const Table = function(dados){
                 console.clear()
 
                 const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
-                target.click(); 
+                target.click();
             });
         });
     }
@@ -195,62 +205,65 @@ const Table = function(dados){
 
 // Modal Observacao
 
-function abrirModalObs(dados){
-    
+function abrirModalObs(dados) {
+
     $('#conteudo_obs').text(dados.observacao)
     $('#observacaoModal').modal('show');
 }
 
-function fechaModalObs(){
+function fechaModalObs() {
     $('#conteudo_obs').text('')
     $('#observacaoModal').modal('hide');
 
 }
 
-
-
-function abrirModalAceitar(idsolicitacao, idsituacao){
+function abrirModalAceitar(idsolicitacao, idsituacao) {
+    $('#observacaoact').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAceitacao').modal('show');
-    if(parseInt(idsituacao)== 2){
-        $('#tituloModalObs').text('Aceitar Solicitação - Observação')
-    }else{
-        $('#tituloModalObs').text('Recusar Solicitação - Observação')
+
+    if (parseInt(idsituacao) === 2) {
+        $('#tituloModalObs').text('Aceitar Solicitação - Observação');
+    } else {
+        $('#tituloModalObs').text('Recusar Solicitação - Observação');
     }
-    $('#idsolicitacao').val(idsolicitacao)
-    $('#idsituacao').val(idsituacao)
-  
+
+    $('#idsolicitacao').val(idsolicitacao);
+    $('#idsituacao').val(idsituacao);
 }
 
-function fechaModalAceitar(){
+// Função para fechar o modal de aceitação/recusa e limpar o campo de observação
+function fechaModalAceitar() {
+    $('#observacaoact').val(''); // Limpa o campo de observação ao fechar o modal
     $('#modalAceitacao').modal('hide');
 }
 
 
-function confimarSolicitacao(){
+function confimarSolicitacao() {
     let dados = {
-        observacao:  $('#observacaoact').val(),
+        observacao: $('#observacaoact').val(),
         idsolicitacao: $('#idsolicitacao').val(),
         idsituacao: $('#idsituacao').val()
     }
     let textoslt = parseInt(dados.idsituacao) == 2 ? 'Aceitar' : 'Recusar'
-    if(!dados.observacao){
+    if (!dados.observacao) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
             text: "Preencha com uma Observação!"
         });
         $('#observacaoact').toggleClass('erro');
-        return 
+        return
     }
 
     app.callController({
         method: 'POST',
         url: base + '/updatesolicitacao',
         params: dados,
-        onSuccess(res){   
+        onSuccess(res) {
             fechaModalAceitar()
-            listar()
-            
+            listar(1); // Para a tabela de pendentes, ou utilize a situação correta
+            // Chame a função para atualizar os contadores
+            contarSolicitacoes(); // Atualiza os contadores após a mudança de estado
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
@@ -258,12 +271,12 @@ function confimarSolicitacao(){
             });
             return
         },
-        onFailure(res){
-            
+        onFailure(res) {
+
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao "+textoslt+" Solicitação!"
+                text: "Erro ao " + textoslt + " Solicitação!"
             });
             return
         }
