@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let idsituacao =1
+    let idsituacao = 1
     listar(idsituacao);  
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
@@ -53,16 +53,15 @@ function atualizarContador(idsituacao, count) {
             break;
     }
 }
-function listar(idsituacao){
-    
+
+function listar(idsituacao){-
     app.callController({
         method: 'GET',
         url: base + '/getsolicitacoes',
         params: { idsituacao: idsituacao },
         onSuccess(res){
-            console.log('Resposta do servidor:', res);
-            
-            const dados = res[0].ret;   
+
+            const dados = res[0].ret; 
             Table(dados)    
         },
         onFailure(res){
@@ -87,33 +86,25 @@ const Table = function(dados){
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
-        buttons: [
-            /*
-            {
-                extend: 'copyHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'excelHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'csvHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'pdfHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'print',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'colvis',
-                className: 'btn btn-primary'
+        buttons: [{
+            extend: 'copyHtml5',
+        },
+        {
+            extend: 'excelHtml5',
+            title: 'solicitacoes',
+        },
+        {
+            extend: 'csvHtml5',
+        },
+        {
+            extend: 'pdfHtml5',
+            orientation: 'landscape', // Export in landscape mode
+            pageSize: 'A3', // Use A4 page size
+            title: 'solicitacoes',
+            exportOptions: {
+                columns: ':visible'
             }
-            */
+        }
         ],
         lengthMenu: [
             [10, 100, 500, -1],
@@ -124,6 +115,10 @@ const Table = function(dados){
             {
                 title: 'Cód Solicitacao',
                 data: 'idsolicitacao',
+            },
+            {
+                title: 'CD',
+                data: 'nome_cd',
             },
             {
                 title: 'Transportadora',
@@ -144,7 +139,7 @@ const Table = function(dados){
                     let statusClass = '';
 
                     // Usando switch case para definir a classe de acordo com a situação
-                    switch (row.idsituacao) {
+                    switch ( parseInt(row.idsituacao)) {
                         case 1: statusClass = 'status-pendente';break;
                         case 2: statusClass = 'status-andamento';break;
                         case 3: statusClass = 'status-finalizado';break;
@@ -178,6 +173,23 @@ const Table = function(dados){
         ],
         rowCallback: function(row, data) { }
     });
+
+    if (!$('#kt_datatable_example_export_menu').data('events-bound')) {
+        $('#kt_datatable_example_export_menu').data('events-bound', true);
+        var exportButtons = document.querySelectorAll('#kt_datatable_example_export_menu [data-kt-export]');
+        exportButtons.forEach(exportButton => {
+            exportButton.addEventListener('click', e => {
+                e.preventDefault();
+                const exportValue = e.target.getAttribute('data-kt-export');
+                console.clear()
+
+                const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
+                target.click(); 
+            });
+        });
+    }
+
+
 
 }
 

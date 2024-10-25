@@ -19,7 +19,12 @@ class Solicitacoes extends Model{
             "idsituacao" => $dados['idsituacao']
         ];
 
-        $sql = "
+
+
+        $sql =
+          $_SESSION['idgrupo'] == 1 ?
+            "   
+            
             SELECT 
                 s.idsolicitacao, 
                 s.idcd, 
@@ -29,9 +34,32 @@ class Solicitacoes extends Model{
                 DATE_FORMAT(s.data, '%d/%m/%Y') as data,
                 s.idsituacao,   
                 st.situacao,
-                f.nome AS nome_transportadora
+                f.nome AS nome_transportadora,
+                fd.nome as nome_cd,
+                fd.idfilial as idcd
+                
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
+            inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
+            left join situacao st on st.idsituacao = s.idsituacao
+            where s.idsituacao = :idsituacao"
+        :
+        "
+            SELECT 
+                s.idsolicitacao, 
+                s.idcd, 
+                s.placa, 
+                s.quantidadenota, 
+                s.observacao, 
+                DATE_FORMAT(s.data, '%d/%m/%Y') as data,
+                s.idsituacao,   
+                st.situacao,
+                f.nome AS nome_transportadora,
+                fd.nome as nome_cd,
+                fd.idfilial as idcd
+            FROM solicitacoes_agendamentos s
+            INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
+            inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
             left join situacao st on st.idsituacao = s.idsituacao
             where s.idcd = :idfilial
               and s.idsituacao = :idsituacao

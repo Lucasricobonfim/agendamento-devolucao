@@ -36,7 +36,7 @@
         min-height: 100px;
     }
 
-    .cards{
+    .cards {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -66,7 +66,7 @@
         transform: translateY(-5px);
     }
 
-    
+
     @media (max-width: 1200px) {
         .card {
             flex: 1 1 calc(50% - 20px);
@@ -84,13 +84,21 @@
         .card {
             flex: 1 1 calc(50% - 20px);
         }
+
         .card h5 {
             font-size: 1.2rem;
         }
+
         .card p {
             font-size: 1rem;
         }
     }
+
+
+    .dt-buttons{
+        display: none !important;
+    }
+
 </style>
 
 <main class='main-div' style="width:100%; margin-left: 0;">
@@ -116,6 +124,32 @@
         </div>
     </div>
     <div class="form-container">
+
+        <div class="card-toolbar d-flex justify-content-end gap-3" style="margin: 0px 0px 20px 0px;">
+
+            <!-- Dropdown de Exportação -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="exportMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Exportar
+                </button>
+
+                
+                <div id="kt_datatable_example_export_menu" class="dropdown-menu" aria-labelledby="exportMenuButton" style="min-width: 200px;">
+                    <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="excel">
+                        <span class="me-2">📄</span> 
+                        Excel
+                    </a>
+                    <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="pdf">
+                        <span class="me-2">📄</span> 
+                        PDF
+                    </a>
+                </div>
+            </div>
+
+            <div id="kt_datatable_example_buttons_detalhes" class="btn-group"></div>
+
+        </div>
+
         <h1><strong>Agendamento Transportadora</strong></h1>
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 

@@ -104,7 +104,27 @@ class Agendamento extends Model{
     public function getAgendamentos($dados)
     {
        
-        $sql = "                
+        $sql = 
+        $_SESSION['idgrupo'] == 1 ? 
+        "
+                select 
+                         concat( fcd.idfilial, ' - ', fcd.nome) as centro_distribuicao
+                        ,concat( ftr.idfilial, ' - ', ftr.nome) as transportadora
+                        ,sa.placa
+                        ,sa.quantidadenota
+                        ,sa.observacao
+                        ,DATE_FORMAT(sa.data, '%d/%m/%Y') as data
+                        ,st.idsituacao
+                        ,st.situacao as situacao
+                        ,sa.idsolicitacao
+                from solicitacoes_agendamentos sa 
+                left join filial fcd on fcd.idfilial = sa.idcd
+                left join filial ftr on ftr.idfilial = sa.idtransportadora
+                left join situacao st on st.idsituacao = sa.idsituacao
+                where sa.idsituacao = :idsituacao
+        "
+        :
+        "                
                 select 
                          concat( fcd.idfilial, ' - ', fcd.nome) as centro_distribuicao
                         ,concat( ftr.idfilial, ' - ', ftr.nome) as transportadora

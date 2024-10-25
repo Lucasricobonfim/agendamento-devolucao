@@ -1,13 +1,20 @@
 $(document).ready(function () {
+
+
+
+
+
     buscaCd()
     let idsituacao = 1;
-    listar(idsituacao);  
+    listar(idsituacao);
+
+
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
-    $('.card').on('click', function() {
-        const idsituacao = $(this).data('idsituacao'); 
-        
-        listar(idsituacao);  
+    $('.card').on('click', function () {
+        const idsituacao = $(this).data('idsituacao');
+
+        listar(idsituacao);
     });
 })
 $("#placa").inputmask({
@@ -88,14 +95,12 @@ $('#solicitar').on('click', function () {
 
 })
 
+
 function validarPlaca(placa) {
-    // Regex para placa antiga (ABC-1234)
-    const placaAntiga = /^[A-Z]{3}-[0-9]{4}$/;
-    
-    // Regex para placa Mercosul (ABC-1D23)
-    const placaMercosul = /^[A-Z]{3}-[0-9]{1}[A-Z]{1}[0-9]{2}$/;
-    
-    return placaAntiga.test(placa) || placaMercosul.test(placa);
+    placa = placa.replace(/\s+/g, '');
+    const padraoAntigo = /^[A-Z]{3}-?[0-9]{4}$/;
+    const padraoMercosul = /^[A-Z]{3}-?[0-9]{1}[A-Z]{1}[0-9]{2}$/;
+    return padraoAntigo.test(placa) || padraoMercosul.test(placa);
 }
 
 function limparCampos() {
@@ -197,13 +202,13 @@ function buscaCd() {
 
 
 function listar(idsituacao) {
-    console.log('id que esta vindo:', idsituacao);  
+    console.log('id que esta vindo:', idsituacao);
     app.callController({
         method: 'GET',
         url: base + '/get-agendamento',
         params: { idsituacao: idsituacao },
         onSuccess(res) {
-            console.log('Resposta do servidor:', res);  
+            console.log('Resposta do servidor:', res);
             const dados = res[0].ret;
             Table(dados)
 
@@ -224,40 +229,34 @@ const Table = function (dados) {
 
     //var dados = JSON.parse(ret)
     $('#mytable').DataTable({
-        dom: 'Bfrtip',
         responsive: true,
         stateSave: true,
         "bDestroy": true,
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
-        buttons: [
-            /*
-            {
-                extend: 'copyHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'excelHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'csvHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'pdfHtml5',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'print',
-                className: 'btn btn-primary'
-            },
-            {
-                extend: 'colvis',
-                className: 'btn btn-primary'
+        select: true,
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'copyHtml5',
+
+        },
+        {
+            extend: 'excelHtml5',
+            title: 'agendamentos'
+        },
+        {
+            extend: 'csvHtml5',
+        },
+        {
+            extend: 'pdfHtml5',
+            orientation: 'landscape', // Export in landscape mode
+            pageSize: 'A3', // Use A4 page size
+            title: 'agendamentos',
+            exportOptions: {
+                columns: ':visible'
             }
-            */
+        }
         ],
         lengthMenu: [
             [10, 100, 500, -1],
@@ -272,6 +271,10 @@ const Table = function (dados) {
             {
                 title: 'CD',
                 data: 'centro_distribuicao'
+            },
+            {
+                title: 'Transportadaora',
+                data: 'transportadora'
             },
             {
                 title: 'Placa',
@@ -292,7 +295,7 @@ const Table = function (dados) {
                     let statusClass = '';
 
                     // Usando switch case para definir a classe de acordo com a situação
-                    switch (row.idsituacao) {
+                    switch (parseInt(row.idsituacao)) {
                         case 1:
                             statusClass = 'status-pendente';
                             break;
@@ -334,6 +337,22 @@ const Table = function (dados) {
             $(row).addClass('linha' + data.idfilial);
         }
     });
+
+
+    if (!$('#kt_datatable_example_export_menu').data('events-bound')) {
+        $('#kt_datatable_example_export_menu').data('events-bound', true);
+        var exportButtons = document.querySelectorAll('#kt_datatable_example_export_menu [data-kt-export]');
+        exportButtons.forEach(exportButton => {
+            exportButton.addEventListener('click', e => {
+                e.preventDefault();
+                const exportValue = e.target.getAttribute('data-kt-export');
+                console.clear()
+
+                const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
+                target.click(); 
+            });
+        });
+    }
 
 }
 
@@ -378,13 +397,13 @@ function contarSolicitacoes() {
 // Função para atualizar o contador no card específico
 function atualizarContador(idsituacao, count) {
     switch (idsituacao) {
-        case 1: 
+        case 1:
             $('#pendentesCount').text(`${count} solicitações pendentes`);
             break;
-        case 2: 
+        case 2:
             $('#andamentoCount').text(`${count} solicitações em andamento`);
             break;
-        case 3: 
+        case 3:
             $('#finalizadasCount').text(`${count} solicitações finalizadas`);
             break;
         case 4:
