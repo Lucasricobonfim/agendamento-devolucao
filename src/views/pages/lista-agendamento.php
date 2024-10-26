@@ -95,13 +95,18 @@
     }
 
 
-    .dt-buttons{
+    .dt-buttons {
         display: none !important;
     }
 
+    .modal-body {
+        padding: 15px 20px;
+        word-break: break-word;
+        vertical-align: middle;
+    }
 </style>
 
-<main class='main-div' style="width:100%; margin-left: 0;">
+<main class='main-div' style="width:100%;">
     <div class="cards">
         <div class="card" style="background-color: #ffa5002e;" data-idsituacao="1">
             <h5 style="color: orange"><strong>Solicitações Pendentes</strong></h5>
@@ -133,14 +138,14 @@
                     Exportar
                 </button>
 
-                
+
                 <div id="kt_datatable_example_export_menu" class="dropdown-menu" aria-labelledby="exportMenuButton" style="min-width: 200px;">
                     <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="excel">
-                        <span class="me-2">📄</span> 
+                        <span class="me-2">📄</span>
                         Excel
                     </a>
                     <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="pdf">
-                        <span class="me-2">📄</span> 
+                        <span class="me-2">📄</span>
                         PDF
                     </a>
                 </div>
