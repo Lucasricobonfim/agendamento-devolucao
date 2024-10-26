@@ -98,7 +98,7 @@
         display: none !important;
     }
 </style>
-<main class='main-div' style="width:100%; margin-left: 0;">
+<main class='main-div' style="width:100%;">
     <div class="cards">
         <div class="card" style="background-color: #ffa5002e;" data-idsituacao="1">
             <h5 style="color: orange"><strong>Solicitações Pendentes</strong></h5>

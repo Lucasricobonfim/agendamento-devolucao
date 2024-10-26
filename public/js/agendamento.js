@@ -1,14 +1,7 @@
 $(document).ready(function () {
-
-
-
-
-
     buscaCd()
     let idsituacao = 1;
     listar(idsituacao);
-
-
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
     $('.card').on('click', function () {

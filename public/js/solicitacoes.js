@@ -172,16 +172,21 @@ const Table = function (dados, idsituacao) {
                     `;
                     } else if (idsituacao === 2) { // Para "Em Andamento"
                         return `
-                            <button class="btn btn-success btn-sm" onclick="finalizarSolicitacao('${row.idsolicitacao}')">Finalizar</button>
-                            <button class="btn btn-danger btn-sm" onclick="cancelarSolicitacao('${row.idsolicitacao}')">Cancelar</button>
+                            <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3)">Finalizar</button>
+                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4)">Cancelar</button>
                         `;
                     }
-                    // Adicione mais condições se necessário para outros estados
                     return ''; // Retorna vazio se não houver ações para o estado atual
-                }
+                },
+                visible: idsituacao === 1 || idsituacao === 2 // <--- Esta linha foi adicionada
             }
         ],
-        rowCallback: function (row, data) { }
+        rowCallback: function (row, data) { },
+        initComplete: function(settings, json) {
+            const column = this.api().column(7); // Índice da coluna "Ações"
+            // Define a visibilidade da coluna "Ações"
+            column.visible(idsituacao === 1 || idsituacao === 2);
+        }
     });
 
     if (!$('#kt_datatable_example_export_menu').data('events-bound')) {
@@ -223,8 +228,10 @@ function abrirModalAceitar(idsolicitacao, idsituacao) {
 
     if (parseInt(idsituacao) === 2) {
         $('#tituloModalObs').text('Aceitar Solicitação - Observação');
-    } else {
+    } else if(parseInt(idsituacao) === 4){
         $('#tituloModalObs').text('Recusar Solicitação - Observação');
+    } else if(parseInt(idsituacao) === 3){
+        $('#tituloModalObs').text('Finalizar Solicitação - Observação');
     }
 
     $('#idsolicitacao').val(idsolicitacao);
@@ -244,7 +251,18 @@ function confimarSolicitacao() {
         idsolicitacao: $('#idsolicitacao').val(),
         idsituacao: $('#idsituacao').val()
     }
-    let textoslt = parseInt(dados.idsituacao) == 2 ? 'Aceitar' : 'Recusar'
+    // Determina a ação (Aceitar, Recusar, Finalizar ou Cancelar)
+    let textoslt;
+    if (parseInt(dados.idsituacao) === 2) { // Aceitar
+        textoslt = 'Aceitar';
+    } else if (parseInt(dados.idsituacao) === 4) { // Cancelar
+        textoslt = 'Cancelar';
+    } else if (parseInt(dados.idsituacao) === 3) { // Finalizar
+        textoslt = 'Finalizar';
+    } else { // Recusar
+        textoslt = 'Recusar';
+    }
+
     if (!dados.observacao) {
         Swal.fire({
             icon: "warning",
@@ -262,7 +280,6 @@ function confimarSolicitacao() {
         onSuccess(res) {
             fechaModalAceitar()
             listar(1); // Para a tabela de pendentes, ou utilize a situação correta
-            // Chame a função para atualizar os contadores
             contarSolicitacoes(); // Atualiza os contadores após a mudança de estado
             Swal.fire({
                 icon: "success",

@@ -69,7 +69,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>
-                    <textarea id="observacao" name="observacao" placeholder="Informe observações"></textarea>
+                    <textarea id="observacao" name="observacao" placeholder="Informe observações" maxlength="500"></textarea>
                 </div>
             </div>
             <div class="form-footer">

@@ -65,13 +65,11 @@
     margin-right: 10px;
     font-size: 22px;
 }
-.sidebar ul li:hover {
+.sidebar ul li.active {
     background-image: linear-gradient(to right, #211b72, #146dcc);
-    /* Gradiente azul */
 }
-.sidebar ul li a:hover {
+.sidebar ul li.active a {
     color: rgb(255, 255, 255);
-    /* Texto branco ao passar o mouse */
 }
 .content {
     margin-top: 50px;

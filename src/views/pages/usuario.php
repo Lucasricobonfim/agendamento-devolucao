@@ -31,7 +31,7 @@
     }
 </style>
 
-<main class='main-div' style="width:100%; margin-left: 100px;">
+<main class='main-div' style="width:100%;">
 
     <div class="form-container">
         <div class="header-container">
