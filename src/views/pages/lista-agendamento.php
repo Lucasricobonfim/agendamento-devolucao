@@ -40,7 +40,7 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 5px;
         padding: 20px;
     }
 
@@ -52,7 +52,7 @@
         text-align: center;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        flex: 1 1 calc(25% - 20px);
+        flex: 1 1 calc(20% - 10px);
         min-height: 150px;
         margin: 10px 0;
         display: flex;
@@ -124,7 +124,11 @@
         </div>
 
         <div class="card" style="background-color: #ff000029;" data-idsituacao="4">
-            <h5 style="color: red"><strong>Solicitações Canceladas/Recusadas</strong></h5>
+            <h5 style="color: red"><strong>Solicitações Recusadas</strong></h5>
+            <p id="recusadasCount">0 solicitações recusadas</p>
+        </div>
+        <div class="card" style="background-color: #b39ddb;" data-idsituacao="5">
+            <h5 style="color: b39ddb"><strong>Solicitações Canceladas</strong></h5>
             <p id="canceladasCount">0 solicitações canceladas</p>
         </div>
     </div>
