@@ -48,9 +48,11 @@ function atualizarContador(idsituacao, count) {
             $('#finalizadasCount').text(`${count} solicitações finalizadas`);
             break;
         case 4:
-            $('#canceladasCount').text(`${count} solicitações canceladas`);
+            $('#recusadasCount').text(`${count} solicitações recusadas`);
             break;
         case 5:
+            $('#canceladasCount').text(`${count} solicitações recusadas`);
+            break;
     }
 }
 
@@ -173,7 +175,7 @@ const Table = function (dados, idsituacao) {
                     } else if (idsituacao === 2) { // Para "Em Andamento"
                         return `
                             <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3)">Finalizar</button>
-                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4)">Cancelar</button>
+                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 5)">Cancelar</button>
                         `;
                     }
                     return ''; // Retorna vazio se não houver ações para o estado atual
@@ -232,6 +234,8 @@ function abrirModalAceitar(idsolicitacao, idsituacao) {
         $('#tituloModalObs').text('Recusar Solicitação - Observação');
     } else if(parseInt(idsituacao) === 3){
         $('#tituloModalObs').text('Finalizar Solicitação - Observação');
+    } else{
+        $('#tituloModalObs').text('Cancelar Solicitação - Observação');
     }
 
     $('#idsolicitacao').val(idsolicitacao);
@@ -256,11 +260,11 @@ function confimarSolicitacao() {
     if (parseInt(dados.idsituacao) === 2) { // Aceitar
         textoslt = 'Aceitar';
     } else if (parseInt(dados.idsituacao) === 4) { // Cancelar
-        textoslt = 'Cancelar';
+        textoslt = 'Recusar';
     } else if (parseInt(dados.idsituacao) === 3) { // Finalizar
         textoslt = 'Finalizar';
     } else { // Recusar
-        textoslt = 'Recusar';
+        textoslt = 'Cancelar';
     }
 
     if (!dados.observacao) {

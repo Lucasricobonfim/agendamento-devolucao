@@ -195,15 +195,15 @@ function buscaCd() {
 
 
 function listar(idsituacao) {
-    console.log('id que esta vindo:', idsituacao);
+    //console.log('id que esta vindo:', idsituacao);
     app.callController({
         method: 'GET',
         url: base + '/get-agendamento',
         params: { idsituacao: idsituacao },
         onSuccess(res) {
-            console.log('Resposta do servidor:', res);
+            //console.log('Resposta do servidor:', res);
             const dados = res[0].ret;
-            Table(dados)
+            Table(dados, idsituacao)
 
         },
         onFailure(res) {
@@ -218,7 +218,7 @@ function listar(idsituacao) {
 }
 
 
-const Table = function (dados) {
+const Table = function (dados, idsituacao) {
 
     //var dados = JSON.parse(ret)
     $('#mytable').DataTable({
@@ -289,23 +289,12 @@ const Table = function (dados) {
 
                     // Usando switch case para definir a classe de acordo com a situação
                     switch (parseInt(row.idsituacao)) {
-                        case 1:
-                            statusClass = 'status-pendente';
-                            break;
-                        case 2:
-                            statusClass = 'status-andamento';
-                            break;
-                        case 3:
-                            statusClass = 'status-finalizado';
-                            break;
-                        case 4:
-                            statusClass = 'status-recusado';
-                            break;
-                        case 5:
-                            statusClass = 'status-cancelado';
-                            break;
-                        default:
-                            statusClass = ''; // Sem classe se não houver correspondência
+                        case 1: statusClass = 'status-pendente'; break;
+                        case 2: statusClass = 'status-andamento'; break;
+                        case 3: statusClass = 'status-finalizado'; break;
+                        case 4: statusClass = 'status-recusado'; break;
+                        case 5: statusClass = 'status-cancelado'; break;
+                        default: statusClass = '';
                     }
 
                     return `<span class="${statusClass}">${data}</span>`;
@@ -367,7 +356,7 @@ function fechaModalObs() {
 // Função para contar as solicitações para todos os cards no carregamento
 function contarSolicitacoes() {
     // Verifica a contagem de cada tipo de situação (1: pendentes, 2: andamento, etc.)
-    [1, 2, 3, 4].forEach(idsituacao => {
+    [1, 2, 3, 4, 5].forEach(idsituacao => {
         app.callController({
             method: 'GET',
             url: base + '/get-agendamento',
@@ -400,8 +389,10 @@ function atualizarContador(idsituacao, count) {
             $('#finalizadasCount').text(`${count} solicitações finalizadas`);
             break;
         case 4:
+            $('#recusadasCount').text(`${count} solicitações recusadas`);
+            break;
         case 5:
-            $('#canceladasCount').text(`${count} solicitações canceladas`);
+            $('#canceladasCount').text(`${count} solicitações recusadas`);
             break;
     }
 }
