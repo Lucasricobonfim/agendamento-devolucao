@@ -39,5 +39,14 @@ class Controller {
     public function render($viewName, $viewData = []) {
         $this->_render('pages', $viewName, $viewData);
     }
-
+    
+    function jsonResponse($success, $data = null, $message = ""){
+    header('Content-Type: application/json');
+    echo json_encode([
+        "success" => $success,
+        "ret" => $data,
+        "message" => $message
+    ]);
+    die;
+}
 }

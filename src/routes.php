@@ -10,6 +10,7 @@ $router->get('/deslogar', 'LoginController@deslogar');
 
 //inicio
 $router->get('/inicio', 'InicioController@index');
+$router->get('/getTotalSolicitações', 'InicioController@getTotalSolicitaces');
 
 // dashboard
 $router->get('/dashboard', 'DashboardController@index');

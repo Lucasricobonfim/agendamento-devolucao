@@ -136,7 +136,7 @@ class Agendamento extends Model{
                         ,st.situacao as situacao
                         ,sa.idsolicitacao
                 from solicitacoes_agendamentos sa 
-                left join filial fcd on fcd.idfilial = sa.idcd
+                left join filial fcd on fcd.idfilial = sa.idcd 
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
                 left join situacao st on st.idsituacao = sa.idsituacao
                 where sa.idsituacao = :idsituacao AND sa.idtransportadora = :idtransportadora;

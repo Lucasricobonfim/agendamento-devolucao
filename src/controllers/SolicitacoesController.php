@@ -8,7 +8,7 @@ use src\models\Solicitacoes;
 class SolicitacoesController extends Controller {
 
     public function __construct(){
-        if (!isset($_SESSION['token'])) {
+        if ( !isset($_SESSION['token']) || $_SESSION['idgrupo'] == 2     )  {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }

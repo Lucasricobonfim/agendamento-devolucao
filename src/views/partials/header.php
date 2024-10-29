@@ -14,7 +14,7 @@ if (!isset($_SESSION['token'])) {
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -107,21 +107,30 @@ if (!isset($_SESSION['token'])) {
                     </a>
                 </li>
             <?php } ?>
+            
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'agendamento') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/agendamento">
                     <i class="fa-solid fa-clipboard-list" style="margin-right: 10px; font-size: 22px;"></i>Agendar
                 </a>
             </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'agendamento-listar') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/agendamento-listar">
                     <i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Listar Agendamentos
                 </a>
             </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 3) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'solicitacoes') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/solicitacoes">
                     <i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Solicitações
                 </a>
             </li>
+            <?php } ?>
         </ul>
     </aside>
     <script>

@@ -56,8 +56,7 @@ function atualizarContador(idsituacao, count) {
     }
 }
 
-function listar(idsituacao) {
-    -
+function listar(idsituacao) { 
         app.callController({
             method: 'GET',
             url: base + '/getsolicitacoes',
