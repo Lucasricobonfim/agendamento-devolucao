@@ -9,7 +9,7 @@ class AgendamentoController extends Controller {
 
 
     public function __construct(){
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] == 3) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
