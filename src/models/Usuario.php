@@ -105,11 +105,14 @@ class Usuario extends Model
 
     public function getFilialPorGrupo($dados){
 
-          $sql = "select 
+
+        $sql = "	
+            	select 
 	                 f.idfilial
                     ,f.nome as filial
-                   ,concat(f.idfilial, ' - ', f.nome) as descricao
-                from filial f where f.idtipofilial = :idgrupo";
+                    ,concat(f.idfilial, ' - ', f.nome) as descricao
+                from filial f where f.idtipofilial = :idgrupo and f.idsituacao =1
+                ";
 
           $sql = $this->switchParams($sql, $dados);
 
