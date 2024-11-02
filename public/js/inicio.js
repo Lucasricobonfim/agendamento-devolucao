@@ -68,17 +68,18 @@ function grafico (dados){
                 label: 'Exemplo de Gráfico Pizza',
                 data: [30, 50, 20, 50, 10], // Valores para cada categoria
                 backgroundColor: [
-                    '#F0E4CA',
-                    '#0000ff1a',
-                    '#00800024',
-                    '#ff000029',
-                    '#b39ddb'
+                    'rgb(235, 190, 43)',  // Amarelo
+                    'rgb(43, 72, 235)',   // Azul
+                    'rgb(51, 170, 51)',   // Verde
+                    'rgb(235, 43, 43)',   // Vermelho
+                    'rgb(100, 11, 85)'    // Roxo
                 ],
                 hoverOffset: 5
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,  
             plugins: {
                 legend: {
                     position: 'top',
@@ -101,25 +102,26 @@ const Table = function (dados, idsituacao) {
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
-        buttons: [{
-            extend: 'copyHtml5',
-        },
-        {
-            extend: 'excelHtml5',
-            title: 'solicitacoes',
-        },
-        {
-            extend: 'csvHtml5',
-        },
-        {
-            extend: 'pdfHtml5',
-            orientation: 'landscape', // Export in landscape mode
-            pageSize: 'A3', // Use A4 page size
-            title: 'solicitacoes',
-            exportOptions: {
-                columns: ':visible'
-            }
-        }
+        buttons: [
+        // {
+        //     extend: 'copyHtml5',
+        // },
+        // {
+        //     extend: 'excelHtml5',
+        //     title: 'solicitacoes',
+        // },
+        // {
+        //     extend: 'csvHtml5',
+        // },
+        // {
+        //     extend: 'pdfHtml5',
+        //     orientation: 'landscape', // Export in landscape mode
+        //     pageSize: 'A3', // Use A4 page size
+        //     title: 'solicitacoes',
+        //     exportOptions: {
+        //         columns: ':visible'
+        //     }
+        // }
         ],
         lengthMenu: [
             [10, 100, 500, -1],
