@@ -28,6 +28,27 @@
     .down {
         color: red;
     }
+
+    .form-container-grafico {
+        max-width: 35%;
+        margin: 30px auto;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 70px;
+
+    }
+
+    .form-container {
+        max-width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+    }
+
 </style>
 
 
@@ -35,74 +56,52 @@
 
     <h3 class="text-center">Dashboard</h3>
 
-    <div class="container mt-5">
-        <div class="row text-center">
-            <!-- Card 1: Total Solicitações -->
+    <div class="form-container-grafico">
 
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 3) { ?>
-                <div class="col-md-4">
-                    <div class="card shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="icon-container">
-                                <!-- <i class="fas fa-thumbs-up fa-2x"></i> -->
-                                <i class="fa-solid fa-file-signature fa-2x"></i>
-                            </div>
-                            <div class="text-end">
-                                <p class="mb-0">Total de Solicitações</p>
-                                <p id="totalsolicitacoes" class="metric-value"></p>
-                                <span class="percentage up">
-                                    <!-- <i class="fas fa-arrow-up"></i>  -->
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-            <!-- Card 2: Total Agendamento -->
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
-                <div class="col-md-4">
-                    <div class="card shadow-sm p-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="icon-container">
-                                <!-- <i class="fas fa-eye fa-2x"></i> -->
-                                <i class="fa-solid fa-calendar-check fa-2x"></i>
-                            </div>
-                            <div class="text-end">
-                                <p class="mb-0">Total de Agendamentos</p>
-                                <p id="totalagendamento" class="metric-value"></p>
-                                <span class="percentage up">
-                                    <!-- <i class="fas fa-arrow-up"></i>  -->
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
+        <canvas id="myPieChart"></canvas>
 
-            <!-- Card 3: Average CTR -->
-            <div class="col-md-4">
-                <div class="card shadow-sm p-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="icon-container">
-                            <i class="fas fa-chart-pie fa-2x"></i>
-                        </div>
-                        <div class="text-end">
-                            <p class="mb-0">Average CTR</p>
-                            <p class="metric-value">24.57%</p>
-                            <span class="percentage down">
-                                <i class="fas fa-arrow-down"></i> 3.9%
-                            </span>
-                        </div>
-                    </div>
+    </div>
+
+
+
+    <div class="form-container">
+        <!-- botao Exportar e PDF -->
+        <div class="card-toolbar d-flex justify-content-end gap-3" style="margin: 0px 0px 20px 0px;">
+
+            <!-- Dropdown de Exportação -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="exportMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Exportar
+                </button>
+
+
+                <div id="kt_datatable_example_export_menu" class="dropdown-menu" aria-labelledby="exportMenuButton" style="min-width: 200px;">
+                    <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="excel">
+                        <span class="me-2">📄</span>
+                        Excel
+                    </a>
+                    <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="pdf">
+                        <span class="me-2">📄</span>
+                        PDF
+                    </a>
                 </div>
             </div>
+
+            <div id="kt_datatable_example_buttons_detalhes" class="btn-group"></div>
+
         </div>
+
+        <h1><strong>Solicitações Agendamento (CD)</strong></h1>
+        <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
+
+        </table>
     </div>
+
 
 </main>
 </body>
 <script src="<?= $base; ?>/js/inicio.js"></script>
-<!-- Bootstrap JS -->
+
 <script>
     const base = '<?= $base; ?>';
 </script>
