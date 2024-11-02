@@ -10,7 +10,12 @@ $router->get('/deslogar', 'LoginController@deslogar');
 
 //inicio
 $router->get('/inicio', 'InicioController@index');
-$router->get('/getTotalSolicitações', 'InicioController@getTotalSolicitaces');
+$router->get('/getsituacao', 'InicioController@getSituacao');
+
+$router->get('/get-transportadora-dash', 'InicioController@getTransportadoraDash');
+$router->get('/get=cd-dash', 'InicioController@getCdDash');
+$router->get('/get-dashboard', 'InicioController@getDashBoard');
+$router->get('/get-dashboard-qtd', 'InicioController@getTotalSolicitaces');
 
 // dashboard
 $router->get('/dashboard', 'DashboardController@index');

@@ -66,6 +66,10 @@
         background-color: #fff;
         padding: 20px;
     }
+
+    .dt-buttons {
+        display: none !important;
+    }
 </style>
 
 
@@ -77,41 +81,52 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="idtipofilial" class="form-label">Transportadora<span class="text-danger">*</span></label>
-                <select class="form-select" id="idtipofilial" name="idtipofilial">
-                    <option value="">Selecionar</option>
-                    <option value="">Transportadora</option>
+                <select <?php if ($_SESSION['idgrupo'] == 2) { ?> disabled <?php }  ?> class="form-select oppt" id="idtransportadora" name="idtransportadora">
+
                 </select>
             </div>
+
+
+
             <div class="col-md-6 mb-3">
                 <label for="idtipofilial" class="form-label">CD<span class="text-danger">*</span></label>
-                <select class="form-select" id="idtipofilial" name="idtipofilial">
-                    <option value="">Selecionar</option>
-                    <option value="">CD</option>
+                <select <?php if ($_SESSION['idgrupo'] == 3) { ?> disabled <?php }  ?> class="form-select oppc" id="idcd" name="idcd">
+
+
                 </select>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="data" class="form-label">Data Inicial<span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="data" name="data" required>
+                <input type="date" class="form-control" id="datainicio" name="data" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="data" class="form-label">Data Final<span class="text-danger">*</span></label>
-                <input type="date" class="form-control" id="data" name="data" required>
+                <input type="date" class="form-control" id="datafim" name="data" required>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="idsituacao" class="form-label">Situação<span class="text-danger">*</span></label>
-                <select class="form-select" id="idsituacao" name="idsituacao">
-                    <option value="">Selecionar</option>
-                    <option value="">Finalizado</option>
+                <select class="form-select opps" id="idsituacao" name="idsituacao">
+
                 </select>
             </div>
             <div class="col-md-6 mb-3" style="margin-top: 30px; text-align: right;">
-                <input type="button" value="Pesquisar" class="btn btn-primary">
-                <input type="button" value="Limpar" class="btn btn-primary">
+                <input type="button" id="pesquisar" value="Pesquisar" class="btn btn-primary">
+
+
+                <button onclick="Limpar(<?= $_SESSION['idgrupo'] ?>)" type="button" id="limpar" value="Limpar" class="btn btn-primary">Limpar</button>
+
+
+
             </div>
 
             <div class="canvas">
 
                 <canvas class="form-container-grafico" id="myPieChart"></canvas>
+
+                <div id="noDataMessage" style="display: none; text-align: center; font-size: 18px; color: #555;">
+                    SEM DADOS
+                </div>
+
 
             </div>
         </div>
@@ -148,6 +163,25 @@
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
         </table>
+    </div>
+
+    <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
+                    <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo da observação -->
+                    <h4 id="conteudo_obs"></h4>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
