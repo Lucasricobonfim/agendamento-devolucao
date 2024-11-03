@@ -23,9 +23,8 @@ class Solicitacoes extends Model{
 
         $sql =
           $_SESSION['idgrupo'] == 1 ?
-            "   
-            
-            SELECT 
+
+          "SELECT 
                 s.idsolicitacao, 
                 s.idcd, 
                 s.placa, 
@@ -36,12 +35,25 @@ class Solicitacoes extends Model{
                 st.situacao,
                 f.nome AS nome_transportadora,
                 fd.nome as nome_cd,
-                fd.idfilial as idcd
+                fd.idfilial as idcd,
+                oi.observacoes,
+                oi.dataoperacao,
+                oi.situacao_operacao
                 
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
             left join situacao st on st.idsituacao = s.idsituacao
+            left join(
+                SELECT
+                	ms.idsolicitacao
+                	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                	,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                from  movimento_solicitacoes ms 
+                left join situacao sos on sos.idsituacao = ms.idsituacao
+                GROUP BY ms.idsolicitacao
+            )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
             where s.idsituacao = :idsituacao"
         :
         "
@@ -56,11 +68,25 @@ class Solicitacoes extends Model{
                 st.situacao,
                 f.nome AS nome_transportadora,
                 fd.nome as nome_cd,
-                fd.idfilial as idcd
+
+                oi.observacoes,
+                oi.dataoperacao,
+                oi.situacao_operacao
+                
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
             left join situacao st on st.idsituacao = s.idsituacao
+            left join(
+                SELECT
+                	ms.idsolicitacao
+                	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                	,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                from  movimento_solicitacoes ms 
+                left join situacao sos on sos.idsituacao = ms.idsituacao
+                GROUP BY ms.idsolicitacao
+            )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
             where s.idcd = :idfilial
               and s.idsituacao = :idsituacao
         ";
@@ -96,7 +122,16 @@ class Solicitacoes extends Model{
           update solicitacoes_agendamentos 
             set idsituacao = :idsituacao
            ,observacao = ':observacao'
-          where idsolicitacao = :idsolicitacao
+          where idsolicitacao = :idsolicitacao;
+
+
+          insert into movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao )
+
+          SELECT
+            :idsolicitacao
+            ,:idsituacao
+            ,':observacao'
+            ,now();
         ";
         $sql = $this->switchParams($sql, $params );
 
