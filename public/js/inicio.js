@@ -87,8 +87,7 @@ $('#pesquisar').on('click', function () {
 
     getDashBoard(dados)
     getQtdDash(dados)
-    
-    limparCampos()
+
 })
 
 
@@ -191,6 +190,15 @@ function grafico(dados) {
             plugins: {
                 legend: {
                     position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            let label = tooltipItem.label || '';
+                            let value = tooltipItem.raw || 0;
+                            return `${label}: ${value} agendamentos`;
+                        }
+                    }
                 }
             }
         }
