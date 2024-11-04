@@ -315,10 +315,10 @@ const Table = function(dados){
             },
             {
                 title: 'Situação',
-                data: 'situacao',
+                data: 'descricao',
                 render: function(data) {
                     // Adicione uma classe de status com base no valor
-                    const statusClass = data === '1 - Ativo' ? 'status-ativo' : 'status-inativo';
+                    const statusClass = data === 'Ativo' ? 'status-ativo' : 'status-inativo';
                     return `<span class="${statusClass}">${data}</span>`;
                 }
             },

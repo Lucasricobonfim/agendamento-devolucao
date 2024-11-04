@@ -52,7 +52,7 @@ class Usuario extends Model
                 ,u.idfilial
                 ,g.descricao as grupo
                 ,u.idsituacao
-                ,case when u.idsituacao = 1 then '1 - Ativo' else '2 - Inativo' end as situacao
+                ,case when u.idsituacao = 1 then 'Ativo' else 'Inativo' end as descricao
                 ,coalesce( f.nome, 'Filial não cadastrada') as filial
             from usuarios u 
             left join grupos g on g.idgrupo = u.idgrupo
