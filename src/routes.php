@@ -61,3 +61,24 @@ $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
 $router->get('/solicitacoes', 'SolicitacoesController@index');
 $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
 $router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao');
+
+//Negocio
+$router->get('/negocio', 'NegocioController@index');
+$router->get('/getnegocio', 'NegocioController@getnegocio');
+
+$router->post('/cadnegocio', 'NegocioController@cadastro');
+$router->get('/editnegocio', 'NegocioController@editar');
+$router->get('/updatesituacaonegocio', 'NegocioController@updatesituacaoNegocio');
+
+// Indenização
+$router->get('/indenizacao-cd', 'IndenizacaoCdController@index');
+$router->post('/solicitar-indenizacao', 'IndenizacaoCdController@solicitar');
+
+$router->get('/get-transportadora-ativos', 'IndenizacaoCdController@getTransportadora');
+$router->get('/get-negocio-ativos', 'IndenizacaoCdController@getNegocio');
+$router->get('/get-indenizacao-cd', 'IndenizacaoCdController@getindenizacao');
+
+//Indenização - Transportadora
+$router->get('/indenizacao-transportadora', 'IndenizacaoTransportadoraController@index');
+$router->get('/getindenizacao-transportadora', 'IndenizacaoTransportadoraController@getindenizacao');
+$router->post('/updateindenizacao-transportadora', 'IndenizacaoTransportadoraController@updateindenizacao');

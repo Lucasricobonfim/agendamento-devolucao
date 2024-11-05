@@ -113,6 +113,9 @@
                         <option value="1">ADM</option>
                         <option value="2">Transportadora</option>
                         <option value="3">CD</option>
+                        <option value="4">ATACADO</option>
+                        <option value="5">E-COMMERCE</option>
+                        <option value="6">NOVA VENDA</option>
                     </select>
                 </div>
 
