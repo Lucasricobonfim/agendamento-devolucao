@@ -64,7 +64,5 @@ class SolicitacoesController extends Controller {
             ]));
             die;
         }
-
-
     }
 }

@@ -149,28 +149,18 @@
 </style>
 <main class='main-div' style="width:100%;">
     <div class="cards">
-        <div class="card" style="background-color: #ffa5002e;" data-idsituacao="8">
-            <h5 style="color: orange"><strong>Indenizações Pendentes</strong></h5>
-            <p id="pendentesCount" style="color: orange">0 indenizações pendentes</p>
-        </div>
-
-        <div class="card" style="background-color: #e057202e;" data-idsituacao="6">
-            <h5 style="color: #e05720"><strong>Indenizações Contestadas</strong></h5>
-            <p id="contestadasCount" style="color: #e05720">0 indenizações contestadas</p>
-        </div>
-
         <div class="card" style="background-color: #00800024;" data-idsituacao="7">
             <h5 style="color: green"><strong>Indenizações autorizadas</strong></h5>
             <p id="autorizadasCount" style="color: green">0 indenizações autorizadas</p>
         </div>
 
-        <div class="card" style="background-color: #B0E0E6;" data-idsituacao="9">
+        <div class="card" style="background-color: #B0E0E6;" data-idsituacao="7">
             <h5><strong>Indenizações Faturadas</strong></h5>
             <p id="faturadasCount">0 indenizações faturadas</p>
         </div>
     </div>
     <div class="form-container">
-        <h1><strong>Indenizações (Transportadora)</strong></h1>
+        <h1><strong>Indenizações (Nova Venda)</strong></h1>
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
         </table>
@@ -199,75 +189,31 @@
 
     <!-- FIM MODAL -->
 
-    <!-- Modal para Autorizar -->
-    <div class="modal fade" id="modalAutorizar" tabindex="-1" role="dialog" aria-labelledby="tituloModalObs" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Modal para Faturar -->
+    <div class="modal fade" id="modalFaturar" tabindex="-1" aria-labelledby="tituloModalObs" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalObs">Autorizar Solicitação</h5>
-                    <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="tituloModalObs">Observação Fatura</h5>
+                    <button type="button" onclick="fechaModalFaturar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formAutorizar">
-                        <div class="form-group">
-                            <label for="cnpj">CNPJ</label>
-                            <input type="text" class="form-control" id="cnpj" placeholder="Digite o CNPJ" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="observacaoAutorizar">Observação</label>
-                            <textarea class="form-control" id="observacaoAutorizar" rows="3" placeholder="Digite uma observação"></textarea>
-                        </div>
-                        <input hidden name="" id="idsolicitacaoAutorizar" />
-                        <input hidden name="" id="idsituacao"></input>
-                    </form>
+                    <!-- Conteúdo da observação -->
+                    <input hidden name="" id="idsolicitacaoFaturar"></input>
+                    <input hidden name="" id="idsituacao"></input>
+                    <textarea class="form-control" name="" id="observacaoFaturar"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmarAutorizar()">Confirmar Autorização</button>
+                    <button type="button" onclick="confimarFaturar()" class="btn btn-secondary">Confirmar</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Modal para Contestar -->
-    <div class="modal fade" id="modalContestar" tabindex="-1" role="dialog" aria-labelledby="tituloModalObs" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalObs">Contestar Solicitação</h5>
-                    <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formContestar">
-                        <div class="col-md-6 mb-3">
-                            <label for="idtipofilial" class="form-label">Negócio<span class="text-danger">*</span></label>
-                            <select class="form-select" id="idtipofilial" name="idtipofilial">
-                                <option value="">Selecionar</option>
-                                <option value="4">ATACADO</option>
-                                <option value="5">E-COMMERCE</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="observacaoContestar">Motivo da Contestação</label>
-                            <textarea class="form-control" id="observacaoContestar" rows="3" placeholder="Digite uma observação"></textarea>
-                        </div>
-                        <input hidden name="" id="idsolicitacaoContestar" />
-                        <input hidden name="" id="idsituacao"></input>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmarContestar()">Confirmar Contestação</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 
 </body>
-<script src="<?= $base; ?>/js/indenizacao-transportadora.js"></script>
+<script src="<?= $base; ?>/js/indenizacao-financeiro.js"></script>
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';

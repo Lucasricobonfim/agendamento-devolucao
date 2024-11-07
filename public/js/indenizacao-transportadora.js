@@ -20,7 +20,7 @@ $(document).ready(function () {
 });
 
 function contarIndenizacoes() {
-    [6, 7, 8].forEach(idsituacao => {
+    [6, 7, 8, 9].forEach(idsituacao => {
         app.callController({
             method: 'GET',
             url: base + '/getindenizacao-transportadora',
@@ -50,6 +50,9 @@ function atualizarContador(idsituacao, count) {
         case 6:
             $('#contestadasCount').text(`${count} indenizações contestadas`);
             break;
+        case 9:
+            $('#faturadasCount').text(`${count} indenizações faturadas`);
+            break;
     }
 }
 
@@ -75,7 +78,7 @@ function listar(idsituacao) {
 }
 
 const Table = function (dados, idsituacao) {
-    
+
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
@@ -123,7 +126,7 @@ const Table = function (dados, idsituacao) {
                 data: 'nome_negocio',
             },
             {
-                title: 'Centro de Distribuição',
+                title: 'CD',
                 data: 'nome_cd'
             },
             {
@@ -135,7 +138,7 @@ const Table = function (dados, idsituacao) {
                 data: 'numero_nota2',
             },
             {
-                title: 'Tipo Indenização',
+                title: '% Indenização',
                 data: 'tipo_indenizacao',
                 render: function (data) {
                     // Aplicando máscara no CNPJ
@@ -158,6 +161,7 @@ const Table = function (dados, idsituacao) {
                         case 8: statusClass = 'status-pendente'; break;
                         case 6: statusClass = 'status-contestacao'; break;
                         case 7: statusClass = 'status-finalizado'; break;
+                        case 9: statusClass = 'status-faturado'; break;
                         default: statusClass = '';
                     }
 
@@ -274,7 +278,7 @@ function confirmarAutorizar() {
             title: "Atenção!",
             text: "Por favor, insira o CNPJ."
         });
-        $('#cnpj').addClass('erro'); // Adiciona a classe 'erro' se o CNPJ estiver vazio
+        $('#cnpj').toggleClass('erro');// Adiciona a classe 'erro' se o CNPJ estiver vazio
         return;
     }
     if (!app.validarCNPJ(dados.cnpj)) {

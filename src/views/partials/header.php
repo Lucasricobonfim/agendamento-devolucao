@@ -88,6 +88,7 @@ if (!isset($_SESSION['token'])) {
                     </a>
                 </li>
             <?php } ?>
+            
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'transportadoras') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/transportadoras">
@@ -95,12 +96,21 @@ if (!isset($_SESSION['token'])) {
                     </a>
                 </li>
             <?php } ?>
+
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'centro-distribuicao') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/centro-distribuicao">
                         <i class="fa-solid fa-arrow-right-to-bracket" style="margin-right: 10px; font-size: 22px;"></i>Centro de distribuição
                     </a>
                 </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 1) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'negocio') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/negocio">
+                <i class="fa-regular fa-handshake" style="margin-right: 10px; font-size: 22px;"></i>Negocio
+                </a>
+            </li>
             <?php } ?>
             
             <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>

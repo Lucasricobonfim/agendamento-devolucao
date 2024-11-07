@@ -261,7 +261,7 @@ const Table = function(ret){
                 data: 'numero_nota2',
             },
             {
-                title: 'Tipo Indenização',
+                title: '% Indenização',
                 data: 'tipo_indenizacao',
                 render: function(data) {
                     // Aplicando máscara no CNPJ
@@ -284,6 +284,7 @@ const Table = function(ret){
                         case 8: statusClass = 'status-pendente'; break;
                         case 7: statusClass = 'status-finalizado'; break;
                         case 6: statusClass = 'status-contestacao'; break;
+                        case 9: statusClass = 'status-faturado'; break;
                         default: statusClass = '';
                     }
 
