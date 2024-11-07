@@ -281,7 +281,7 @@ const Table = function(ret){
 
                     // Usando switch case para definir a classe de acordo com a situação
                     switch (parseInt(row.idsituacao)) {
-                        case 1: statusClass = 'status-pendente'; break;
+                        case 8: statusClass = 'status-pendente'; break;
                         case 7: statusClass = 'status-finalizado'; break;
                         case 6: statusClass = 'status-contestacao'; break;
                         default: statusClass = '';

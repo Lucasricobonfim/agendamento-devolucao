@@ -1,24 +1,67 @@
 $(document).ready(function () {
-    listar();
+    let idsituacao = 8
+    listar(idsituacao);
+    contarIndenizacoes()
 
     $('#cnpj').mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' });
 
+    $('.card').on('click', function () {
+        const idsituacao = $(this).data('idsituacao');
+
+        //console.log('id clicado: ', idsituacao)
+        listar(idsituacao);
+    });
+
+    $('#anexo').on('change', function () {
+        const fileName = $(this).val().split('\\').pop() || "Nenhum arquivo escolhido";
+        $('#file-chosen').text(fileName);
+    });
+
 });
 
-$('#anexo').on('change', function () {
-    const fileName = $(this).val().split('\\').pop() || "Nenhum arquivo escolhido";
-    $('#file-chosen').text(fileName);
-});
+function contarIndenizacoes() {
+    [6, 7, 8].forEach(idsituacao => {
+        app.callController({
+            method: 'GET',
+            url: base + '/getindenizacao-transportadora',
+            params: { idsituacao: idsituacao },
+            onSuccess(res) {
+                const dados = res[0].ret;
+                let count = dados.length;
+                //console.log(`Dados retornados para idsituacao ${idsituacao}:`, dados);
+                atualizarContador(idsituacao, count);
+            },
+            onFailure() {
+                console.error('Erro ao contar solicitações para a situação:', idsituacao);
+            }
+        });
+    });
+}
 
+// Função para atualizar o contador no card específico
+function atualizarContador(idsituacao, count) {
+    switch (idsituacao) {
+        case 8:
+            $('#pendentesCount').text(`${count} indenizações pendentes`);
+            break;
+        case 7:
+            $('#autorizadasCount').text(`${count} indenizações autorizadas`);
+            break;
+        case 6:
+            $('#contestadasCount').text(`${count} indenizações contestadas`);
+            break;
+    }
+}
 
-function listar() {
+function listar(idsituacao) {
     app.callController({
         method: 'GET',
         url: base + '/getindenizacao-transportadora',
-        params: null,
+        params: { idsituacao: idsituacao },
         onSuccess(res) {
-            console.log(res)
-            Table(res[0].ret)
+            const dados = res[0].ret;
+            Table(dados, idsituacao); // Atualiza a tabela com os novos dados
+            //console.log(idsituacao, dados)
         },
         onFailure(res) {
             Swal.fire({
@@ -31,8 +74,8 @@ function listar() {
     });
 }
 
-const Table = function (ret) {
-    var dados = ret
+const Table = function (dados, idsituacao) {
+    
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
@@ -112,7 +155,7 @@ const Table = function (ret) {
 
                     // Usando switch case para definir a classe de acordo com a situação
                     switch (parseInt(row.idsituacao)) {
-                        case 1: statusClass = 'status-pendente'; break;
+                        case 8: statusClass = 'status-pendente'; break;
                         case 6: statusClass = 'status-contestacao'; break;
                         case 7: statusClass = 'status-finalizado'; break;
                         default: statusClass = '';
@@ -142,15 +185,24 @@ const Table = function (ret) {
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    return `
-                        <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 7)">Autorizar</button>
-                        <button class="btn btn-warning btn-sm" onclick="abrirModalContestar('${row.idsolicitacao}', 6)">Contestar</button>
-                    `;
-                }
+                    if (idsituacao === 8 || idsituacao === 6) {
+                        return `
+                            <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 7)">Autorizar</button>
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalContestar('${row.idsolicitacao}', 6)">Contestar</button>
+                        `;
+                    } else {
+                        return ''; // Retorna vazio se não houver ações para o estado atual
+                    }
+                },
+                visible: idsituacao === 6 || idsituacao === 8 // <--- Esta linha foi adicionada
             },
         ],
         rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
+        },
+        initComplete: function(settings, json) {
+            const column = this.api().column(9);
+            column.visible(idsituacao === 6 || idsituacao === 8);
         }
     });
 
@@ -171,7 +223,11 @@ function fechaModalAceitar() {
     $('#cnpj').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAutorizar').modal('hide');
 }
-
+function fechaModalContestar() {
+    $('#observacaoContestar').val(''); // Limpa o campo de observação ao fechar o modal
+    $('#idtipofilial').val(''); // Limpa o campo de observação ao abrir o modal
+    $('#modalContestar').modal('hide');
+}
 
 function abrirModalAceitar(idsolicitacao, idsituacao) {
     $('#observacaoAutorizar').val(''); // Limpa o campo de observação ao abrir o modal
@@ -188,8 +244,7 @@ function abrirModalAceitar(idsolicitacao, idsituacao) {
     $('#idsituacao').val(idsituacao);
 }
 function abrirModalContestar(idsolicitacao, idsituacao) {
-    $('#idtipofilial').val('')
-    $('#observacaoContestar').val(''); 
+    $('#observacaoContestar').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalContestar').modal('show');
 
     if (parseInt(idsituacao) === 6) {
@@ -207,11 +262,11 @@ function confirmarAutorizar() {
     let dados = {
         idsolicitacao: $('#idsolicitacaoAutorizar').val(),
         idsituacao: $('#idsituacao').val(),
-        observacao: $('#observacaoContestar').val(),
-        cnpj: $('#cnpj').val()
+        observacao: $('#observacaoAutorizar').val(),
+        cnpj: $('#cnpj').val().replace(/[^\d]/g, ''), // Removendo máscara antes de enviar
     };
 
-    console.log(dados)
+    //console.log(dados)
 
     if (!dados.cnpj) {
         Swal.fire({
@@ -219,8 +274,16 @@ function confirmarAutorizar() {
             title: "Atenção!",
             text: "Por favor, insira o CNPJ."
         });
-        $('#cnpj').toggleClass('erro');
+        $('#cnpj').addClass('erro'); // Adiciona a classe 'erro' se o CNPJ estiver vazio
         return;
+    }
+    if (!app.validarCNPJ(dados.cnpj)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "CNPJ Inválido!"
+        });
+        return false;
     }
 
     app.callController({
@@ -229,7 +292,8 @@ function confirmarAutorizar() {
         params: dados,
         onSuccess(res) {
             fechaModalAceitar()
-            listar()
+            listar(8)
+            contarIndenizacoes()
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
@@ -249,15 +313,15 @@ function confirmarAutorizar() {
 // Função para confirmar autorização
 function confirmarContestar() {
     let dados = {
-        idtipofilial: $('#idtipofilial'),
         idsolicitacao: $('#idsolicitacaoContestar').val(),
         idsituacao: $('#idsituacao').val(),
-        observacao: $('#observacaoAutorizar').val(),
+        observacao: $('#observacaoContestar').val(),
+        idtipofilial: $('#idtipofilial').val()
     };
 
     console.log(dados)
 
-    if (dados.idtipofilial) {
+    if (!dados.idtipofilial) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!",
@@ -266,14 +330,24 @@ function confirmarContestar() {
         $('#idtipofilial').toggleClass('erro');
         return;
     }
+    // if(dados.observacao){
+    //     Swal.fire({
+    //         icon: "warning",
+    //         title: "Atenção!",
+    //         text: "Por favor, insira o Motivo da contestação."
+    //     });
+    //     $('#observacaoContestar').toggleClass('erro');
+    //     return;
+    // }
 
     app.callController({
         method: 'POST',
         url: base + '/updateindenizacao-transportadora',
         params: dados,
         onSuccess(res) {
-            fechaModalAceitar()
-            listar()
+            fechaModalContestar()
+            listar(8)
+            contarIndenizacoes()
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",

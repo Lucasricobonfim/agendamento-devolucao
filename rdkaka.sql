@@ -111,6 +111,9 @@ INSERT INTO `situacao` (`idsituacao`, `situacao`) VALUES
 (3, 'FINALIZADO'),
 (4, 'RECUSADO'),
 (5, 'CANCELADO');
+(6, 'EM CONTESTAÇÃO');
+(7, 'INDENIZAÇÃO AUTORIZADA');
+(8, 'INDENIZAÇÃO PENDENTE');
 
 -- --------------------------------------------------------
 

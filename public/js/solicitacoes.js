@@ -22,9 +22,8 @@ function contarSolicitacoes() {
             params: { idsituacao: idsituacao },
             onSuccess(res) {
                 const dados = res[0].ret;
-
-                // Contar as solicitações para o card específico
                 let count = dados.length;
+                console.log(`Dados retornados para idsituacao ${idsituacao}:`, dados);
 
                 // Atualizar o contador do card correspondente
                 atualizarContador(idsituacao, count);
@@ -62,7 +61,6 @@ function listar(idsituacao) {
             url: base + '/getsolicitacoes',
             params: { idsituacao: idsituacao },
             onSuccess(res) {
-
                 const dados = res[0].ret;
                 Table(dados, idsituacao); // Passar também a idsituacao para a tabela
             },

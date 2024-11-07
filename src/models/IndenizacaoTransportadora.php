@@ -10,15 +10,17 @@ use Throwable;
 
 class IndenizacaoTransportadora extends Model{
 
-    public function getindenizacao()
+    public function getindenizacao($dados)
     {
-        try {
-            $sql = Database::getInstance()->prepare("
-                
-        
+            $params = [
+                "idfilial" => $_SESSION['idfilial'],
+                "idsituacao" => $dados['idsituacao']
+            ];
+
+
+            $sql = "
                 SELECT 
                     si.idsolicitacao,
-                    si.idtransportadora,
                     si.numero_nota,
                     si.numero_nota2,
                     si.idnegocio,
@@ -35,40 +37,43 @@ class IndenizacaoTransportadora extends Model{
                 left join filial f ON si.idcd = f.idfilial
                 left join filial fn ON si.idnegocio = fn.idfilial -- Filial correspondente ao idnegocio
                 left join grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
-                left join situacao s ON s.idsituacao = si.idsituacao;
-                
-        
-           ");
+                left join situacao s ON s.idsituacao = si.idsituacao
+                where s.idsituacao = :idsituacao
+            ";
+
+        $sql = $this->switchParams($sql, $params);    
+        try {
+            $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
             return [
                 'sucesso' => true,
                 'result' => $result
             ];
+
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
                 'result' => 'Falha ao buscar os centros de distribuicao ' .$error->getMessage()
-            ];
-            
-                
+            ];    
         }
-    }   
+    }
 
     public function updateindenizacao($dados){
 
         $params = [
             "observacao" => $dados['observacao'],
             "idsolicitacao" => $dados['idsolicitacao'],
-            "idsituacao" => $dados['idsituacao']
+            "idsituacao" => $dados['idsituacao'],
+            "cnpj" => $dados['cnpj'] 
         ];
 
         $sql = "
           update solicitacoes_indenizacao 
-            set idsituacao = :idsituacao
-           ,observacao = ':observacao'
-          where idsolicitacao = :idsolicitacao
+          set idsituacao = :idsituacao,
+             observacao = ':observacao',  
+             cnpj = :cnpj             
+          WHERE idsolicitacao = :idsolicitacao
         ";
         $sql = $this->switchParams($sql, $params );
 

@@ -47,7 +47,7 @@ class IndenizacaoCd extends Model{
                 from
                     filial t
                 where
-                    t.idtipofilial IN (4, 5, 6)
+                    t.idtipofilial IN (4, 5)
                     and t.idsituacao = 1;
            ");
             $sql->execute();
@@ -81,7 +81,7 @@ class IndenizacaoCd extends Model{
                     ,':anexo'
                     ,':data'
                     ,':observacao'
-                    ,1
+                    ,8
 
             ";
 

@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 80%;
+        max-width: 97%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -97,7 +97,6 @@
         height: 4px;
         width: 70%;
         background-color: #007bff;
-        /* Azul padrão */
         animation: loadBar 1.5s ease forwards;
     }
 
