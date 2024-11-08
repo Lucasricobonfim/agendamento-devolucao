@@ -12,11 +12,11 @@ class IndenizacaoTransportadoraController extends Controller {
     }
 
     public function getindenizacao (){
-        $dados = [];
 
         $cad = new IndenizacaoTransportadora();
         $dados['idcd'] = $_SESSION['idfilial'];
         $dados['idsituacao'] = $_GET['idsituacao'];
+        $dados['idtransportadora'] = $_SESSION['idfilial'];
         $ret = $cad->getindenizacao($dados);
 
         if($ret['sucesso'] == true){

@@ -65,7 +65,7 @@ class Negocio extends Model
                 join 
                     grupos g ON f.idtipofilial = g.idgrupo
                 where 
-                    f.idtipofilial IN (4, 5, 6);
+                    f.idtipofilial IN (4, 5, 6, 7);
            ");
 
             $sql->execute();

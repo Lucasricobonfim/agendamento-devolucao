@@ -12,21 +12,18 @@ class IndenizacaoTransportadora extends Model{
 
     public function getindenizacao($dados)
     {
-            $params = [
-                "idfilial" => $_SESSION['idfilial'],
-                "idsituacao" => $dados['idsituacao']
-            ];
-
 
             $sql = "
-                SELECT 
+                SELECT
+                    si.idtransportadora, 
                     si.idsolicitacao,
                     si.numero_nota,
                     si.numero_nota2,
                     si.idnegocio,
                     g.descricao AS nome_negocio, 
                     si.tipo_indenizacao,
-                    f.nome AS nome_cd, 
+                    f.nome AS nome_cd,
+                    ft.nome AS nome_transportadora, 
                     si.idcd, 
                     si.observacao,
                     DATE_FORMAT(si.data, '%d/%m/%Y') as data,
@@ -34,14 +31,15 @@ class IndenizacaoTransportadora extends Model{
                     s.idsituacao,  
                     s.situacao AS descricao_situacao
                 from solicitacoes_indenizacao si
+                left join filial ft ON si.idtransportadora = ft.idfilial
                 left join filial f ON si.idcd = f.idfilial
                 left join filial fn ON si.idnegocio = fn.idfilial -- Filial correspondente ao idnegocio
                 left join grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
                 left join situacao s ON s.idsituacao = si.idsituacao
-                where s.idsituacao = :idsituacao
+                where s.idsituacao = :idsituacao AND si.idtransportadora = :idtransportadora;
             ";
 
-        $sql = $this->switchParams($sql, $params);    
+        $sql = $this->switchParams($sql, $dados);    
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();

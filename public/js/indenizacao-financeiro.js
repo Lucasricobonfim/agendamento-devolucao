@@ -1,13 +1,13 @@
 $(document).ready(function () {
-    //let idsituacao = 7
-    listar();
-    // contarIndenizacoes()
+    let idsituacao = 7
+    listar(idsituacao);
+    contarIndenizacoes()
 
-    // $('.card').on('click', function () {
-    //     const idsituacao = $(this).data('idsituacao');
-    //     //console.log('id clicado: ', idsituacao)
-    //     listar(idsituacao);
-    // });
+    $('.card').on('click', function () {
+        const idsituacao = $(this).data('idsituacao');
+        //console.log('id clicado: ', idsituacao)
+        listar(idsituacao);
+    });
 
     $('#anexo').on('change', function () {
         const fileName = $(this).val().split('\\').pop() || "Nenhum arquivo escolhido";
@@ -15,47 +15,46 @@ $(document).ready(function () {
     });
 });
 
-// function contarIndenizacoes() {
-//     [6, 7, 8].forEach(idsituacao => {
-//         app.callController({
-//             method: 'GET',
-//             url: base + '/getindenizacao-transportadora',
-//             params: { idsituacao: idsituacao },
-//             onSuccess(res) {
-//                 const dados = res[0].ret;
-//                 let count = dados.length;
-//                 //console.log(`Dados retornados para idsituacao ${idsituacao}:`, dados);
-//                 atualizarContador(idsituacao, count);
-//             },
-//             onFailure() {
-//                 console.error('Erro ao contar solicitações para a situação:', idsituacao);
-//             }
-//         });
-//     });
-// }
+function contarIndenizacoes() {
+    [7, 9].forEach(idsituacao => {
+        app.callController({
+            method: 'GET',
+            url: base + '/getindenizacao-financeiro',
+            params: { idsituacao: idsituacao },
+            onSuccess(res) {
+                const dados = res[0].ret;
+                let count = dados.length;
+                //console.log(`Dados retornados para idsituacao ${idsituacao}:`, dados);
+                atualizarContador(idsituacao, count);
+            },
+            onFailure() {
+                console.error('Erro ao contar solicitações para a situação:', idsituacao);
+            }
+        });
+    });
+}
 
 // Função para atualizar o contador no card específico
-// function atualizarContador(idsituacao, count) {
-//     switch (idsituacao) {
-//         case 8:
-//             $('#pendentesCount').text(`${count} indenizações pendentes`);
-//             break;
-//         case 7:
-//             $('#autorizadasCount').text(`${count} indenizações autorizadas`);
-//             break;
-//         case 6:
-//             $('#contestadasCount').text(`${count} indenizações contestadas`);
-//             break;
-//     }
-// }
+function atualizarContador(idsituacao, count) {
+    switch (idsituacao) {
+        case 9:
+            $('#faturadasCount').text(`${count} indenizações faturadas`);
+            break;
+        case 7:
+            $('#autorizadasCount').text(`${count} indenizações autorizadas`);
+            break;
+    }
+}
 
-function listar() {
+function listar(idsituacao) {
     app.callController({
         method: 'GET',
         url: base + '/getindenizacao-financeiro',
-        params: null,
+        params: {idsituacao: idsituacao},
         onSuccess(res) {
-            Table(res[0].ret);
+            const dados = res[0].ret;
+            Table(dados, idsituacao);
+            console.log(idsituacao, dados, res)
         },
         onFailure(res) {
             Swal.fire({
@@ -67,8 +66,7 @@ function listar() {
     });
 }
 
-const Table = function (res) {
-    var dados = res
+const Table = function (dados, idsituacao) {
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
@@ -193,16 +191,17 @@ const Table = function (res) {
                         `;
 
                 },
-                //visible: idsituacao === 6 || idsituacao === 8 // <--- Esta linha foi adicionada
+                visible: idsituacao === 7
             },
         ],
         rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
         },
-        // initComplete: function(settings, json) {
-        //     const column = this.api().column(9);
-        //     column.visible(idsituacao === 6 || idsituacao === 8);
-        // }
+        initComplete: function(settings, json) {
+            console.log('Valor de idsituacao:', idsituacao); // Para verificar o valor
+            const column = this.api().column(11);
+            column.visible(idsituacao === 7);
+        }
     });
 
 }
@@ -254,7 +253,8 @@ function  confimarFaturar(){
         params: dados, 
         onSuccess(res){
             fechaModalFaturar()
-            listar()
+            listar(7)
+            contarIndenizacoes()
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",

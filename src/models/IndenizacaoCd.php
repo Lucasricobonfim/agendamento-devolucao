@@ -105,37 +105,40 @@ class IndenizacaoCd extends Model{
         }
     }
 
-    public function getindenizacao()
+    public function getindenizacao($dados)
     {
+        $sql = 
+        "
+
+            SELECT 				
+                        si.idcd,
+                        si.idsolicitacao,
+                        si.numero_nota,
+                        si.numero_nota2,
+                        si.idnegocio,
+                        g.descricao AS nome_negocio, 
+                        si.tipo_indenizacao,
+                        f.nome AS nome_transportadora,
+                        fc.nome AS nome_cd,
+                        si.idtransportadora, 
+                        si.observacao,
+                        DATE_FORMAT(si.data, '%d/%m/%Y') as data,
+                        si.anexo,
+                        s.idsituacao,  
+                        s.situacao AS descricao_situacao
+                    from solicitacoes_indenizacao si
+                    left join filial fc ON si.idcd = fc.idfilial
+                    left join filial f ON si.idtransportadora = f.idfilial
+                    left join filial fn ON si.idnegocio = fn.idfilial -- Filial correspondente ao idnegocio
+                    left join grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
+                    left join situacao s ON s.idsituacao = si.idsituacao
+                    where si.idcd = :idcd;
+        ";
+        $sql = $this->switchParams($sql, $dados);
         try {
-            $sql = Database::getInstance()->prepare("
-                
-        
-                SELECT 
-                    si.idsolicitacao,
-                    si.numero_nota,
-                    si.numero_nota2,
-                    si.idnegocio,
-                    g.descricao AS nome_negocio, 
-                    si.tipo_indenizacao,
-                    f.nome AS nome_transportadora, 
-                    si.idtransportadora, 
-                    si.observacao,
-                    DATE_FORMAT(si.data, '%d/%m/%Y') as data,
-                    si.anexo,
-                    s.idsituacao,  
-                    s.situacao AS descricao_situacao
-                from solicitacoes_indenizacao si
-                left join filial f ON si.idtransportadora = f.idfilial
-                left join filial fn ON si.idnegocio = fn.idfilial -- Filial correspondente ao idnegocio
-                left join grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
-                left join situacao s ON s.idsituacao = si.idsituacao;
-                
-        
-           ");
+            $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
             return [
                 'sucesso' => true,
                 'result' => $result

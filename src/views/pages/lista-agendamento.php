@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 97%;
+        max-width: 99%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;

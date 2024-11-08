@@ -12,11 +12,14 @@ class IndenizacaoFinanceiroController extends Controller {
     }
 
     public function getindenizacao (){
-        $dados = [];
         $cad = new IndenizacaoFinanceiro();
         $dados['idtransportadora'] = $_SESSION['idfilial'];
-        //$dados['idsituacao'] = $_GET['idsituacao'];
+        $dados['idsituacao'] = $_GET['idsituacao'];
+        $dados['idnegocio'] = $_SESSION['idfilial'];
         $ret = $cad->getindenizacao($dados);
+
+        print_r($dados);
+        exit;
 
         if($ret['sucesso'] == true){
             echo json_encode(array([

@@ -111,11 +111,12 @@
                     <select class="form-select" id="idgrupo" name="idgrupo">
                         <option value="">Selecionar</option>
                         <option value="1">ADM</option>
-                        <option value="2">Transportadora</option>
+                        <option value="2">TRANSPORTADORA</option>
                         <option value="3">CD</option>
                         <option value="4">ATACADO</option>
                         <option value="5">E-COMMERCE</option>
                         <option value="6">NOVA VENDA</option>
+                        <option value="7">POS VENDAS</option>
                     </select>
                 </div>
 

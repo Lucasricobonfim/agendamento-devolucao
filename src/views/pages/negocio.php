@@ -57,6 +57,7 @@
                         <option value="4">ATACADO</option>
                         <option value="5">E-COMMERCE</option>
                         <option value="6">NOVA VENDA</option>
+                        <option value="7">POS VENDAS</option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">

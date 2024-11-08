@@ -76,11 +76,13 @@ if (!isset($_SESSION['token'])) {
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" class="img-fluid" alt="texte">
         <ul>
-            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'inicio') ? 'active' : ''; ?>">
-                <a class="negrito" href="<?= $base; ?>/inicio">
-                    <i class="fa-solid fa-house" style="margin-right: 10px; font-size: 22px;"></i>Inicio
-                </a>
-            </li>
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2 || $_SESSION['idgrupo'] == 3) { ?>
+                <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'inicio') ? 'active' : ''; ?>">
+                    <a class="negrito" href="<?= $base; ?>/inicio">
+                        <i class="fa-solid fa-house" style="margin-right: 10px; font-size: 22px;"></i>Inicio
+                    </a>
+                </li>
+            <?php } ?>
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'usuario') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/usuario">
@@ -141,6 +143,14 @@ if (!isset($_SESSION['token'])) {
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-cd') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/indenizacao-cd">
                     <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Indenização
+                </a>
+            </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 6 || $_SESSION['idgrupo'] == 7) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-financeiro') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/indenizacao-financeiro">
+                <i class="fa-solid fa-file-invoice-dollar" style="margin-right: 10px; font-size: 22px;"></i>Fatura
                 </a>
             </li>
             <?php } ?>

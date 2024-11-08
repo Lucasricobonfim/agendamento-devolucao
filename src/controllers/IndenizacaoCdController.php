@@ -83,8 +83,10 @@ class IndenizacaoCdController extends Controller {
     }
 
     public function getindenizacao (){
+        $dados['idcd'] = $_SESSION['idfilial'];
+
         $cad = new IndenizacaoCd();
-        $ret = $cad->getindenizacao();
+        $ret = $cad->getindenizacao($dados);
 
         if($ret['sucesso'] == true){
             echo json_encode(array([

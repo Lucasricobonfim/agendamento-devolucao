@@ -154,7 +154,7 @@
             <p id="autorizadasCount" style="color: green">0 indenizações autorizadas</p>
         </div>
 
-        <div class="card" style="background-color: #B0E0E6;" data-idsituacao="7">
+        <div class="card" style="background-color: #B0E0E6;" data-idsituacao="9">
             <h5><strong>Indenizações Faturadas</strong></h5>
             <p id="faturadasCount">0 indenizações faturadas</p>
         </div>

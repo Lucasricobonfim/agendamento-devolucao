@@ -7,7 +7,6 @@ $(document).ready(function () {
 
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
-
         //console.log('id clicado: ', idsituacao)
         listar(idsituacao);
     });
@@ -249,6 +248,7 @@ function abrirModalAceitar(idsolicitacao, idsituacao) {
 }
 function abrirModalContestar(idsolicitacao, idsituacao) {
     $('#observacaoContestar').val(''); // Limpa o campo de observação ao abrir o modal
+    $('#idtipofilial').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalContestar').modal('show');
 
     if (parseInt(idsituacao) === 6) {
@@ -325,15 +325,15 @@ function confirmarContestar() {
 
     console.log(dados)
 
-    if (!dados.idtipofilial) {
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!",
-            text: "Por favor, insira o Negocio."
-        });
-        $('#idtipofilial').toggleClass('erro');
-        return;
-    }
+    // if (!dados.idtipofilial) {
+    //     Swal.fire({
+    //         icon: "warning",
+    //         title: "Atenção!",
+    //         text: "Por favor, insira o Negocio."
+    //     });
+    //     $('#idtipofilial').toggleClass('erro');
+    //     return;
+    // }
     // if(dados.observacao){
     //     Swal.fire({
     //         icon: "warning",
