@@ -120,7 +120,7 @@ class Agendamento extends Model{
                         ,oi.observacoes
                         ,oi.dataoperacao
                         ,oi.situacao_operacao
-                        ,sa.dataoperacao as dataagendamento
+                        ,DATE_FORMAT(sa.dataoperacao, '%d/%m/%Y') as dataagendamento
                 from solicitacoes_agendamentos sa 
                 left join filial fcd on fcd.idfilial = sa.idcd
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
@@ -129,7 +129,7 @@ class Agendamento extends Model{
                     SELECT
                         ms.idsolicitacao
                         ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                        ,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
                         ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                     from  movimento_solicitacoes ms 
                     left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -152,7 +152,7 @@ class Agendamento extends Model{
                         ,oi.observacoes
                         ,oi.dataoperacao
                         ,oi.situacao_operacao
-                        ,sa.dataoperacao as dataagendamento
+                        ,DATE_FORMAT(sa.dataoperacao, '%d/%m/%Y') as dataagendamento
                 from solicitacoes_agendamentos sa 
                 left join filial fcd on fcd.idfilial = sa.idcd 
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
@@ -161,7 +161,7 @@ class Agendamento extends Model{
                     SELECT
                         ms.idsolicitacao
                         ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                        ,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
                         ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                     from  movimento_solicitacoes ms 
                     left join situacao sos on sos.idsituacao = ms.idsituacao

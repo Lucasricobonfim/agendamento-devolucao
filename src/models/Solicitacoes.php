@@ -39,7 +39,7 @@ class Solicitacoes extends Model{
                 oi.observacoes,
                 oi.dataoperacao,
                 oi.situacao_operacao,
-                s.dataoperacao as dataagendamento
+                DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
                 
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
@@ -49,7 +49,7 @@ class Solicitacoes extends Model{
                 SELECT
                 	ms.idsolicitacao
                 	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                	,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                	,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
                 	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                 from  movimento_solicitacoes ms 
                 left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -73,7 +73,7 @@ class Solicitacoes extends Model{
                 oi.observacoes,
                 oi.dataoperacao,
                 oi.situacao_operacao,
-                s.dataoperacao as dataagendamento
+                DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
@@ -82,7 +82,7 @@ class Solicitacoes extends Model{
                 SELECT
                 	ms.idsolicitacao
                 	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                	,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                	,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
                 	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                 from  movimento_solicitacoes ms 
                 left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -94,6 +94,7 @@ class Solicitacoes extends Model{
 
 
         $sql = $this->switchParams($sql, $params );
+
 
         try {
             $sql = Database::getInstance()->prepare($sql);

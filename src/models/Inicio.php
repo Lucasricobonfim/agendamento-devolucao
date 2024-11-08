@@ -211,11 +211,26 @@ class Inicio extends Model
                             f.nome AS nome_transportadora,
                             fd.nome as nome_cd,
                             fd.idfilial as idcd,
-                            (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao
+                            (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao,
+                              oi.observacoes,
+                              oi.dataoperacao,
+                              oi.situacao_operacao,
+                              DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
                         FROM solicitacoes_agendamentos s
                         INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
                         inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
-                        left join situacao st on st.idsituacao = s.idsituacao";
+                        left join situacao st on st.idsituacao = s.idsituacao
+                        left join(
+                            SELECT
+                                ms.idsolicitacao
+                                ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                            from  movimento_solicitacoes ms 
+                            left join situacao sos on sos.idsituacao = ms.idsituacao
+                            GROUP BY ms.idsolicitacao
+                        )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
+                        ";
         }else if($dados['todos'] == 0 &&  $_SESSION['idgrupo'] == 2){
 
                $sql = " 
@@ -231,11 +246,25 @@ class Inicio extends Model
                         f.nome AS nome_transportadora,
                         fd.nome as nome_cd,
                         fd.idfilial as idcd,
-                        (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao
+                        (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao,
+                         oi.observacoes,
+                              oi.dataoperacao,
+                              oi.situacao_operacao,
+                              DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
                     FROM solicitacoes_agendamentos s
                     INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
                     inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
                     left join situacao st on st.idsituacao = s.idsituacao
+                    left join(
+                            SELECT
+                                ms.idsolicitacao
+                                ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                            from  movimento_solicitacoes ms 
+                            left join situacao sos on sos.idsituacao = ms.idsituacao
+                            GROUP BY ms.idsolicitacao
+                    )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
                     where s.idtransportadora =".$_SESSION['idfilial'];
 
         }else if ($dados['todos'] == 0 &&  $_SESSION['idgrupo'] == 3 ){
@@ -252,11 +281,25 @@ class Inicio extends Model
                             f.nome AS nome_transportadora,
                             fd.nome as nome_cd,
                             fd.idfilial as idcd,
-                            (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao
+                            (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao,
+                             oi.observacoes,
+                              oi.dataoperacao,
+                              oi.situacao_operacao,
+                              DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
                         FROM solicitacoes_agendamentos s
                         INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
                         inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
                         left join situacao st on st.idsituacao = s.idsituacao
+                        left join(
+                            SELECT
+                                ms.idsolicitacao
+                                ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                            from  movimento_solicitacoes ms 
+                            left join situacao sos on sos.idsituacao = ms.idsituacao
+                            GROUP BY ms.idsolicitacao
+                    )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
                         where s.idcd =".$_SESSION['idfilial'];
             
         }else{
@@ -274,11 +317,25 @@ class Inicio extends Model
                 f.nome AS nome_transportadora,
                 fd.nome as nome_cd,
                 fd.idfilial as idcd,
-                (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao
+                (SELECT COUNT(*) FROM solicitacoes_agendamentos s2  WHERE s2.idsituacao = s.idsituacao) AS qtd_situacao,
+                oi.observacoes,
+                oi.dataoperacao,
+                oi.situacao_operacao,
+                DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
             inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
             left join situacao st on st.idsituacao = s.idsituacao
+            left join(
+                            SELECT
+                                ms.idsolicitacao
+                                ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                            from  movimento_solicitacoes ms 
+                            left join situacao sos on sos.idsituacao = ms.idsituacao
+                            GROUP BY ms.idsolicitacao
+                    )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
             where  ( :idsituacao = 99 or   s.idsituacao = :idsituacao )
               and s.idcd = :idcd
               and s.idtransportadora = :idtransportadora
