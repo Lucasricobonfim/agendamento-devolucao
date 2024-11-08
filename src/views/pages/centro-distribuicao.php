@@ -28,6 +28,53 @@
     .form-cad{
         margin-left: 100px;
     }
+    @media (max-width: 395px) {
+        .form-cad {
+            font-size: 0.90rem;
+            margin-left: 20px;
+        }
+
+        .media-h5 {
+            font-size: 0.90rem;
+            margin-left: 10px;
+        }
+    }
+
+    @media (max-width: 412px) {
+        .form-cad {
+            font-size: 0.90rem;
+            margin-left: 20px;
+        }
+
+        .media-h5 {
+            font-size: 0.90rem;
+            margin-left: 10px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .form-cad {
+            font-size: 0.90rem;
+            margin-left: 20px;
+        }
+
+        .media-h5 {
+            font-size: 0.90rem;
+            margin-left: 10px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .form-cad {
+            font-size: 0.99rem;
+            margin-left: 20px;
+        }
+
+        .media-h5 {
+            font-size: 0.99rem;
+            margin-left: 10px;
+        }
+    }
 </style>
 
 <main class='main-div' style="width:100%;">
@@ -35,7 +82,7 @@
         <div class="header-container">
             <button id="novo" class="btn-custom" onclick="limparForm()">Novo</button>
             <h5 id="form-title" class="form-cad">Cadastrando CD</h5>
-            <h5>Informações básicas</h5>
+            <h5 class="media-h5">Informações básicas</h5>
         </div>
 
         <div style="margin-top: 50px;">

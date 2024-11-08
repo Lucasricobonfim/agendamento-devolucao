@@ -343,6 +343,8 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
+    console.log(dados)
+
     $('#conteudo_obs').text(dados.observacao)
     $('#observacaoModal').modal('show');
 }

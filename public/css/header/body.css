@@ -7,7 +7,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     margin-top: 100px;
     background-color: #EDF2F6;
-
+    font-size: 1.10rem;
     overflow-x: hidden; 
     transition: margin-left 0.3s ease; 
     margin-left: 250px; 
@@ -17,7 +17,6 @@ body {
 
 .erro {
     border: 2px solid red;
-    /* Define uma borda vermelha para os campos com erro */
 }
 
 .erro::after {
@@ -28,3 +27,10 @@ body {
     display: block;
     margin-top: 5px;
 } 
+
+@media (max-width: 768px) {
+    body{
+        margin-left: 0; 
+    }
+
+}

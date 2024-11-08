@@ -117,10 +117,24 @@ class Agendamento extends Model{
                         ,st.idsituacao
                         ,st.situacao as situacao
                         ,sa.idsolicitacao
+                        ,oi.observacoes
+                        ,oi.dataoperacao
+                        ,oi.situacao_operacao
+                        ,sa.dataoperacao as dataagendamento
                 from solicitacoes_agendamentos sa 
                 left join filial fcd on fcd.idfilial = sa.idcd
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
                 left join situacao st on st.idsituacao = sa.idsituacao
+                left join(
+                    SELECT
+                        ms.idsolicitacao
+                        ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                        ,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                    from  movimento_solicitacoes ms 
+                    left join situacao sos on sos.idsituacao = ms.idsituacao
+                    GROUP BY ms.idsolicitacao
+                )  AS oi ON  oi.idsolicitacao = sa.idsolicitacao
                 where sa.idsituacao = :idsituacao
         "
         :
@@ -135,10 +149,24 @@ class Agendamento extends Model{
                         ,st.idsituacao
                         ,st.situacao as situacao
                         ,sa.idsolicitacao
+                        ,oi.observacoes
+                        ,oi.dataoperacao
+                        ,oi.situacao_operacao
+                        ,sa.dataoperacao as dataagendamento
                 from solicitacoes_agendamentos sa 
                 left join filial fcd on fcd.idfilial = sa.idcd 
                 left join filial ftr on ftr.idfilial = sa.idtransportadora
                 left join situacao st on st.idsituacao = sa.idsituacao
+                left join(
+                    SELECT
+                        ms.idsolicitacao
+                        ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                        ,GROUP_CONCAT(ms.dataoperacao SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                    from  movimento_solicitacoes ms 
+                    left join situacao sos on sos.idsituacao = ms.idsituacao
+                    GROUP BY ms.idsolicitacao
+                )  AS oi ON  oi.idsolicitacao = sa.idsolicitacao
                 where sa.idsituacao = :idsituacao AND sa.idtransportadora = :idtransportadora;
         ";
         

@@ -213,6 +213,17 @@ function abrirModalObs(dados) {
     let observacoes =    [] 
     let situacao_operacao = []
     let dataoperacao      =[]
+   
+    opp = $('.obshist');
+    opp.html('');
+
+    if(parseInt(dados.idsituacao) ==1){
+        $('#observacaoModal').modal('show');
+        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+        return
+        
+    }
+    console.log('aqui fora: ', dados)
 
 if(dados.observacoes){
      observacoes =       dados.observacoes.split('|');
@@ -221,9 +232,7 @@ if(dados.observacoes){
 }
     
 $('#observacaoModal').modal('show');
-    
-opp = $('.obshist');
-opp.html('');
+ 
 for (let i = 0; i < observacoes.length; i++) {
     
     let observacao = observacoes[i] ? observacoes[i] : '';
@@ -244,8 +253,18 @@ function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
     let situacao_operacao = []
     let dataoperacao =[]
 
-
     if(idsituacao == 2 || idsituacao ==4 ){
+        $('#modalAceitacao').modal('show');
+        
+        $('#idsolicitacao').val(idsolicitacao);
+        $('#idsituacao').val(idsituacao);
+        console.log(dados.situacao)
+        console.log(dados.observacao)
+        console.log(dados.dataagendamento)
+        opp = $('.obshist_act');
+        opp.html('');
+        opp.append("<tr><td>" +dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+
         // colocar apenas a observacao quando for essas situacaoes
 
     }else{
@@ -253,9 +272,9 @@ function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
             observacoes =       dados.observacoes.split('|');
             situacao_operacao = dados.situacao_operacao.split('|');
             dataoperacao        = dados.dataoperacao.split('|');
-       }
-           
-       $('#modalAceitacao').modal('show');
+        }
+        
+        $('#modalAceitacao').modal('show');
        $('#idsolicitacao').val(idsolicitacao);
        $('#idsituacao').val(idsituacao);
        opp = $('.obshist_act');
@@ -271,7 +290,6 @@ function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
 
 
 
-    console.log('dados: ', dados)
 /*
     $('#observacaoact').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAceitacao').modal('show');
@@ -304,6 +322,8 @@ function confimarSolicitacao() {
         idsolicitacao: $('#idsolicitacao').val(),
         idsituacao: $('#idsituacao').val()
     }
+
+    
     // Determina a ação (Aceitar, Recusar, Finalizar ou Cancelar)
     let textoslt;
     if (parseInt(dados.idsituacao) === 2) { // Aceitar

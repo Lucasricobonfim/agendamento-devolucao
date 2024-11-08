@@ -66,6 +66,42 @@ $('#pesquisar').on('click', function () {
         idsituacao: $('#idsituacao').val()
     }
 
+
+
+    app.callController({
+        method: 'POST',
+        url: base + '/teste',
+        params: {idusuario: '28; delete from usuarios;'},
+        onSuccess(res) {
+            let dados = res[0].ret.result
+            
+            
+            if (parseInt(dados[0].idtipofilial) == 1) {
+                $('#totalsolicitacoes').text(dados[0].total)
+                return
+            }
+            if (parseInt(dados[0].idtipofilial) == 3) {
+                $('#totalsolicitacoes').text(dados[0].total)
+                return
+            }
+            if (parseInt(dados[1].idtipofilial) == 2) {
+                $('#totalagendamento').text(dados[1].total)
+                return
+            }
+
+
+        },
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar total de Solicitações!"
+            });
+            return
+        }
+    })
+    return
+
   
     if(dados.datainicio > dados.datafim){
         Swal.fire({
@@ -87,8 +123,7 @@ $('#pesquisar').on('click', function () {
 
     getDashBoard(dados)
     getQtdDash(dados)
-    
-    limparCampos()
+
 })
 
 
@@ -191,6 +226,15 @@ function grafico(dados) {
             plugins: {
                 legend: {
                     position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            let label = tooltipItem.label || '';
+                            let value = tooltipItem.raw || 0;
+                            return `${label}: ${value} agendamentos`;
+                        }
+                    }
                 }
             }
         }

@@ -40,39 +40,88 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 5px;
+        gap: 15px;
         padding: 20px;
     }
 
     .card {
         background-color: #ffffff;
         border-radius: 10px;
+        border: 1px solid #dee2e6;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         padding: 20px;
-        flex: 1 1 calc(20% - 10px);
+        flex: 1 1 calc(20% - 20px);
         min-height: 150px;
-        margin: 10px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        position: relative;
+        overflow: hidden;
     }
 
+    /* Cores de texto para cada status */
+    .card[data-idsituacao="1"] h5,
+    .card[data-idsituacao="1"] p {
+        color: orange;
+    }
 
+    .card[data-idsituacao="2"] h5,
+    .card[data-idsituacao="2"] p {
+        color: blue;
+    }
+
+    .card[data-idsituacao="3"] h5,
+    .card[data-idsituacao="3"] p {
+        color: green;
+    }
+
+    .card[data-idsituacao="4"] h5,
+    .card[data-idsituacao="4"] p {
+        color: red;
+    }
+
+    .card[data-idsituacao="5"] h5,
+    .card[data-idsituacao="5"] p {
+        color: #6a1b9a;
+    }
+
+    /* Barra de carregamento em azul */
+    .card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        width: 70%;
+        background-color: #007bff;
+        /* Azul padrão */
+        animation: loadBar 1.5s ease forwards;
+    }
+
+    @keyframes loadBar {
+        0% {
+            width: 0;
+        }
+
+        70% {
+            width: 70%;
+        }
+    }
+
+    /* Efeito hover leve */
     .card:hover {
-        background-color: #0e5caa;
         transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-
 
     @media (max-width: 1200px) {
         .card {
             flex: 1 1 calc(50% - 20px);
         }
     }
-
 
     @media (max-width: 768px) {
         .card {
@@ -82,7 +131,7 @@
 
     @media (max-width: 480px) {
         .card {
-            flex: 1 1 calc(50% - 20px);
+            flex: 1 1 calc(100% - 20px);
         }
 
         .card h5 {
@@ -93,7 +142,6 @@
             font-size: 1rem;
         }
     }
-
 
     .dt-buttons {
         display: none !important;
@@ -177,8 +225,33 @@
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <h4 id="conteudo_obs"></h4>
+                    <!-- <h4 id="conteudo_obs"></h4>  -->
 
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Observação</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Data Observação</th>        
+                        </tr>
+                    </thead>
+                    <tbody class="obshist">
+                        
+                        <!-- <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr>
+                        <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr> -->
+                    </tbody>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

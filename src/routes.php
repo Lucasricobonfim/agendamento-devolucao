@@ -5,7 +5,9 @@ $router = new Router();
 
 // login - falto pagina de cadastro
 $router->get('/', 'LoginController@index');
+
 $router->post('/logar', 'LoginController@logar');
+
 $router->get('/deslogar', 'LoginController@deslogar');
 
 //inicio
@@ -61,3 +63,7 @@ $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
 $router->get('/solicitacoes', 'SolicitacoesController@index');
 $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
 $router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao');
+
+
+
+$router->post('/teste', 'SolicitacoesController@teste');
