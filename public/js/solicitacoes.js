@@ -7,8 +7,6 @@ $(document).ready(function () {
     // Adicionar evento de clique para os cards
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
-
-        console.log('aaa', idsituacao)
         listar(idsituacao);
     });
 })
@@ -168,13 +166,13 @@ const Table = function (dados, idsituacao) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     if (idsituacao === 1) {
                         return `
-                        <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2)">Aceitar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4)">Recusar</button>
+                        <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2,${dados})">Aceitar</button>
+                        <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4,${dados})">Recusar</button>
                     `;
                     } else if (idsituacao === 2) { // Para "Em Andamento"
                         return `
-                            <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3)">Finalizar</button>
-                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 5)">Cancelar</button>
+                            <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3,${dados})">Finalizar</button>
+                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 5,${dados})">Cancelar</button>
                         `;
                     }
                     return ''; // Retorna vazio se não houver ações para o estado atual
@@ -212,9 +210,36 @@ const Table = function (dados, idsituacao) {
 // Modal Observacao
 
 function abrirModalObs(dados) {
+    let observacoes =    [] 
+    let situacao_operacao = []
+    let dataoperacao      =[]
+   
+    opp = $('.obshist');
+    opp.html('');
 
-    $('#conteudo_obs').text(dados.observacao)
-    $('#observacaoModal').modal('show');
+    if(parseInt(dados.idsituacao) ==1){
+        $('#observacaoModal').modal('show');
+        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+        return
+        
+    }
+    console.log('aqui fora: ', dados)
+
+if(dados.observacoes){
+     observacoes =       dados.observacoes.split('|');
+     situacao_operacao = dados.situacao_operacao.split('|');
+     dataoperacao        = dados.dataoperacao.split('|');
+}
+    
+$('#observacaoModal').modal('show');
+ 
+for (let i = 0; i < observacoes.length; i++) {
+    
+    let observacao = observacoes[i] ? observacoes[i] : '';
+    let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
+    let data = dataoperacao[i] ? dataoperacao[i] : '';
+    opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
+}
 }
 
 function fechaModalObs() {
@@ -223,7 +248,49 @@ function fechaModalObs() {
 
 }
 
-function abrirModalAceitar(idsolicitacao, idsituacao) {
+function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
+    let observacoes = [] 
+    let situacao_operacao = []
+    let dataoperacao =[]
+
+    if(idsituacao == 2 || idsituacao ==4 ){
+        $('#modalAceitacao').modal('show');
+        
+        $('#idsolicitacao').val(idsolicitacao);
+        $('#idsituacao').val(idsituacao);
+        console.log(dados.situacao)
+        console.log(dados.observacao)
+        console.log(dados.dataagendamento)
+        opp = $('.obshist_act');
+        opp.html('');
+        opp.append("<tr><td>" +dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+
+        // colocar apenas a observacao quando for essas situacaoes
+
+    }else{
+        if(dados.observacoes){
+            observacoes =       dados.observacoes.split('|');
+            situacao_operacao = dados.situacao_operacao.split('|');
+            dataoperacao        = dados.dataoperacao.split('|');
+        }
+        
+        $('#modalAceitacao').modal('show');
+       $('#idsolicitacao').val(idsolicitacao);
+       $('#idsituacao').val(idsituacao);
+       opp = $('.obshist_act');
+       opp.html('');
+       for (let i = 0; i < observacoes.length; i++) {
+           
+           let observacao = observacoes[i] ? observacoes[i] : '';
+           let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
+           let data = dataoperacao[i] ? dataoperacao[i] : '';
+           opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
+       }
+    }
+
+
+
+/*
     $('#observacaoact').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAceitacao').modal('show');
 
@@ -239,6 +306,7 @@ function abrirModalAceitar(idsolicitacao, idsituacao) {
 
     $('#idsolicitacao').val(idsolicitacao);
     $('#idsituacao').val(idsituacao);
+    */
 }
 
 // Função para fechar o modal de aceitação/recusa e limpar o campo de observação
@@ -254,6 +322,8 @@ function confimarSolicitacao() {
         idsolicitacao: $('#idsolicitacao').val(),
         idsituacao: $('#idsituacao').val()
     }
+
+    
     // Determina a ação (Aceitar, Recusar, Finalizar ou Cancelar)
     let textoslt;
     if (parseInt(dados.idsituacao) === 2) { // Aceitar

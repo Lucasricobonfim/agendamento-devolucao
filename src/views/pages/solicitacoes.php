@@ -38,7 +38,7 @@
 
     .cards {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between ;
         flex-wrap: wrap;
         gap: 15px;
         padding: 20px;
@@ -209,15 +209,41 @@
 
     <!-- MODAL  -->
 
-    <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
+    <div class="modal fade"   style="width: 100% !important;" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog"  >
+            <div class="modal-content"   style="width: 200% !important; margin: 20px auto;">
+                <div class="modal-header" >
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Observação</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Data Observação</th>        
+                        </tr>
+                    </thead>
+                    <tbody class="obshist">
+                        
+                        <!-- <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr>
+                        <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr> -->
+                    </tbody>
+                </table>
                     <h4 id="conteudo_obs"></h4>
 
                 </div>
@@ -236,10 +262,23 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalObs">Observação</h5>
+                    <h5 class="modal-title" id="tituloModalObs">Observação Act</h5>
                     <button type="button" onclick="fechaModalAceitar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Observação</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Data Observação</th>        
+                        </tr>
+                    </thead>
+                    <tbody class="obshist_act"> 
+                       
+                    </tbody>
+                    </table>
+
                     <!-- Conteúdo da observação -->
                     <input hidden name="" id="idsolicitacao"></input>
                     <input hidden name="" id="idsituacao"></input>

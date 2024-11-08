@@ -91,8 +91,6 @@
             <div class="col-md-6 mb-3">
                 <label for="idtipofilial" class="form-label">CD<span class="text-danger">*</span></label>
                 <select <?php if ($_SESSION['idgrupo'] == 3) { ?> disabled <?php }  ?> class="form-select oppc" id="idcd" name="idcd">
-
-
                 </select>
             </div>
             <div class="col-md-6 mb-3">
@@ -173,12 +171,19 @@
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Conteúdo da observação -->
-                    <h4 id="conteudo_obs"></h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                          
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

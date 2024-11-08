@@ -343,8 +343,32 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
-    $('#conteudo_obs').text(dados.observacao)
-    $('#observacaoModal').modal('show');
+    console.log(dados)
+
+    opp = $('.obshist');
+    opp.html('');
+
+    if(parseInt(dados.idsituacao) == 1){
+        $('#observacaoModal').modal('show');
+        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+        return
+    }
+
+    if(dados.observacoes){
+        observacoes =       dados.observacoes.split('|');
+        situacao_operacao = dados.situacao_operacao.split('|');
+        dataoperacao        = dados.dataoperacao.split('|');
+   }
+       
+   $('#observacaoModal').modal('show');
+    
+   for (let i = 0; i < observacoes.length; i++) {
+       
+       let observacao = observacoes[i] ? observacoes[i] : '';
+       let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
+       let data = dataoperacao[i] ? dataoperacao[i] : '';
+       opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
+   }
 }
 
 function fechaModalObs() {

@@ -218,18 +218,40 @@
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="width: 100% !important">
                 <div class="modal-header">
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <h4 id="conteudo_obs"></h4>
+                    <!-- <h4 id="conteudo_obs"></h4>  -->
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Observação</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Data Observação</th>        
+                        </tr>
+                    </thead>
+                    <tbody class="obshist">
+                        
+                        <!-- <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr>
+                        <tr >
+
+                             <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td> 
+
+                        </tr> -->
+                    </tbody>
                 </div>
             </div>
         </div>

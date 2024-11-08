@@ -65,6 +65,33 @@ class SolicitacoesController extends Controller {
             die;
         }
 
+        
+
 
     }
+
+    
+    public function teste(){
+     
+        $dados['idusuario'] = $_POST['idusuario'];
+
+        $slt = new Solicitacoes();
+        $ret = $slt->teste($dados);
+
+        if ($ret['sucesso'] == false) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+        } else {
+            echo json_encode(array([
+                "success" => true,
+                "ret" => $ret['result']
+            ]));
+            die;
+        }
+    }
+
+        
 }

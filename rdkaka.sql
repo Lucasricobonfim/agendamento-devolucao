@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/10/2024 às 19:23
+-- Tempo de geração: 03/11/2024 às 20:04
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Versão do PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,18 +41,13 @@ CREATE TABLE `filial` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Tabela truncada antes do insert `filial`
---
-
-TRUNCATE TABLE `filial`;
---
 -- Despejando dados para a tabela `filial`
 --
 
 INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsituacao`, `idtipofilial`) VALUES
 (1, 'Matriz', '11331494990123', 'lucas.dossantos@gazin.com.br', '44998487185', 1, 1),
 (22, 'IDH', '11111111111111', 'idh@transportes.com', '44111111111', 1, 2),
-(23, 'ALFA', '22222222222222', 'alfa@transportes.com', '44222222222', 1, 2),
+(23, 'ALFA', '22222222222222', 'alfa@transportes.com', '44222222222', 2, 2),
 (24, 'RODONAVES', '33333333333333', 'rodonaves@transportes.com', '44333333333', 1, 2),
 (25, 'DOURADINA', '44444444444444', 'douradina@transportes.com', '44444444444', 1, 3),
 (26, 'IPAMERI', '55555555555555', 'ipameri@transportes.com', '55555555555', 1, 3),
@@ -71,11 +66,6 @@ CREATE TABLE `grupos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Tabela truncada antes do insert `grupos`
---
-
-TRUNCATE TABLE `grupos`;
---
 -- Despejando dados para a tabela `grupos`
 --
 
@@ -83,6 +73,32 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 (1, 'ADMIN'),
 (2, 'TRANSPORTADORA'),
 (3, 'CD');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `movimento_solicitacoes`
+--
+
+DROP TABLE IF EXISTS `movimento_solicitacoes`;
+CREATE TABLE `movimento_solicitacoes` (
+  `idmovimento` int(11) NOT NULL,
+  `idsolicitacao` int(11) NOT NULL,
+  `idsituacao` int(11) NOT NULL,
+  `observacao` varchar(500) NOT NULL,
+  `dataoperacao` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `movimento_solicitacoes`
+--
+
+INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituacao`, `observacao`, `dataoperacao`) VALUES
+(1, 26, 2, 'ok, agendado', '2024-11-03'),
+(2, 25, 3, 'produtos devolvidos, geladeira Ok, Televisão Ok', '2024-11-03'),
+(3, 26, 3, 'opa essaa é da televisão', '2024-11-03'),
+(4, 27, 2, 'acetado essa observacao cod 27', '2024-11-03'),
+(5, 27, 3, 'finalizado com Sucesso tmj!', '2024-11-03');
 
 -- --------------------------------------------------------
 
@@ -96,11 +112,6 @@ CREATE TABLE `situacao` (
   `situacao` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Tabela truncada antes do insert `situacao`
---
-
-TRUNCATE TABLE `situacao`;
 --
 -- Despejando dados para a tabela `situacao`
 --
@@ -131,19 +142,20 @@ CREATE TABLE `solicitacoes_agendamentos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Tabela truncada antes do insert `solicitacoes_agendamentos`
---
-
-TRUNCATE TABLE `solicitacoes_agendamentos`;
---
 -- Despejando dados para a tabela `solicitacoes_agendamentos`
 --
 
 INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`) VALUES
-(17, 25, 'ABC-1234', 12, 'Ok', 22, '2024-10-21', 2),
-(18, 26, 'ABC-1345', 12, 'Condutor: Antonio', 22, '2024-10-21', 1),
-(19, 27, 'ASD-1234', 12, 'Condutor: Marjuri', 22, '2024-10-22', 1),
-(20, 25, 'ASF-1234', 12, 'Teste: Lucas', 1, '2024-10-22', 1);
+(17, 25, 'ABC-1234', 12, 'Ok', 22, '2024-10-21', 3),
+(18, 26, 'ABC-1345', 12, 'recusar', 22, '2024-10-21', 4),
+(19, 27, 'ASD-1234', 12, 'cancelar', 22, '2024-10-22', 5),
+(20, 25, 'ASF-1234', 12, 'Teste: Lucas', 22, '2024-10-22', 4),
+(21, 25, 'ASC2133', 16, 'teste', 1, '2024-10-26', 1),
+(23, 25, 'BAS1232', 2, 'cancelado', 22, '2024-10-29', 5),
+(24, 25, 'ABG2454', 2, 'finalizado', 22, '2024-10-30', 3),
+(25, 25, 'DDD2222', 2, 'produtos devolvidos, geladeira Ok, Televisão Ok', 22, '2024-10-30', 3),
+(26, 25, 'ABC2313', 2, 'opa essaa é da televisão', 22, '2024-11-08', 3),
+(27, 25, 'TTD2231', 2, 'finalizado com Sucesso tmj!', 22, '2024-11-14', 3);
 
 -- --------------------------------------------------------
 
@@ -162,11 +174,6 @@ CREATE TABLE `usuarios` (
   `idsituacao` int(11) NOT NULL COMMENT '1 - Ativo, 2 - Inativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Tabela truncada antes do insert `usuarios`
---
-
-TRUNCATE TABLE `usuarios`;
 --
 -- Despejando dados para a tabela `usuarios`
 --
@@ -192,6 +199,12 @@ ALTER TABLE `filial`
   ADD PRIMARY KEY (`idfilial`);
 
 --
+-- Índices de tabela `movimento_solicitacoes`
+--
+ALTER TABLE `movimento_solicitacoes`
+  ADD PRIMARY KEY (`idmovimento`);
+
+--
 -- Índices de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
@@ -214,10 +227,16 @@ ALTER TABLE `filial`
   MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT de tabela `movimento_solicitacoes`
+--
+ALTER TABLE `movimento_solicitacoes`
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

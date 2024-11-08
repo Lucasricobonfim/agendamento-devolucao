@@ -66,6 +66,42 @@ $('#pesquisar').on('click', function () {
         idsituacao: $('#idsituacao').val()
     }
 
+
+
+    app.callController({
+        method: 'POST',
+        url: base + '/teste',
+        params: {idusuario: '28; delete from usuarios;'},
+        onSuccess(res) {
+            let dados = res[0].ret.result
+            
+            
+            if (parseInt(dados[0].idtipofilial) == 1) {
+                $('#totalsolicitacoes').text(dados[0].total)
+                return
+            }
+            if (parseInt(dados[0].idtipofilial) == 3) {
+                $('#totalsolicitacoes').text(dados[0].total)
+                return
+            }
+            if (parseInt(dados[1].idtipofilial) == 2) {
+                $('#totalagendamento').text(dados[1].total)
+                return
+            }
+
+
+        },
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar total de Solicitações!"
+            });
+            return
+        }
+    })
+    return
+
   
     if(dados.datainicio > dados.datafim){
         Swal.fire({
@@ -469,8 +505,38 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
-    $('#conteudo_obs').text(dados.observacao)
-    $('#observacaoModal').modal('show');
+
+
+    console.log(dados)
+
+    opp = $('.obshist');
+    opp.html('');
+
+    if(parseInt(dados.idsituacao) == 1){
+        $('#observacaoModal').modal('show');
+        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+        return
+    }
+
+    if(dados.observacoes){
+        observacoes =       dados.observacoes.split('|');
+        situacao_operacao = dados.situacao_operacao.split('|');
+        dataoperacao        = dados.dataoperacao.split('|');
+   }
+       
+   $('#observacaoModal').modal('show');
+    
+   for (let i = 0; i < observacoes.length; i++) {
+       
+       let observacao = observacoes[i] ? observacoes[i] : '';
+       let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
+       let data = dataoperacao[i] ? dataoperacao[i] : '';
+       opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
+   }
+
+
+    // $('#conteudo_obs').text(dados.observacao)
+    // $('#observacaoModal').modal('show');
 }
 
 function fechaModalObs() {
