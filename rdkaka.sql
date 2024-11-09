@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/11/2024 às 20:04
+-- Tempo de geração: 09/11/2024 às 01:00
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -94,11 +94,9 @@ CREATE TABLE `movimento_solicitacoes` (
 --
 
 INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituacao`, `observacao`, `dataoperacao`) VALUES
-(1, 26, 2, 'ok, agendado', '2024-11-03'),
-(2, 25, 3, 'produtos devolvidos, geladeira Ok, Televisão Ok', '2024-11-03'),
-(3, 26, 3, 'opa essaa é da televisão', '2024-11-03'),
-(4, 27, 2, 'acetado essa observacao cod 27', '2024-11-03'),
-(5, 27, 3, 'finalizado com Sucesso tmj!', '2024-11-03');
+(6, 28, 2, 'aceito', '2024-11-08'),
+(7, 29, 2, 'aceitado 2222', '2024-11-08'),
+(8, 28, 3, 'finalizado com sucesso tmj', '2024-11-08');
 
 -- --------------------------------------------------------
 
@@ -138,24 +136,18 @@ CREATE TABLE `solicitacoes_agendamentos` (
   `observacao` varchar(300) NOT NULL,
   `idtransportadora` int(11) NOT NULL,
   `data` date NOT NULL,
-  `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO'
+  `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO',
+  `dataoperacao` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `solicitacoes_agendamentos`
 --
 
-INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`) VALUES
-(17, 25, 'ABC-1234', 12, 'Ok', 22, '2024-10-21', 3),
-(18, 26, 'ABC-1345', 12, 'recusar', 22, '2024-10-21', 4),
-(19, 27, 'ASD-1234', 12, 'cancelar', 22, '2024-10-22', 5),
-(20, 25, 'ASF-1234', 12, 'Teste: Lucas', 22, '2024-10-22', 4),
-(21, 25, 'ASC2133', 16, 'teste', 1, '2024-10-26', 1),
-(23, 25, 'BAS1232', 2, 'cancelado', 22, '2024-10-29', 5),
-(24, 25, 'ABG2454', 2, 'finalizado', 22, '2024-10-30', 3),
-(25, 25, 'DDD2222', 2, 'produtos devolvidos, geladeira Ok, Televisão Ok', 22, '2024-10-30', 3),
-(26, 25, 'ABC2313', 2, 'opa essaa é da televisão', 22, '2024-11-08', 3),
-(27, 25, 'TTD2231', 2, 'finalizado com Sucesso tmj!', 22, '2024-11-14', 3);
+INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`, `dataoperacao`) VALUES
+(28, 25, 'SAA2321', 2, 'finalizado com sucesso tmj', 22, '2024-11-08', 3, '2024-11-08'),
+(29, 25, 'VAS2131', 2, 'aceitado 2222', 22, '2024-11-09', 2, '2024-11-08'),
+(30, 25, 'ASD2313', 2, 'teste', 22, '2024-11-09', 1, '2024-11-08');
 
 -- --------------------------------------------------------
 
@@ -230,13 +222,13 @@ ALTER TABLE `filial`
 -- AUTO_INCREMENT de tabela `movimento_solicitacoes`
 --
 ALTER TABLE `movimento_solicitacoes`
-  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
