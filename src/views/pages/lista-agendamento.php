@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 80%;
+        max-width: 99%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -142,15 +142,30 @@
             font-size: 1rem;
         }
     }
-
     .dt-buttons {
         display: none !important;
     }
-
+    .modal-lg {
+        max-width: 50%;
+        min-height: 500px;
+    }
+    /* Modal */
+    @media (max-width: 768px) {
+        .modal-lg {
+            max-width: 90%;
+        }
+        .modal-body {
+            font-size: 0.8em;
+        }
+    }
+    @media (max-width: 576px) {
+        .modal-lg {
+            max-width: 100%;
+        }
+    }
     .modal-body {
-        padding: 15px 20px;
-        word-break: break-word;
-        vertical-align: middle;
+        flex: 1;
+        overflow-y: auto;
     }
 </style>
 
@@ -217,8 +232,8 @@
     <!-- MODAL  -->
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="width: 100% !important">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -227,17 +242,16 @@
                     <!-- Conteúdo da observação -->
                     <!-- <h4 id="conteudo_obs"></h4>  -->
 
-                    <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Observação</th>
-                            <th scope="col">Situação</th>
-                            <th scope="col">Data Observação</th>        
-                        </tr>
-                    </thead>
-                    <tbody class="obshist">
-                        
-                        <!-- <tr >
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist">
+                            <!-- <tr >
 
                              <td>Mark</td>
                             <td>Otto</td>
@@ -251,12 +265,11 @@
                             <td>@mdo</td> 
 
                         </tr> -->
-                    </tbody>
+                        </tbody>
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 
 </body>

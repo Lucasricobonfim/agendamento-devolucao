@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 80%;
+        max-width: 98%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -38,7 +38,7 @@
 
     .cards {
         display: flex;
-        justify-content: space-between ;
+        justify-content: space-between;
         flex-wrap: wrap;
         gap: 15px;
         padding: 20px;
@@ -146,6 +146,29 @@
     .dt-buttons {
         display: none !important;
     }
+
+    .modal-lg {
+        max-width: 50%;
+        min-height: 500px;
+    }
+    /* Modal */
+    @media (max-width: 768px) {
+        .modal-lg {
+            max-width: 90%;
+        }
+        .modal-body {
+            font-size: 0.8em;
+        }
+    }
+    @media (max-width: 576px) {
+        .modal-lg {
+            max-width: 100%;
+        }
+    }
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+    }
 </style>
 <main class='main-div' style="width:100%;">
     <div class="cards">
@@ -209,26 +232,26 @@
 
     <!-- MODAL  -->
 
-    <div class="modal fade"   style="width: 100% !important;" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog"  >
-            <div class="modal-content"   style="width: 200% !important; margin: 20px auto;">
-                <div class="modal-header" >
+    <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Observação</th>
-                            <th scope="col">Situação</th>
-                            <th scope="col">Data Observação</th>        
-                        </tr>
-                    </thead>
-                    <tbody class="obshist">
-                        
-                        <!-- <tr >
+                    <table id="modal-media" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist">
+
+                            <!-- <tr >
 
                              <td>Mark</td>
                             <td>Otto</td>
@@ -242,8 +265,8 @@
                             <td>@mdo</td> 
 
                         </tr> -->
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                     <h4 id="conteudo_obs"></h4>
 
                 </div>
@@ -259,30 +282,30 @@
     <!-- MODAL ACEITACAO -->
 
     <div class="modal fade" id="modalAceitacao" tabindex="-1" aria-labelledby="tituloModalObs" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalObs">Observação Act</h5>
+                    <h5 class="modal-title" id="tituloModalObs">Observação - Aceitar</h5>
                     <button type="button" onclick="fechaModalAceitar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Observação</th>
-                            <th scope="col">Situação</th>
-                            <th scope="col">Data Observação</th>        
-                        </tr>
-                    </thead>
-                    <tbody class="obshist_act"> 
-                       
-                    </tbody>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist_act">
+
+                        </tbody>
                     </table>
 
                     <!-- Conteúdo da observação -->
                     <input hidden name="" id="idsolicitacao"></input>
                     <input hidden name="" id="idsituacao"></input>
-                    <textarea class="form-control" name="" id="observacaoact"></textarea>
+                    <textarea class="form-control" name="" id="observacaoact" placeholder="Digite uma observação"></textarea>
 
                 </div>
                 <div class="modal-footer">
