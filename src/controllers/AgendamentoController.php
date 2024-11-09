@@ -120,5 +120,31 @@ class AgendamentoController extends Controller {
         
     }
 
+    public function reagendar() {
+      
+        $dados= $_POST;
+        
+        $agn = new Agendamento();
+
+        $ret = $agn->reagendar($dados);
+
+        
+        if ($ret['sucesso'] == false) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+        }else{
+           echo json_encode(array([
+               "success" => true,
+               "ret" => $ret['result']
+           ]));
+           die;
+        }
+        
+    }
+
+
 
 }

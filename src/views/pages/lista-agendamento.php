@@ -142,27 +142,33 @@
             font-size: 1rem;
         }
     }
+
     .dt-buttons {
         display: none !important;
     }
+
     .modal-lg {
         max-width: 50%;
         min-height: 500px;
     }
+
     /* Modal */
     @media (max-width: 768px) {
         .modal-lg {
             max-width: 90%;
         }
+
         .modal-body {
             font-size: 0.8em;
         }
     }
+
     @media (max-width: 576px) {
         .modal-lg {
             max-width: 100%;
         }
     }
+
     .modal-body {
         flex: 1;
         overflow-y: auto;
@@ -251,21 +257,37 @@
                             </tr>
                         </thead>
                         <tbody class="obshist">
-                            <!-- <tr >
 
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr>
-                        <tr >
-
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr> -->
                         </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODDAL REAGENDER -->
+    <div class="modal fade" id="modalReagendar" tabindex="-1" aria-labelledby="reagendarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
+                    <button type="button" onclick="fecharModalReagendar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                <form>
+                    <div class="mb-3">
+                        <input type="text" disabled class="form-control" id="idsolicitacao" required style="display: none;">
+
+                        <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>
+                        <textarea id="observacao" name="observacao" placeholder="Informe observações" maxlength="500"></textarea>
+
+                        <label for="dataReagendamento" class="form-label">Data para Reagendar</label>
+                        <input type="date" class="form-control" id="dataReagendamento" required>
+                    </div>
+                    <button type="button" onclick="reagendar()"  class="btn btn-primary w-100">Reagendar</button>
+                </form>
                 </div>
             </div>
         </div>

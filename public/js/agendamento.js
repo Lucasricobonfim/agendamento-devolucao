@@ -28,6 +28,8 @@ $("#placa").inputmask({
     autoUnmask: true, // Remove a máscara ao enviar o formulário
 });
 
+
+
 $('#solicitar').on('click', function () {
 
     let dados = {
@@ -98,10 +100,10 @@ function validarPlaca(placa) {
 
 function limparCampos() {
     $('#idfilial').val(''),
-        $('#placa').val(''),
-        $('#data').val(''),
-        $('#qtdnota').val(''),
-        $('#observacao').val('')
+    $('#placa').val(''),
+    $('#data').val(''),
+    $('#qtdnota').val(''),
+    $('#observacao').val('')
 }
 
 function solicitar(dados) {
@@ -307,6 +309,16 @@ const Table = function (dados, idsituacao) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     return '<button style="width: 100%;" class="btn btn-primary btn-sm" onclick="abrirModalObs(' + dados + ')">Observação</button> '
                 }
+            },
+            {
+                title: 'Ações',
+                data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
+                render: function (data, type, row) {
+                    dados = JSON.stringify(row).replace(/"/g, '&quot;');
+                   
+                    return '<button style="width: 100%;" class="btn btn-primary btn-sm" onclick="abriModalReagendar(' + dados + ')">Reagendar</button> '
+                },
+                visible: idsituacao === 4 || idsituacao ===5  
             }
         ],
         columnDefs: [
@@ -317,6 +329,11 @@ const Table = function (dados, idsituacao) {
         ],
         rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
+        },
+        initComplete: function(settings, json) {
+            const column = this.api().column(8); // Índice da coluna "Ações"
+            // Define a visibilidade da coluna "Ações"
+            column.visible(idsituacao === 4 || idsituacao === 5);
         }
     });
 
@@ -342,8 +359,6 @@ const Table = function (dados, idsituacao) {
 // Modal Observacao
 
 function abrirModalObs(dados) {
-
-    console.log(dados)
 
     opp = $('.obshist');
     opp.html('');
@@ -419,4 +434,116 @@ function atualizarContador(idsituacao, count) {
             $('#canceladasCount').text(`${count} solicitações recusadas`);
             break;
     }
+}
+
+
+
+function abriModalReagendar(dados) {
+
+    
+
+
+
+    $('#modalReagendar').modal('show');
+    $('#idsolicitacao').val(dados.idsolicitacao);
+
+}
+
+function fecharModalReagendar(){
+
+
+    $('#idsolicitacao').val('');
+    $('#dataReagendamento').val('');
+    $('#modalReagendar').modal('hide');
+}
+
+
+function reagendar(){
+
+    let dados = {
+        idsolicitacao: $('#idsolicitacao').val(),
+        dataReagendamento: $('#dataReagendamento').val(),
+        observacao: $('#observacao').val(),
+
+    }
+    
+    if (!app.validarCampos(dados)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Preencha todos os campos!"
+        });
+        return
+    }
+    
+    let dataReagendar = new Date(dados.dataReagendamento + 'T00:00:00'); 
+    let hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); 
+
+    if (dataReagendar < hoje) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "A data do Reagendamento não pode ser anterior à data de hoje!"
+        });
+        return;
+    }
+
+    let dataLimite = new Date(hoje);
+    dataLimite.setDate(hoje.getDate() + 20);
+
+    if (dataReagendar > dataLimite) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "A data do Reagendamento não pode ser superior a 20 dias a partir de hoje!"
+        });
+        return;
+    }
+
+    let dataFormatada = app.formatarData(dados.dataReagendamento);
+
+    Swal.fire({
+        title: "Tem certeza?",
+        text: "Deseja Reagendar essa solicitação para a data " + dataFormatada+ " ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, Reagendar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+         
+            app.callController({
+                method: 'POST',
+                url: base + '/reagendar',
+                params: { idsolicitacao: dados.idsolicitacao, data: dados.dataReagendamento, observacao: dados.observacao },
+                onSuccess(res) {
+                    listar(1)
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: "Solicitação Reagendada com Sucesso!",
+                        icon: "success"
+                    });
+                    fecharModalReagendar()
+                    contarSolicitacoes()
+        
+                },
+                onFailure(res) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Atenção!!",
+                        text: "Erro ao Reagendar!"
+                    });
+                    return;
+                }
+            });
+        
+
+
+         
+       
+        }
+      })
+
 }

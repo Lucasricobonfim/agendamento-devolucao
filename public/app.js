@@ -74,5 +74,14 @@ window.app = {
         }
     
         return valido;
+    },
+
+    formatarData(data) {
+        // Converte a string para um objeto Date
+        let [ano, mes, dia] = data.split('-'); // Divide a string no formato "YYYY-MM-DD"
+        let dataObj = new Date(ano, mes - 1, dia); // Mês em Date começa do índice 0
+    
+        // Formata a data no padrão "DD/MM/YYYY"
+        return `${String(dataObj.getDate()).padStart(2, '0')}/${String(dataObj.getMonth() + 1).padStart(2, '0')}/${dataObj.getFullYear()}`;
     }
 }

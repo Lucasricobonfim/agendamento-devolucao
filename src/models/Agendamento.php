@@ -189,5 +189,38 @@ class Agendamento extends Model{
         }
     }
 
+    public function reagendar($dados)
+    {
+
+       
+        try {
+            $sql = Database::getInstance()->prepare("
+            UPDATE solicitacoes_agendamentos
+                set idsituacao = 1,
+                data = :data,
+                observacao = :observacao,
+                dataoperacao = now()
+            where idsolicitacao =  :idsolicitacao
+            ");
+
+            $sql->bindParam(':idsolicitacao', $dados['idsolicitacao']);
+            $sql->bindParam(':data', $dados['data']);
+            $sql->bindParam(':observacao', $dados['observacao']);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao reagendar' .$error->getMessage()
+            ];
+            
+                
+        }
+    }
+
 
 }
