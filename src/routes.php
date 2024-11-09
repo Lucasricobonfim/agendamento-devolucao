@@ -58,6 +58,8 @@ $router->get('/agendamento-listar', 'AgendamentoController@listagem');
 
 $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
 
+$router->post('/reagendar', 'AgendamentoController@reagendar');
+
 
 //Pendente CD
 $router->get('/solicitacoes', 'SolicitacoesController@index');

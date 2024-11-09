@@ -329,11 +329,11 @@ function confimarSolicitacao() {
     if (parseInt(dados.idsituacao) === 2) { // Aceitar
         textoslt = 'Aceitar';
     } else if (parseInt(dados.idsituacao) === 4) { // Cancelar
-        textoslt = 'Recusar';
+        textoslt = 'Cancelar';
     } else if (parseInt(dados.idsituacao) === 3) { // Finalizar
         textoslt = 'Finalizar';
     } else { // Recusar
-        textoslt = 'Cancelar';
+        textoslt = 'Recusar';
     }
 
     if (!dados.observacao) {
