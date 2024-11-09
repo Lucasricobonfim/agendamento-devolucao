@@ -36,6 +36,7 @@ class IndenizacaoTransportadoraController extends Controller {
 
     public function updateindenizacao(){
         $dados = $_POST;
+        $dados['cnpj'] = isset($_POST['cnpj']) ? $_POST['cnpj'] : 'null';
         $slt = new IndenizacaoTransportadora();
         $ret = $slt->updateindenizacao($dados);
 

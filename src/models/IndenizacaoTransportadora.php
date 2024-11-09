@@ -58,12 +58,13 @@ class IndenizacaoTransportadora extends Model{
     }
 
     public function updateindenizacao($dados){
-
+        // print_r($dados);
+        // exit;
         $params = [
             "observacao" => $dados['observacao'],
             "idsolicitacao" => $dados['idsolicitacao'],
             "idsituacao" => $dados['idsituacao'],
-            "cnpj" => $dados['cnpj'] 
+            "cnpj" => $dados['cnpj']
         ];
 
         $sql = "
@@ -74,7 +75,8 @@ class IndenizacaoTransportadora extends Model{
           WHERE idsolicitacao = :idsolicitacao
         ";
         $sql = $this->switchParams($sql, $params );
-
+        // print_r($sql);
+        // exit;
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();

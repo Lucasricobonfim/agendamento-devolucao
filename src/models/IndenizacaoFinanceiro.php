@@ -12,7 +12,6 @@ class IndenizacaoFinanceiro extends Model{
 
     public function getindenizacao($dados)
     {
-
         $sql = "
             SELECT 
                 si.idsolicitacao,
@@ -36,9 +35,8 @@ class IndenizacaoFinanceiro extends Model{
             LEFT JOIN filial fn ON si.idnegocio = fn.idfilial -- Junção para pegar o idtipofilial
             LEFT JOIN grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
             LEFT JOIN situacao s ON s.idsituacao = si.idsituacao
-            where s.idsituacao = :idsituacao AND si.idnegocio = :idnegocio;
+            where s.idsituacao = :idsituacao AND si.idnegocio = :idnegocio
         ";
-    
         $sql = $this->switchParams($sql, $dados);
         try {
             $sql = Database::getInstance()->prepare($sql);

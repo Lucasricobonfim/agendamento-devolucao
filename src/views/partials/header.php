@@ -142,7 +142,15 @@ if (!isset($_SESSION['token'])) {
             <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 3) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-cd') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/indenizacao-cd">
-                    <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Indenização
+                    <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Solicitar Indenizações
+                </a>
+            </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-transportadora') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/indenizacao-transportadora">
+                    <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Listar Indenizações
                 </a>
             </li>
             <?php } ?>

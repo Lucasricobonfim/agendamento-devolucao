@@ -83,7 +83,12 @@ $router->get('/indenizacao-transportadora', 'IndenizacaoTransportadoraController
 $router->get('/getindenizacao-transportadora', 'IndenizacaoTransportadoraController@getindenizacao');
 $router->post('/updateindenizacao-transportadora', 'IndenizacaoTransportadoraController@updateindenizacao');
 
-//Indenização - Nova Venda
+//Indenização - Nova Venda, Pos vendas
 $router->get('/indenizacao-financeiro', 'IndenizacaoFinanceiroController@index');
 $router->get('/getindenizacao-financeiro', 'IndenizacaoFinanceiroController@getindenizacao');
 $router->post('/updateindenizacao-financeiro', 'IndenizacaoFinanceiroController@updateindenizacao');
+
+//Contestacao - Atacado, E-commerce
+$router->get('/replica', 'ReplicaController@index');
+$router->get('/getreplica', 'ReplicaController@getreplica');
+$router->post('/updatereplica', 'ReplicaController@updatereplica');
