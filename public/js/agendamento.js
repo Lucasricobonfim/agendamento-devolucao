@@ -93,7 +93,7 @@ $('#solicitar').on('click', function () {
 
     // Calcular a data limite (30 dias a partir de hoje)
     let dataLimite = new Date(hoje);
-    dataLimite.setDate(hoje.getDate() + 30); // Adiciona 20 dias
+    dataLimite.setDate(hoje.getDate() + 30); // Adiciona 30 dias
 
     // Validar se a data escolhida é maior que a data limite
     if (dataSolicitacao > dataLimite) {
@@ -166,7 +166,7 @@ function solicitar(dados) {
                 Swal.fire({
                     icon: "warning",
                     title: "Atenção!!",
-                    text: "Já existe um agendamento para essa Data com essa Placa"
+                    text: "Já existe um agendamento para essa data com essa Placa"
                 });
                 return;
             }
@@ -523,13 +523,13 @@ function reagendar(){
     }
 
     let dataLimite = new Date(hoje);
-    dataLimite.setDate(hoje.getDate() + 20);
+    dataLimite.setDate(hoje.getDate() + 30);
 
     if (dataReagendar > dataLimite) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
-            text: "A data do Reagendamento não pode ser superior a 20 dias a partir de hoje!"
+            text: "A data do Reagendamento não pode ser superior a 30 dias a partir de hoje!"
         });
         return;
     }

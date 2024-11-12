@@ -442,7 +442,12 @@ const Table = function (dados, idsituacao) {
             },
             {
                 title: 'Placa',
-                data: 'placa'
+                data: 'placa',
+                render: function(data) {
+                    const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
+                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                    return placaMascara;
+                }
             },
             {
                 title: 'Data Agendada',
