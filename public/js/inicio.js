@@ -476,6 +476,20 @@ const Table = function (dados, idsituacao) {
                 }
             },
         ],
+        columnDefs: [
+            {
+                targets: [0], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [2], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [4], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            }
+        ],
         rowCallback: function (row, data) { },
         initComplete: function(settings, json) {}
     });

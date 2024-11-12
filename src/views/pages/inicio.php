@@ -70,6 +70,33 @@
     .dt-buttons {
         display: none !important;
     }
+
+    .modal-lg {
+        max-width: 50%;
+        min-height: 500px;
+    }
+
+    /* Modal */
+    @media (max-width: 768px) {
+        .modal-lg {
+            max-width: 90%;
+        }
+
+        .modal-body {
+            font-size: 0.8em;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .modal-lg {
+            max-width: 100%;
+        }
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+    }
 </style>
 
 
@@ -164,14 +191,14 @@
     </div>
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">Observação</th>
@@ -181,7 +208,7 @@
                         </thead>
                         <tbody class="obshist">
 
-                          
+
                         </tbody>
                     </table>
                 </div>

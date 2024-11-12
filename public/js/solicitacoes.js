@@ -126,7 +126,12 @@ const Table = function (dados, idsituacao) {
             },
             {
                 title: 'Placa',
-                data: 'placa'
+                data: 'placa',
+                render: function(data) {
+                    const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
+                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                    return placaMascara;
+                }
             },
             {
                 title: 'Data Agendada',
@@ -166,18 +171,32 @@ const Table = function (dados, idsituacao) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     if (idsituacao === 1) {
                         return `
-                        <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2,${dados})">Aceitar</button>
-                        <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4,${dados})">Recusar</button>
+                        <button style="width: 49%; " class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2,${dados})">Aceitar</button>
+                        <button style="width: 49%; " class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 4,${dados})">Recusar</button>
                     `;
                     } else if (idsituacao === 2) { // Para "Em Andamento"
                         return `
-                            <button class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3,${dados})">Finalizar</button>
-                            <button class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 5,${dados})">Cancelar</button>
+                            <button style="width: 49%; " class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 3,${dados})">Finalizar</button>
+                            <button style="width: 49%; " class="btn btn-danger btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 5,${dados})">Cancelar</button>
                         `;
                     }
                     return ''; // Retorna vazio se não houver ações para o estado atual
                 },
                 visible: idsituacao === 1 || idsituacao === 2 // <--- Esta linha foi adicionada
+            }
+        ],
+        columnDefs: [
+            {
+                targets: [0], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [2], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [4], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
             }
         ],
         rowCallback: function (row, data) { },

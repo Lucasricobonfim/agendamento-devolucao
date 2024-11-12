@@ -71,16 +71,36 @@ $('#solicitar').on('click', function () {
         return;
     }
 
+     // Verifica se a quantidade de notas é negativa
+     if (dados.quantidadenota < 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "O número de notas não pode ser negativo!"
+        });
+        return;
+    }
+
+    // Verifica se a quantidade de notas tem mais de 4 dígitos
+    if (dados.quantidadenota.length > 4) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "O número de notas não pode ter mais de 4 dígitos!"
+        });
+        return;
+    }
+
     // Calcular a data limite (30 dias a partir de hoje)
     let dataLimite = new Date(hoje);
-    dataLimite.setDate(hoje.getDate() + 20); // Adiciona 20 dias
+    dataLimite.setDate(hoje.getDate() + 30); // Adiciona 20 dias
 
     // Validar se a data escolhida é maior que a data limite
     if (dataSolicitacao > dataLimite) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
-            text: "A data da solicitação não pode ser superior a 20 dias a partir de hoje!"
+            text: "A data da solicitação não pode ser superior a 30 dias a partir de hoje!"
         });
         return;
     }
@@ -273,7 +293,12 @@ const Table = function (dados, idsituacao) {
             },
             {
                 title: 'Placa',
-                data: 'placa'
+                data: 'placa',
+                render: function(data) {
+                    const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
+                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                    return placaMascara;
+                }
             },
             {
                 title: 'Data Agendada',
@@ -324,7 +349,15 @@ const Table = function (dados, idsituacao) {
         columnDefs: [
             {
                 targets: [0], // Índice da coluna "Cód Solicitacao"
-                width: '50px' // Definindo a largura desejada
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [2], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
+            },
+            {
+                targets: [4], // Índice da coluna "Cód Solicitacao"
+                width: '1px' // Definindo a largura desejada
             }
         ],
         rowCallback: function (row, data) {
