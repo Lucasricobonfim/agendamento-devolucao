@@ -85,6 +85,30 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `movimento_solicitacoes`
+--
+
+DROP TABLE IF EXISTS `movimento_solicitacoes`;
+CREATE TABLE `movimento_solicitacoes` (
+  `idmovimento` int(11) NOT NULL,
+  `idsolicitacao` int(11) NOT NULL,
+  `idsituacao` int(11) NOT NULL,
+  `observacao` varchar(500) NOT NULL,
+  `dataoperacao` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `movimento_solicitacoes`
+--
+
+INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituacao`, `observacao`, `dataoperacao`) VALUES
+(6, 28, 2, 'aceito', '2024-11-08'),
+(7, 29, 2, 'aceitado 2222', '2024-11-08'),
+(8, 28, 3, 'finalizado com sucesso tmj', '2024-11-08');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `situacao`
 --
 
@@ -107,7 +131,8 @@ INSERT INTO `situacao` (`idsituacao`, `situacao`) VALUES
 (6, 'EM CONTESTAÇÃO'),
 (7, 'INDENIZAÇÃO AUTORIZADA'),
 (8, 'INDENIZAÇÃO PENDENTE'),
-(9, 'FATURADO');
+(9, 'FATURADO'),
+(10, 'INDENIZAÇÃO CANCELADA');
 
 -- --------------------------------------------------------
 
@@ -124,25 +149,17 @@ CREATE TABLE `solicitacoes_agendamentos` (
   `observacao` varchar(300) NOT NULL,
   `idtransportadora` int(11) NOT NULL,
   `data` date NOT NULL,
-  `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO'
+  `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO',
+  `dataoperacao` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Despejando dados para a tabela `solicitacoes_agendamentos`
 --
 
-INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`) VALUES
-(17, 25, 'ABC-1234', 12, 'ok', 22, '2024-10-21', 3),
-(18, 26, 'ABC-1345', 12, 'Condutor: Antonio', 22, '2024-10-21', 1),
-(19, 27, 'ASD-1234', 12, 'Condutor: Marjuri', 22, '2024-10-22', 1),
-(20, 25, 'ASF-1234', 12, 'Teste: Lucas', 1, '2024-10-22', 1),
-(21, 25, 'EWQ2131', 121, 'ok', 22, '2024-11-14', 2),
-(22, 25, 'DRE2131', 12, 'ok', 22, '2024-11-15', 4),
-(23, 25, 'EEW1231', 12, '12', 22, '2024-11-13', 1),
-(24, 25, 'WTE1231', 12, '12', 1, '2024-11-15', 1),
-(25, 25, 'DWQ1231', 12, '12', 22, '2024-11-15', 1),
-(26, 26, 'DQW2131', 12, '12', 22, '2024-11-15', 1),
-(27, 27, 'DEF1231', 12, '12', 22, '2024-11-22', 1);
+INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`, `dataoperacao`) VALUES
+(28, 25, 'SAA2321', 2, 'finalizado com sucesso tmj', 22, '2024-11-08', 3, '2024-11-08'),
+(29, 25, 'VAS2131', 2, 'aceitado 2222', 22, '2024-11-09', 2, '2024-11-08'),
+(30, 25, 'ASD2313', 2, 'teste', 22, '2024-11-09', 1, '2024-11-08');
 
 -- --------------------------------------------------------
 
@@ -229,8 +246,15 @@ ALTER TABLE `filial`
   ADD PRIMARY KEY (`idfilial`);
 
 --
+-- Índices de tabela `movimento_solicitacoes`
+--
+ALTER TABLE `movimento_solicitacoes`
+  ADD PRIMARY KEY (`idmovimento`);
+
+--
 -- Índices de tabela `solicitacoes_agendamentos`
 --
+
 ALTER TABLE `solicitacoes_agendamentos`
   ADD PRIMARY KEY (`idsolicitacao`);
 

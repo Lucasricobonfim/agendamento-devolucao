@@ -285,6 +285,7 @@ const Table = function(ret){
                         case 7: statusClass = 'status-finalizado'; break;
                         case 6: statusClass = 'status-contestacao'; break;
                         case 9: statusClass = 'status-faturado'; break;
+                        case 10: statusClass = 'status-recusado'; break;
                         default: statusClass = '';
                     }
 

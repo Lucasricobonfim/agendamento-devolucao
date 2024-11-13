@@ -162,6 +162,14 @@ if (!isset($_SESSION['token'])) {
                 </a>
             </li>
             <?php } ?>
+            
+            <?php if ($_SESSION['idgrupo'] == 4 || $_SESSION['idgrupo'] == 5) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'replica') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/replica">
+                <i class="fa-solid fa-bullhorn" style="margin-right: 10px; font-size: 22px;"></i>Contestações
+                </a>
+            </li>
+            <?php } ?>
         </ul>
     </aside>
     <script>

@@ -16,6 +16,14 @@ $(document).ready(function () {
         $('#file-chosen').text(fileName);
     });
 
+    $('#cnpj').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#observacaoContestar').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
 });
 
 function contarIndenizacoes() {
@@ -69,7 +77,7 @@ function listar(idsituacao) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao listar Centro de distribuição!"
+                text: "Erro ao listar Indenizações!"
             });
             return;
         }
@@ -197,7 +205,7 @@ const Table = function (dados, idsituacao) {
                         return ''; // Retorna vazio se não houver ações para o estado atual
                     }
                 },
-                visible: idsituacao === 6 || idsituacao === 8 // <--- Esta linha foi adicionada
+                visible: idsituacao === 8 // <--- Esta linha foi adicionada
             },
         ],
         rowCallback: function (row, data) {
@@ -205,7 +213,7 @@ const Table = function (dados, idsituacao) {
         },
         initComplete: function(settings, json) {
             const column = this.api().column(9);
-            column.visible(idsituacao === 6 || idsituacao === 8);
+            column.visible(idsituacao === 8);
         }
     });
 
@@ -223,17 +231,20 @@ function fechaModalObs() {
 // Função para fechar o modal de aceitação/recusa e limpar o campo de observação
 function fechaModalAceitar() {
     $('#observacaoAutorizar').val(''); // Limpa o campo de observação ao fechar o modal
+    $('#cnpj').removeClass('erro'); // Remove a classe 'erro'
     $('#cnpj').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAutorizar').modal('hide');
 }
 function fechaModalContestar() {
     $('#observacaoContestar').val(''); // Limpa o campo de observação ao fechar o modal
     $('#idtipofilial').val(''); // Limpa o campo de observação ao abrir o modal
+    $('#observacaoContestar').removeClass('erro'); // Remove a classe 'erro'
     $('#modalContestar').modal('hide');
 }
 
 function abrirModalAceitar(idsolicitacao, idsituacao) {
     $('#observacaoAutorizar').val(''); // Limpa o campo de observação ao abrir o modal
+    $('#cnpj').removeClass('erro'); // Remove a classe 'erro'
     $('#cnpj').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalAutorizar').modal('show');
 
@@ -250,6 +261,7 @@ function abrirModalContestar(idsolicitacao, idsituacao) {
     $('#observacaoContestar').val(''); // Limpa o campo de observação ao abrir o modal
     $('#idtipofilial').val(''); // Limpa o campo de observação ao abrir o modal
     $('#modalContestar').modal('show');
+    $('#observacaoContestar').removeClass('erro'); // Remove a classe 'erro'
 
     if (parseInt(idsituacao) === 6) {
         $('#tituloModalObs').text('Autorizar Solicitação');
@@ -260,7 +272,6 @@ function abrirModalContestar(idsolicitacao, idsituacao) {
     $('#idsolicitacaoContestar').val(idsolicitacao);
     $('#idsituacao').val(idsituacao);
 }
-
 // Função para confirmar autorização
 function confirmarAutorizar() {
     let dados = {
@@ -320,29 +331,20 @@ function confirmarContestar() {
         idsolicitacao: $('#idsolicitacaoContestar').val(),
         idsituacao: $('#idsituacao').val(),
         observacao: $('#observacaoContestar').val(),
-        idtipofilial: $('#idtipofilial').val()
     };
 
     console.log(dados)
 
-    // if (!dados.idtipofilial) {
-    //     Swal.fire({
-    //         icon: "warning",
-    //         title: "Atenção!",
-    //         text: "Por favor, insira o Negocio."
-    //     });
-    //     $('#idtipofilial').toggleClass('erro');
-    //     return;
-    // }
-    // if(dados.observacao){
-    //     Swal.fire({
-    //         icon: "warning",
-    //         title: "Atenção!",
-    //         text: "Por favor, insira o Motivo da contestação."
-    //     });
-    //     $('#observacaoContestar').toggleClass('erro');
-    //     return;
-    // }
+    
+    if (!dados.observacao) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!",
+            text: "Por favor, insira o motivo da contestação."
+        });
+        $('#observacaoContestar').toggleClass('erro');
+        return;
+    }
 
     app.callController({
         method: 'POST',
@@ -362,7 +364,7 @@ function confirmarContestar() {
             Swal.fire({
                 icon: "error",
                 title: "Erro!",
-                text: "Falha ao autorizar a solicitação."
+                text: "Falha ao contestar a solicitação."
             });
         }
     });

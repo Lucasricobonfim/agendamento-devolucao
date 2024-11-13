@@ -239,14 +239,6 @@
                 </div>
                 <div class="modal-body">
                     <form id="formContestar">
-                        <div class="col-md-6 mb-3">
-                            <label for="idtipofilial" class="form-label">Negócio<span class="text-danger">*</span></label>
-                            <select class="form-select" id="idtipofilial" name="idtipofilial">
-                                <option value="">Selecionar</option>
-                                <option value="4">ATACADO</option>
-                                <option value="5">E-COMMERCE</option>
-                            </select>
-                        </div>
                         <div class="form-group">
                             <label for="observacaoContestar">Motivo da Contestação</label>
                             <textarea class="form-control" id="observacaoContestar" rows="3" placeholder="Digite uma observação"></textarea>
