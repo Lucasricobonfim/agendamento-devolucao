@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="placa" class="form-label">Placa<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="placa" name="placa" required>
+                    <input type="text" class="form-control" id="placa" name="placa" placeholder="Placa" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="data" class="form-label">Data<span class="text-danger">*</span></label>

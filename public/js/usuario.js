@@ -164,13 +164,21 @@ function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
     const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
     
-    // Verifica se o nome é válido
-    if (!nomeRegex.test(nome)) {
+    // Verifica se o nome é válido e se respeita o limite de caracteres
+    if (!nomeRegex.test(nome) || nome.length > 25) {
+        if (nome.length > 25) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: `O nome deve ter no máximo ${25} caracteres.`
+        });
+        } else {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
             text: "O nome pode conter apenas letras e espaços."
         });
+        }
         return false;
     }
     return true;
