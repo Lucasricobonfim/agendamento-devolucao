@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 98%;
+        max-width: 99%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -146,60 +146,24 @@
     .dt-buttons {
         display: none !important;
     }
-
-    .modal-lg {
-        max-width: 50%;
-        min-height: 500px;
-    }
-    /* Modal */
-    @media (max-width: 768px) {
-        .modal-lg {
-            max-width: 90%;
-        }
-        .modal-body {
-            font-size: 0.8em;
-        }
-    }
-    @media (max-width: 576px) {
-        .modal-lg {
-            max-width: 100%;
-        }
-    }
-    .modal-body {
-        flex: 1;
-        overflow-y: auto;
-    }
 </style>
 <main class='main-div' style="width:100%;">
     <div class="cards">
-        <div class="card" style="background-color: #ffa5002e;" data-idsituacao="1">
-            <h5 style="color: orange"><strong>Solicitações Pendentes</strong></h5>
-            <p id="pendentesCount">0 solicitações pendentes</p>
+        <div class="card" style="background-color: #00800024;" data-idsituacao="7">
+            <h5 style="color: green"><strong>Indenizações autorizadas</strong></h5>
+            <p id="autorizadasCount" style="color: green">0 indenizações autorizadas</p>
         </div>
 
-        <div class="card" style="background-color: #0000ff1a;" data-idsituacao="2">
-            <h5 style="color: blue"><strong>Solicitações Em andamento</strong></h5>
-            <p id="andamentoCount">0 solicitações em andamento</p>
-        </div>
-
-        <div class="card" style="background-color: #00800024;" data-idsituacao="3">
-            <h5 style="color: green"><strong>Solicitações Finalizadas</strong></h5>
-            <p id="finalizadasCount">0 solicitações finalizadas</p>
-        </div>
-
-        <div class="card" style="background-color: #ff000029;" data-idsituacao="4">
-            <h5 style="color: red"><strong>Solicitações Recusadas</strong></h5>
-            <p id="recusadasCount">0 solicitações canceladas</p>
-        </div>
-        <div class="card" style="background-color: #b39ddb;" data-idsituacao="5">
-            <h5 style="color: b39ddb"><strong>Solicitações Canceladas</strong></h5>
-            <p id="canceladasCount">0 solicitações canceladas</p>
+        <div class="card" style="background-color: #B0E0E6;" data-idsituacao="9">
+            <h5><strong>Indenizações Faturadas</strong></h5>
+            <p id="faturadasCount">0 indenizações faturadas</p>
         </div>
     </div>
+
     <div class="form-container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1><strong>Solicitações Agendamento (CD)</strong></h1>
-            <div class="dropdown ms-auto">
+            <h1 class="mb-0"><strong>Indenizações (Nova Venda)</strong></h1>
+            <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="exportMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     Exportar
                 </button>
@@ -214,18 +178,14 @@
                     </a>
                 </div>
             </div>
-            <div id="kt_datatable_example_buttons_detalhes" class="btn-group"></div>
         </div>
-        
-        <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
-
-        </table>
+        <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%"></table>
     </div>
 
     <!-- MODAL  -->
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
@@ -233,32 +193,6 @@
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <table id="modal-media" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Observação</th>
-                                <th scope="col">Situação</th>
-                                <th scope="col">Data</th>
-                            </tr>
-                        </thead>
-                        <tbody class="obshist">
-
-                            <!-- <tr >
-
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr>
-                        <tr >
-
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr> -->
-                        </tbody>
-                    </table>
                     <h4 id="conteudo_obs"></h4>
 
                 </div>
@@ -271,49 +205,31 @@
 
     <!-- FIM MODAL -->
 
-    <!-- MODAL ACEITACAO -->
-
-    <div class="modal fade" id="modalAceitacao" tabindex="-1" aria-labelledby="tituloModalObs" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <!-- Modal para Faturar -->
+    <div class="modal fade" id="modalFaturar" tabindex="-1" aria-labelledby="tituloModalObs" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tituloModalObs">Observação </h5>
-                    <button type="button" onclick="fechaModalAceitar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="tituloModalObs">Observação Fatura</h5>
+                    <button type="button" onclick="fechaModalFaturar()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Observação</th>
-                                <th scope="col">Situação</th>
-                                <th scope="col">Data</th>
-                            </tr>
-                        </thead>
-                        <tbody class="obshist_act">
-
-                        </tbody>
-                    </table>
-
                     <!-- Conteúdo da observação -->
-                    <input hidden name="" id="idsolicitacao"></input>
+                    <input hidden name="" id="idsolicitacaoFaturar"></input>
                     <input hidden name="" id="idsituacao"></input>
-                    <textarea class="form-control" name="" id="observacaoact" placeholder="Digite uma observação"></textarea>
-
+                    <textarea class="form-control" name="" id="observacaoFaturar"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="confimarSolicitacao()" class="btn btn-secondary">Confirmar</button>
+                    <button type="button" onclick="confimarFaturar()" class="btn btn-secondary">Confirmar</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- FIM MODAL ACEITACAO -->
-
 </main>
 
 
 </body>
-<script src="<?= $base; ?>/js/solicitacoes.js"></script>
+<script src="<?= $base; ?>/js/indenizacao-financeiro.js"></script>
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';

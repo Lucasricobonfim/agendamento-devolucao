@@ -26,7 +26,7 @@ $(document).ready(function () {
                 return;
             }
             if (!validarNome(dados.nome)) {
-                return; 
+                return;
             }
             if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
@@ -60,7 +60,7 @@ $(document).ready(function () {
                 return;
             }
             if (!validarNome(dados.nome)) {
-                return; 
+                return;
             }
             if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
@@ -85,18 +85,42 @@ $(document).ready(function () {
             cadastro(dados);
         }
     });
+
+    $('#nome').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#cnpj_cpf').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#email').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#telefone').on('input', function () {
+        $(this).removeClass('erro');
+    });
 });
 function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
     const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
     
-    // Verifica se o nome é válido
-    if (!nomeRegex.test(nome)) {
+    // Verifica se o nome é válido e se respeita o limite de caracteres
+    if (!nomeRegex.test(nome) || nome.length > 25) {
+        if (nome.length > 25) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: `O nome deve ter no máximo ${25} caracteres.`
+        });
+        } else {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
             text: "O nome pode conter apenas letras e espaços."
         });
+        }
         return false;
     }
     return true;
@@ -141,7 +165,7 @@ function listar() {
     });
 }
 
-function limparForm(){
+function limparForm() {
     $('#form-title').text('Cadastrando CD').css('color', 'blue');;
 
     $('#nome').val('');
@@ -149,15 +173,21 @@ function limparForm(){
     $('#email').val('');
     $('#telefone').val('');
     $('#idfilial').val('');
+
+    //Para remover erro do preenchimento
+    $('#nome').removeClass('erro'); // Remove a classe 'erro'
+    $('#cnpj_cpf').removeClass('erro'); // Remove a classe 'erro'
+    $('#email').removeClass('erro'); // Remove a classe 'erro'
+    $('#telefone').removeClass('erro'); // Remove a classe 'erro'
 }
 
-function cadastro(dados) {  
+function cadastro(dados) {
     app.callController({
         method: 'POST',
         url: base + '/cadcentro-distribuicao',
         params: dados,
-        onSuccess(res) {         
-           limparForm()
+        onSuccess(res) {
+            limparForm()
             listar(); // Atualiza a lista após o cadastro
             Swal.fire({
                 icon: "success",
@@ -184,15 +214,15 @@ function cadastro(dados) {
     });
 }
 
-const Table = function(ret){
+const Table = function (ret) {
     var dados = ret
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
         stateSave: true,
-       "bDestroy": true,
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        "bDestroy": true,
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
         buttons: [
             /*
@@ -231,14 +261,14 @@ const Table = function(ret){
             {
                 title: 'Nome',
                 data: 'nome',
-                render: function(data) {
+                render: function (data) {
                     return `<strong>${data}</strong>`; // Coloca o nome em negrito
                 }
             },
             {
                 title: 'CNPJ',
                 data: 'cnpj_cpf',
-                render: function(data) {
+                render: function (data) {
                     // Aplicando máscara no CNPJ
                     const cnpjMascara = data.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
                     return cnpjMascara;
@@ -251,7 +281,7 @@ const Table = function(ret){
             {
                 title: 'Telefone',
                 data: 'telefone',
-                render: function(data) {
+                render: function (data) {
                     if (data.length === 10) {
                         // Telefone fixo sem o nono dígito
                         return data.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
@@ -270,7 +300,7 @@ const Table = function(ret){
             {
                 title: 'Status',
                 data: 'descricao',
-                render: function(data) {
+                render: function (data) {
                     // Adicione uma classe de status com base no valor
                     const statusClass = data === 'Ativo' ? 'status-ativo' : 'status-inativo';
                     return `<span class="${statusClass}">${data}</span>`;
@@ -279,23 +309,23 @@ const Table = function(ret){
             {
                 title: 'Ações',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    
+
                     return '<div class="dropdown" style="display: inline-block; cursor: pointer;">' +
-                                '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
-                                    '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
-                                '</a>' +
-                                '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
-                                    '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
-                                    '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
-                                    '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
-                                '</ul>' +
-                            '</div>';
+                        '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
+                        '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
+                        '</a>' +
+                        '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
+                        '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
+                        '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
+                        '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
+                        '</ul>' +
+                        '</div>';
                 }
             }
         ],
-        rowCallback: function(row, data) {
+        rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
         }
     });
@@ -335,14 +365,14 @@ function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
 
 
 
-function updateSituacao(id, idsituacao, atualsituacao){
-   
+function updateSituacao(id, idsituacao, atualsituacao) {
+
     var situacao = atualsituacao == 2 ? 'inativo' : 'ativo'
-    if(idsituacao == atualsituacao){
+    if (idsituacao == atualsituacao) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!",
-            text: "Centro de distribuição já está " +  situacao
+            text: "Centro de distribuição já está " + situacao
         });
         return
     }
@@ -353,17 +383,17 @@ function updateSituacao(id, idsituacao, atualsituacao){
             id: id,
             idsituacao: idsituacao
         },
-        onSuccess(res){
-            listar(); 
+        onSuccess(res) {
+            listar();
             // Terceiro alerta de sucesso
             var novaSituacao = idsituacao == 2 ? 'inativado' : 'ativado';
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
                 text: "Centro de distribuição " + novaSituacao + " com sucesso."
-            });  
+            });
         },
-        onFailure(res){
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
@@ -382,53 +412,53 @@ function setEditar(row) {
     // Remover máscaras antes de setar novos valores
     $('#cnpj_cpf').unmask();
     $('#telefone').unmask();
-    
+
     // Setando o valor no campo CNPJ e Telefone
     $('#cnpj_cpf').val(row.cnpj_cpf);
     $('#email').val(row.email);
     $('#telefone').val(row.telefone);
 
     // Reaplicar as máscaras após os valores serem inseridos
-    $('#telefone').mask('(00) 00000-0000'); 
+    $('#telefone').mask('(00) 00000-0000');
     $('#cnpj_cpf').mask('00.000.000/0000-00');
-    
+
     // Rolagem suave para o formulário
     $('html, body').animate({
         scrollTop: $(".form-container").offset().top
-    }, 100); 
+    }, 100);
 }
-    function editar(dados){
-        app.callController({
-            method: 'GET',
-            url: base + '/editarcentro-distribuicao',
-            params: {
-               nome: dados.nome,
-               cnpj_cpf: dados.cnpj_cpf,
-               email: dados.email,
-               telefone: dados.telefone,
-               idfilial: dados.idfilial
-            },
-            onSuccess(res){
-                listar(); // Atualiza a lista após o cadastro
-                // Limpar os campos do formulário
-                limparForm()
-                // Mostrar alerta de sucesso
-                Swal.fire({
-                    icon: "success",
-                    title: "Sucesso!",
-                    text: "Editado com sucesso!"
-                });
-            },
-            onFailure(res){
-                 
-                Swal.fire({
-                    icon: "error",
-                    title: "Atenção!!",
-                    text: "Erro ao editar Centro de distribuição!"
-                });
-                return
-               
-            }
-        })
-    }
+function editar(dados) {
+    app.callController({
+        method: 'GET',
+        url: base + '/editarcentro-distribuicao',
+        params: {
+            nome: dados.nome,
+            cnpj_cpf: dados.cnpj_cpf,
+            email: dados.email,
+            telefone: dados.telefone,
+            idfilial: dados.idfilial
+        },
+        onSuccess(res) {
+            listar(); // Atualiza a lista após o cadastro
+            // Limpar os campos do formulário
+            limparForm()
+            // Mostrar alerta de sucesso
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Editado com sucesso!"
+            });
+        },
+        onFailure(res) {
+
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao editar Centro de distribuição!"
+            });
+            return
+
+        }
+    })
+}
 

@@ -71,6 +71,26 @@ $(document).ready(function () {
         buscaFilial(idgrupo)
     });
 
+    $('#nome').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#login').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#senha').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#idgrupo').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#idfilial').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
 })
 
 function validarLogin(login) {
@@ -144,13 +164,21 @@ function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
     const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
     
-    // Verifica se o nome é válido
-    if (!nomeRegex.test(nome)) {
+    // Verifica se o nome é válido e se respeita o limite de caracteres
+    if (!nomeRegex.test(nome) || nome.length > 25) {
+        if (nome.length > 25) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: `O nome deve ter no máximo ${25} caracteres.`
+        });
+        } else {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
             text: "O nome pode conter apenas letras e espaços."
         });
+        }
         return false;
     }
     return true;
@@ -166,13 +194,20 @@ function mostrarSenha(){
 }
 
 function limparForm(){
-    $('#form-title').text('Cadastrando Usuários');
+    $('#form-title').text('Cadastrando Usuários').css('color', 'blue');;
     $('#nome').val('');
     $('#idfilial').val('');
     $('#idgrupo').val('');
     $('#login').val('');
     $('#senha').val('');
     $('#idusuario').val('');
+    
+    //Para remover erro do preenchimento
+    $('#nome').removeClass('erro'); // Remove a classe 'erro'
+    $('#login').removeClass('erro'); // Remove a classe 'erro'
+    $('#senha').removeClass('erro'); // Remove a classe 'erro'
+    $('#idgrupo').removeClass('erro'); // Remove a classe 'erro'
+    $('#idfilial').removeClass('erro'); // Remove a classe 'erro'
 }
 
 function listar(){

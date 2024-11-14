@@ -1,6 +1,5 @@
 <?php $render('header'); ?>
 
-
 <style>
     .form-container {
         max-width: 80%;
@@ -24,13 +23,10 @@
 
     h5 {
         margin: 0;
-        /* remove o espaçamento padrão */
     }
-
-    .form-cad {
+    .form-cad{
         margin-left: 100px;
     }
-
     @media (max-width: 395px) {
         .form-cad {
             font-size: 0.90rem;
@@ -81,50 +77,39 @@
 </style>
 
 <main class='main-div' style="width:100%;">
-
     <div class="form-container">
         <div class="header-container">
             <button id="novo" class="btn-custom" onclick="limparForm()">Novo</button>
-            <h5 id="form-title" class="form-cad">Cadastrando Usuários</h5>
+            <h5 id="form-title" class="form-cad">Cadastrando Negocio</h5>
             <h5 class="media-h5">Informações básicas</h5>
         </div>
 
         <div style="margin-top: 50px;">
             <div class="row">
-                <input id="idusuario" type="text" class="form-control" hidden>
-
+                <input id="idfilial" type="text" class="form-control" hidden>
                 <div class="col-md-6 mb-3">
                     <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                    <input type="text" class="form-control" id="nome" placeholder="Nome">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="login" class="form-label">Login<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="login" name="login" placeholder="Login">
+                    <label for="email" class="form-label">E-mail<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="email" placeholder="E-mail">
                 </div>
-                <div class="col-md-6 mb-3" style="position: relative;">
-                    <label for="senha" class="form-label">Senha<span class="text-danger">*</span></label>
-                    <input type="password" class="form-control pr-5" id="senha" name="senha" placeholder="Senha">
-                    <i onclick="mostrarSenha()" class="fa fa-eye" style="position: absolute; top: 74%; right: 25px; transform: translateY(-50%); cursor: pointer;"></i>
-                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="grupo" class="form-label">Grupo<span class="text-danger">*</span></label>
-                    <select class="form-select" id="idgrupo" name="idgrupo">
+                    <label for="idtipofilial" class="form-label">Negócio<span class="text-danger">*</span></label>
+                    <select class="form-select" id="idtipofilial" name="idtipofilial">
                         <option value="">Selecionar</option>
-                        <option value="1">ADM</option>
-                        <option value="2">TRANSPORTADORA</option>
-                        <option value="3">CD</option>
                         <option value="4">ATACADO</option>
                         <option value="5">E-COMMERCE</option>
                         <option value="6">NOVA VENDA</option>
                         <option value="7">POS VENDAS</option>
                     </select>
                 </div>
-
                 <div class="col-md-6 mb-3">
-                    <label for="idfilial" class="form-label">Filial<span class="text-danger">*</span></label>
-                    <select class="form-select opp" id="idfilial" name="idfilial">
-                        <option id="" value="">Selecionar</option>
-                    </select>
+                    <label for="telefone" class="form-label">Telefone<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="telefone" placeholder="Telefone">
                 </div>
             </div>
             <div class="form-footer">
@@ -134,17 +119,18 @@
     </div>
 
     <div class="form-container">
-        <h1><strong>Usuários</strong></h1>
-        Gestão de usuários e acessos
+        <h1><strong>Negocio</strong></h1>
+        Gestão de negocios
         <table id="mytable" class="table table-bordered display nowrap" style="width:100%">
 
         </table>
     </div>
 
+
 </main>
 
 </body>
-<script src="<?= $base; ?>/js/usuario.js"></script>
+<script src="<?= $base; ?>/js/negocio.js"></script>
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';

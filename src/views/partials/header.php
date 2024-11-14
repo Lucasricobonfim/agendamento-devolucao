@@ -76,11 +76,13 @@ if (!isset($_SESSION['token'])) {
     <aside class="sidebar">
         <img src="<?= $base; ?>/img/logo_topo.png" class="img-fluid" alt="texte">
         <ul>
-            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'inicio') ? 'active' : ''; ?>">
-                <a class="negrito" href="<?= $base; ?>/inicio">
-                    <i class="fa-solid fa-house" style="margin-right: 10px; font-size: 22px;"></i>Inicio
-                </a>
-            </li>
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2 || $_SESSION['idgrupo'] == 3) { ?>
+                <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'inicio') ? 'active' : ''; ?>">
+                    <a class="negrito" href="<?= $base; ?>/inicio">
+                        <i class="fa-solid fa-house" style="margin-right: 10px; font-size: 22px;"></i>Inicio
+                    </a>
+                </li>
+            <?php } ?>
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'usuario') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/usuario">
@@ -88,6 +90,7 @@ if (!isset($_SESSION['token'])) {
                     </a>
                 </li>
             <?php } ?>
+            
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'transportadoras') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/transportadoras">
@@ -95,12 +98,21 @@ if (!isset($_SESSION['token'])) {
                     </a>
                 </li>
             <?php } ?>
+
             <?php if ($_SESSION['idgrupo'] == 1) { ?>
                 <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'centro-distribuicao') ? 'active' : ''; ?>">
                     <a class="negrito" href="<?= $base; ?>/centro-distribuicao">
                         <i class="fa-solid fa-arrow-right-to-bracket" style="margin-right: 10px; font-size: 22px;"></i>Centro de distribuição
                     </a>
                 </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 1) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'negocio') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/negocio">
+                <i class="fa-regular fa-handshake" style="margin-right: 10px; font-size: 22px;"></i>Negocio
+                </a>
+            </li>
             <?php } ?>
             
             <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
@@ -123,6 +135,38 @@ if (!isset($_SESSION['token'])) {
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'solicitacoes') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/solicitacoes">
                     <i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Solicitações
+                </a>
+            </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 3) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-cd') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/indenizacao-cd">
+                    <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Solicitar Indenizações
+                </a>
+            </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-transportadora') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/indenizacao-transportadora">
+                    <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Listar Indenizações
+                </a>
+            </li>
+            <?php } ?>
+
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 6 || $_SESSION['idgrupo'] == 7) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-financeiro') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/indenizacao-financeiro">
+                <i class="fa-solid fa-file-invoice-dollar" style="margin-right: 10px; font-size: 22px;"></i>Fatura
+                </a>
+            </li>
+            <?php } ?>
+            
+            <?php if ($_SESSION['idgrupo'] == 4 || $_SESSION['idgrupo'] == 5) { ?>
+            <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'replica') ? 'active' : ''; ?>">
+                <a class="negrito" href="<?= $base; ?>/replica">
+                <i class="fa-solid fa-bullhorn" style="margin-right: 10px; font-size: 22px;"></i>Contestações
                 </a>
             </li>
             <?php } ?>

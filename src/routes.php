@@ -57,7 +57,6 @@ $router->post('/solicitar-agendamento', 'AgendamentoController@solicitar');
 $router->get('/agendamento-listar', 'AgendamentoController@listagem');
 
 $router->get('/get-agendamento', 'AgendamentoController@getAgendamento');
-
 $router->post('/reagendar', 'AgendamentoController@reagendar');
 
 
@@ -66,6 +65,36 @@ $router->get('/solicitacoes', 'SolicitacoesController@index');
 $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
 $router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao');
 
-
-
+//teste
 $router->post('/teste', 'SolicitacoesController@teste');
+
+//Negocio
+$router->get('/negocio', 'NegocioController@index');
+$router->get('/getnegocio', 'NegocioController@getnegocio');
+
+$router->post('/cadnegocio', 'NegocioController@cadastro');
+$router->get('/editnegocio', 'NegocioController@editar');
+$router->get('/updatesituacaonegocio', 'NegocioController@updatesituacaoNegocio');
+
+// Indenização
+$router->get('/indenizacao-cd', 'IndenizacaoCdController@index');
+$router->post('/solicitar-indenizacao', 'IndenizacaoCdController@solicitar');
+
+$router->get('/get-transportadora-ativos', 'IndenizacaoCdController@getTransportadora');
+$router->get('/get-negocio-ativos', 'IndenizacaoCdController@getNegocio');
+$router->get('/get-indenizacao-cd', 'IndenizacaoCdController@getindenizacao');
+
+//Indenização - Transportadora
+$router->get('/indenizacao-transportadora', 'IndenizacaoTransportadoraController@index');
+$router->get('/getindenizacao-transportadora', 'IndenizacaoTransportadoraController@getindenizacao');
+$router->post('/updateindenizacao-transportadora', 'IndenizacaoTransportadoraController@updateindenizacao');
+
+//Indenização - Nova Venda, Pos vendas
+$router->get('/indenizacao-financeiro', 'IndenizacaoFinanceiroController@index');
+$router->get('/getindenizacao-financeiro', 'IndenizacaoFinanceiroController@getindenizacao');
+$router->post('/updateindenizacao-financeiro', 'IndenizacaoFinanceiroController@updateindenizacao');
+
+//Contestacao - Atacado, E-commerce
+$router->get('/replica', 'ReplicaController@index');
+$router->get('/getreplica', 'ReplicaController@getreplica');
+$router->post('/updatereplica', 'ReplicaController@updatereplica');
