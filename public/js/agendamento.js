@@ -10,6 +10,23 @@ $(document).ready(function () {
         listar(idsituacao);
     });
 })
+
+$('#idfilial').on('input', function () {
+    $(this).removeClass('erro');
+});
+$('#placa').on('input', function () {
+    $(this).removeClass('erro');
+});
+$('#data').on('input', function () {
+    $(this).removeClass('erro');
+});
+$('#qtdnota').on('input', function () {
+    $(this).removeClass('erro');
+});
+$('#observacao').on('input', function () {
+    $(this).removeClass('erro');
+});
+
 $("#placa").inputmask({
     mask: ["AAA-9*99"], // Formato Mercosul
     definitions: {
@@ -252,26 +269,75 @@ const Table = function (dados, idsituacao) {
         },
         select: true,
         dom: 'Bfrtip',
-        buttons: [{
-            extend: 'copyHtml5',
-
-        },
-        {
-            extend: 'excelHtml5',
-            title: 'agendamentos'
-        },
-        {
-            extend: 'csvHtml5',
-        },
-        {
-            extend: 'pdfHtml5',
-            orientation: 'landscape', // Export in landscape mode
-            pageSize: 'A3', // Use A4 page size
-            title: 'agendamentos',
-            exportOptions: {
-                columns: ':visible'
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6] // Exporta somente as colunas escolhidas para planilha 
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                title: 'AGENDAMENTO',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                }
+            },
+            {
+                extend: 'csvHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape', 
+                pageSize: 'A3', 
+                title: 'AGENDAMENTO',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                },
+                customize: function (doc) {
+                    // Reduz as margens da página para expandir a tabela
+                    doc.pageMargins = [10, 10, 10, 10]; 
+            
+                    // Centraliza o título
+                    doc.content[0].alignment = 'center';
+            
+                    // Ajusta o tamanho da fonte do título
+                    doc.content[0].fontSize = 14;
+            
+                    // Aumenta o tamanho da tabela
+                    doc.content[1].layout = {
+                        hLineWidth: function () { return 0.5; },
+                        vLineWidth: function () { return 0.5; },
+                        paddingLeft: function () { return 5; },
+                        paddingRight: function () { return 5; },
+                        paddingTop: function () { return 5; },
+                        paddingBottom: function () { return 5; }
+                    };
+            
+                    // Define o estilo do cabeçalho da tabela
+                    doc.styles.tableHeader = {
+                        alignment: 'center',
+                        fillColor: '#2D9CDB',
+                        color: 'white',
+                        bold: true,
+                        fontSize: 12
+                    };
+            
+                    // Ajusta o conteúdo da tabela para centralizar
+                    doc.styles.tableBodyEven = { alignment: 'center' };
+                    doc.styles.tableBodyOdd = { alignment: 'center' };
+            
+                    // Define o alinhamento padrão para todo o conteúdo
+                    doc.defaultStyle.alignment = 'center';
+            
+                    // Ajusta o tamanho das colunas para preencher mais a página
+                    var table = doc.content[1].table;
+                    table.widths = Array(table.body[0].length).fill('*'); // Define a largura de todas as colunas para distribuir igualmente
+                }
             }
-        }
         ],
         lengthMenu: [
             [10, 100, 500, -1],

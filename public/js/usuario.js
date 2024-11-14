@@ -71,6 +71,26 @@ $(document).ready(function () {
         buscaFilial(idgrupo)
     });
 
+    $('#nome').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#login').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#senha').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#idgrupo').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
+    $('#idfilial').on('input', function() {
+        $(this).removeClass('erro');
+    });
+
 })
 
 function validarLogin(login) {
@@ -166,13 +186,20 @@ function mostrarSenha(){
 }
 
 function limparForm(){
-    $('#form-title').text('Cadastrando Usuários');
+    $('#form-title').text('Cadastrando Usuários').css('color', 'blue');;
     $('#nome').val('');
     $('#idfilial').val('');
     $('#idgrupo').val('');
     $('#login').val('');
     $('#senha').val('');
     $('#idusuario').val('');
+    
+    //Para remover erro do preenchimento
+    $('#nome').removeClass('erro'); // Remove a classe 'erro'
+    $('#login').removeClass('erro'); // Remove a classe 'erro'
+    $('#senha').removeClass('erro'); // Remove a classe 'erro'
+    $('#idgrupo').removeClass('erro'); // Remove a classe 'erro'
+    $('#idfilial').removeClass('erro'); // Remove a classe 'erro'
 }
 
 function listar(){

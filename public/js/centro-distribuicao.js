@@ -85,6 +85,22 @@ $(document).ready(function () {
             cadastro(dados);
         }
     });
+
+    $('#nome').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#cnpj_cpf').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#email').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#telefone').on('input', function () {
+        $(this).removeClass('erro');
+    });
 });
 function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
@@ -149,6 +165,11 @@ function limparForm(){
     $('#email').val('');
     $('#telefone').val('');
     $('#idfilial').val('');
+    //Para remover erro do preenchimento
+    $('#nome').removeClass('erro'); // Remove a classe 'erro'
+    $('#cnpj_cpf').removeClass('erro'); // Remove a classe 'erro'
+    $('#email').removeClass('erro'); // Remove a classe 'erro'
+    $('#telefone').removeClass('erro'); // Remove a classe 'erro'
 }
 
 function cadastro(dados) {  
