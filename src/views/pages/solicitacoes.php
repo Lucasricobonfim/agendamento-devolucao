@@ -197,17 +197,12 @@
         </div>
     </div>
     <div class="form-container">
-
-        <!-- botao Exportar e PDF -->
-        <div class="card-toolbar d-flex justify-content-end gap-3" style="margin: 0px 0px 20px 0px;">
-
-            <!-- Dropdown de Exportação -->
-            <div class="dropdown">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1><strong>Solicitações Agendamento (CD)</strong></h1>
+            <div class="dropdown ms-auto">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="exportMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     Exportar
                 </button>
-
-
                 <div id="kt_datatable_example_export_menu" class="dropdown-menu" aria-labelledby="exportMenuButton" style="min-width: 200px;">
                     <a href="#" class="dropdown-item d-flex align-items-center" data-kt-export="excel">
                         <span class="me-2">📄</span>
@@ -219,12 +214,9 @@
                     </a>
                 </div>
             </div>
-
             <div id="kt_datatable_example_buttons_detalhes" class="btn-group"></div>
-
         </div>
-
-        <h1><strong>Solicitações Agendamento (CD)</strong></h1>
+        
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
 
         </table>
