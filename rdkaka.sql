@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/11/2024 às 01:00
+-- Tempo de geração: 15/11/2024 às 13:58
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -86,7 +86,7 @@ CREATE TABLE `movimento_solicitacoes` (
   `idsolicitacao` int(11) NOT NULL,
   `idsituacao` int(11) NOT NULL,
   `observacao` varchar(500) NOT NULL,
-  `dataoperacao` date NOT NULL
+  `dataoperacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -94,9 +94,18 @@ CREATE TABLE `movimento_solicitacoes` (
 --
 
 INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituacao`, `observacao`, `dataoperacao`) VALUES
-(6, 28, 2, 'aceito', '2024-11-08'),
-(7, 29, 2, 'aceitado 2222', '2024-11-08'),
-(8, 28, 3, 'finalizado com sucesso tmj', '2024-11-08');
+(25, 36, 1, 'teeste', '2024-11-15 12:13:01'),
+(26, 36, 4, 'recusaddaa', '2024-11-15 12:18:20'),
+(27, 36, 1, 'quero reagendar para outra data', '2024-11-15 12:19:04'),
+(28, 36, 2, 'aceito', '2024-11-15 12:49:19'),
+(29, 36, 3, 'finalizado', '2024-11-15 12:49:40'),
+(30, 37, 1, 'teste', '2024-11-15 12:52:06'),
+(31, 38, 1, 'teste', '2024-11-15 12:52:47'),
+(32, 37, 2, 'aceitando', '2024-11-15 12:53:55'),
+(33, 38, 4, 'recusar', '2024-11-15 12:54:01'),
+(34, 37, 5, 'cancelar', '2024-11-15 12:54:07'),
+(35, 37, 1, 'quero reagendar essa solicitacao', '2024-11-15 12:54:50'),
+(36, 38, 1, 'rewagendar recusada', '2024-11-15 12:56:44');
 
 -- --------------------------------------------------------
 
@@ -133,7 +142,7 @@ CREATE TABLE `solicitacoes_agendamentos` (
   `idcd` int(11) NOT NULL,
   `placa` varchar(20) NOT NULL,
   `quantidadenota` int(11) NOT NULL,
-  `observacao` varchar(300) NOT NULL,
+  `observacao` varchar(500) NOT NULL,
   `idtransportadora` int(11) NOT NULL,
   `data` date NOT NULL,
   `idsituacao` int(11) NOT NULL COMMENT '1 - PENDENTE CONFIRMAÇÂO\r\n2 - EM ANDAMENTO\r\n3 - FINALIZADO\r\n4 - RECUSADO\r\n5 - CANCELADO',
@@ -145,9 +154,9 @@ CREATE TABLE `solicitacoes_agendamentos` (
 --
 
 INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`, `dataoperacao`) VALUES
-(28, 25, 'SAA2321', 2, 'finalizado com sucesso tmj', 22, '2024-11-08', 3, '2024-11-08'),
-(29, 25, 'VAS2131', 2, 'aceitado 2222', 22, '2024-11-09', 2, '2024-11-08'),
-(30, 25, 'ASD2313', 2, 'teste', 22, '2024-11-09', 1, '2024-11-08');
+(36, 25, 'ACA1231', 2, 'finalizado', 22, '2024-11-25', 3, '2024-11-15'),
+(37, 25, 'ACA1231', 2, 'quero reagendar essa solicitacao', 22, '2024-11-16', 1, '2024-11-15'),
+(38, 25, 'ACA2314', 3, 'rewagendar recusada', 22, '2024-11-16', 1, '2024-11-15');
 
 -- --------------------------------------------------------
 
@@ -222,13 +231,13 @@ ALTER TABLE `filial`
 -- AUTO_INCREMENT de tabela `movimento_solicitacoes`
 --
 ALTER TABLE `movimento_solicitacoes`
-  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

@@ -459,30 +459,38 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
+   
     opp = $('.obshist');
     opp.html('');
 
-    if(parseInt(dados.idsituacao) == 1){
-        $('#observacaoModal').modal('show');
-        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
-        return
-    }
 
     if(dados.observacoes){
         observacoes =       dados.observacoes.split('|');
         situacao_operacao = dados.situacao_operacao.split('|');
         dataoperacao        = dados.dataoperacao.split('|');
-   }
+    }
        
-   $('#observacaoModal').modal('show');
-    
-   for (let i = 0; i < observacoes.length; i++) {
-       
-       let observacao = observacoes[i] ? observacoes[i] : '';
-       let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
-       let data = dataoperacao[i] ? dataoperacao[i] : '';
-       opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
-   }
+    $('#observacaoModal').modal('show');
+
+    let registros = observacoes.map((obs, index) => ({
+        observacao: obs || '',
+        situacao: situacao_operacao[index] || '',
+        data: dataoperacao[index] || ''
+    }));
+
+    registros.sort((a, b) => {
+        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
+        let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        return dateA - dateB;
+    });
+
+    $('#observacaoModal').modal('show');
+
+    for (let registro of registros) {
+        opp.append(
+            "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+        );
+    }
 }
 
 function fechaModalObs() {
@@ -539,10 +547,6 @@ function atualizarContador(idsituacao, count) {
 
 function abriModalReagendar(dados) {
 
-    
-
-
-
     $('#modalReagendar').modal('show');
     $('#idsolicitacao').val(dados.idsolicitacao);
 
@@ -553,6 +557,7 @@ function fecharModalReagendar(){
 
     $('#idsolicitacao').val('');
     $('#dataReagendamento').val('');
+    $('#observacao').val('')
     $('#modalReagendar').modal('hide');
 }
 
@@ -626,7 +631,10 @@ function reagendar(){
                     });
                     fecharModalReagendar()
                     contarSolicitacoes()
-        
+
+                    $('#idsolicitacao').val('')
+                    $('#dataReagendamento').val('')
+                    $('#observacao').val('')
                 },
                 onFailure(res) {
                     Swal.fire({

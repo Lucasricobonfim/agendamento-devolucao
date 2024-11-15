@@ -42,36 +42,69 @@ class Agendamento extends Model{
 
     public function cadSolicitar($dados)
     {
-        $sql = "
-                insert into solicitacoes_agendamentos(idcd, placa, quantidadenota, observacao, idtransportadora, data, idsituacao)
-                select
-                     :idcd
-                    ,':placa'
-                    ,:quantidadenota
-                    ,':observacao'
-                    ,:idtransportadora
-                    ,':data'
-                    ,1
-            
-        ";
-
-        $sql = $this->switchParams($sql, $dados);
         try {
-            $sql = Database::getInstance()->prepare($sql);
-            $sql->execute();
-            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            // Inicia a transação
+            $db = Database::getInstance();
+            $db->beginTransaction();
+        
+            // SQL para a primeira inserção com RETURNING (caso seja PostgreSQL)
+            $sql1 = "
+                INSERT INTO solicitacoes_agendamentos (
+                    idcd, placa, quantidadenota, observacao, idtransportadora, data, idsituacao
+                ) VALUES (
+                    :idcd, :placa, :quantidadenota, :observacao, :idtransportadora, :data, 1
+                ) 
+            ";
+        
+            // Prepara e executa a primeira query
+            $stmt1 = $db->prepare($sql1);
+            $stmt1->execute([
+                ':idcd' => $dados['idcd'],
+                ':placa' => $dados['placa'],
+                ':quantidadenota' => $dados['quantidadenota'],
+                ':observacao' => $dados['observacao'],
+                ':idtransportadora' => $dados['idtransportadora'],
+                ':data' => $dados['data'],
+            ]);
+        
+            // Obtém o idsolicitacao gerado
+            $idsolicitacao = $db->lastInsertId();
+        
+            // SQL para a segunda inserção
+            $sql2 = "
+                INSERT INTO movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao)
+                VALUES (:idsolicitacao, :idsituacao, :observacao, NOW())
+            ";
+        
+            // Prepara e executa a segunda query
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute([
+                ':idsolicitacao' => $idsolicitacao,
+                ':idsituacao' => 1,
+                ':observacao' => $dados['observacao'],
+            ]);
+        
+            // Confirma a transação
+            $db->commit();
+        
+            // Retorna sucesso
             return [
                 'sucesso' => true,
-                'result' => $result
+                'result' => 'Solicitação de agendamento realizada com sucesso!'
             ];
         } catch (Throwable $error) {
-            return  [
+            // Em caso de erro, desfaz a transação
+            if (isset($db)) {
+                $db->rollBack();
+            }
+        
+            // Retorna o erro
+            return [
                 'sucesso' => false,
-                'result' => 'Falha ao solicitar o agendamento ' .$error->getMessage()
+                'result' => 'Falha ao solicitar o agendamento: ' . $error->getMessage()
             ];
-            
-                
         }
+        
     }
 
     
@@ -99,11 +132,9 @@ class Agendamento extends Model{
                 
         }
     }
-    // fim cadastro
 
     public function getAgendamentos($dados)
     {
-       
         $sql = 
         $_SESSION['idgrupo'] == 1 ? 
         "
@@ -129,11 +160,12 @@ class Agendamento extends Model{
                     SELECT
                         ms.idsolicitacao
                         ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                         ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                     from  movimento_solicitacoes ms 
                     left join situacao sos on sos.idsituacao = ms.idsituacao
                     GROUP BY ms.idsolicitacao
+                    order by ms.dataoperacao
                 )  AS oi ON  oi.idsolicitacao = sa.idsolicitacao
                 where sa.idsituacao = :idsituacao
         "
@@ -159,18 +191,21 @@ class Agendamento extends Model{
                 left join situacao st on st.idsituacao = sa.idsituacao
                 left join(
                     SELECT
-                        ms.idsolicitacao
+                         ms.idsolicitacao
                         ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                         ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                     from  movimento_solicitacoes ms 
                     left join situacao sos on sos.idsituacao = ms.idsituacao
                     GROUP BY ms.idsolicitacao
+                    order by ms.dataoperacao asc
                 )  AS oi ON  oi.idsolicitacao = sa.idsolicitacao
                 where sa.idsituacao = :idsituacao AND sa.idtransportadora = :idtransportadora;
         ";
         
         $sql = $this->switchParams($sql, $dados);
+
+        // print_r($sql);exit;
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
@@ -191,8 +226,6 @@ class Agendamento extends Model{
 
     public function reagendar($dados)
     {
-
-       
         try {
             $sql = Database::getInstance()->prepare("
             UPDATE solicitacoes_agendamentos
@@ -200,7 +233,10 @@ class Agendamento extends Model{
                 data = :data,
                 observacao = :observacao,
                 dataoperacao = now()
-            where idsolicitacao =  :idsolicitacao
+            where idsolicitacao =  :idsolicitacao;
+
+            INSERT INTO movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao)
+                VALUES (:idsolicitacao, 1, :observacao, NOW());
             ");
 
             $sql->bindParam(':idsolicitacao', $dados['idsolicitacao']);
