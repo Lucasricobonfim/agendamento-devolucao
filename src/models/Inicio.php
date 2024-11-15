@@ -224,7 +224,7 @@ class Inicio extends Model
                             SELECT
                                 ms.idsolicitacao
                                 ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                                 ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                             from  movimento_solicitacoes ms 
                             left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -259,7 +259,7 @@ class Inicio extends Model
                             SELECT
                                 ms.idsolicitacao
                                 ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                                 ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                             from  movimento_solicitacoes ms 
                             left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -294,7 +294,7 @@ class Inicio extends Model
                             SELECT
                                 ms.idsolicitacao
                                 ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                                 ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                             from  movimento_solicitacoes ms 
                             left join situacao sos on sos.idsituacao = ms.idsituacao
@@ -330,7 +330,7 @@ class Inicio extends Model
                             SELECT
                                 ms.idsolicitacao
                                 ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y') SEPARATOR '|') AS dataoperacao
+                                ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
                                 ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
                             from  movimento_solicitacoes ms 
                             left join situacao sos on sos.idsituacao = ms.idsituacao

@@ -294,13 +294,13 @@ function abrirModalObs(dados) {
     opp = $('.obshist');
     opp.html('');
 
-    if(parseInt(dados.idsituacao) ==1){
-        $('#observacaoModal').modal('show');
-        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
-        return
+    // if(parseInt(dados.idsituacao) ==1){
+    //     $('#observacaoModal').modal('show');
+    //     opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
+    //     return
         
-    }
-    console.log('aqui fora: ', dados)
+    // }
+    // console.log('aqui fora: ', dados)
 
 if(dados.observacoes){
      observacoes =       dados.observacoes.split('|');
@@ -330,63 +330,36 @@ function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
     let situacao_operacao = []
     let dataoperacao =[]
 
-    if(idsituacao == 2 || idsituacao ==4 ){
-        $('#modalAceitacao').modal('show');
-        
-        $('#idsolicitacao').val(idsolicitacao);
-        $('#idsituacao').val(idsituacao);
-        console.log(dados.situacao)
-        console.log(dados.observacao)
-        console.log(dados.dataagendamento)
-        opp = $('.obshist_act');
-        opp.html('');
-        opp.append("<tr><td>" +dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
-
-        // colocar apenas a observacao quando for essas situacaoes
-
-    }else{
         if(dados.observacoes){
             observacoes =       dados.observacoes.split('|');
             situacao_operacao = dados.situacao_operacao.split('|');
             dataoperacao        = dados.dataoperacao.split('|');
         }
+
+        let registros = observacoes.map((obs, index) => ({
+            observacao: obs || '',
+            situacao: situacao_operacao[index] || '',
+            data: dataoperacao[index] || ''
+        }));
+    
+        registros.sort((a, b) => {
+            let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
+            let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+            return dateA - dateB;
+        });
         
         $('#modalAceitacao').modal('show');
-       $('#idsolicitacao').val(idsolicitacao);
-       $('#idsituacao').val(idsituacao);
-       opp = $('.obshist_act');
-       opp.html('');
-       for (let i = 0; i < observacoes.length; i++) {
-           
-           let observacao = observacoes[i] ? observacoes[i] : '';
-           let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
-           let data = dataoperacao[i] ? dataoperacao[i] : '';
-           opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
-       }
-    }
-
-
-
-/*
-    $('#observacaoact').val(''); // Limpa o campo de observação ao abrir o modal
-    $('#modalAceitacao').modal('show');
-
-    if (parseInt(idsituacao) === 2) {
-        $('#tituloModalObs').text('Aceitar Solicitação - Observação');
-    } else if(parseInt(idsituacao) === 4){
-        $('#tituloModalObs').text('Recusar Solicitação - Observação');
-    } else if(parseInt(idsituacao) === 3){
-        $('#tituloModalObs').text('Finalizar Solicitação - Observação');
-    } else{
-        $('#tituloModalObs').text('Cancelar Solicitação - Observação');
-    }
-
-    $('#idsolicitacao').val(idsolicitacao);
-    $('#idsituacao').val(idsituacao);
-    */
+        $('#idsolicitacao').val(idsolicitacao);
+        $('#idsituacao').val(idsituacao);
+        opp = $('.obshist_act');
+        opp.html('');
+        for (let registro of registros) {
+            opp.append(
+                "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+            );
+        }
 }
 
-// Função para fechar o modal de aceitação/recusa e limpar o campo de observação
 function fechaModalAceitar() {
     $('#observacaoact').val(''); // Limpa o campo de observação ao fechar o modal
     $('#modalAceitacao').modal('hide');
