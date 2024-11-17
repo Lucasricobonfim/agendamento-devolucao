@@ -53,30 +53,30 @@ function atualizarContador(idsituacao, count) {
             $('#recusadasCount').text(`${count} solicitações recusadas`);
             break;
         case 5:
-            $('#canceladasCount').text(`${count} solicitações recusadas`);
+            $('#canceladasCount').text(`${count} solicitações canceladas`);
             break;
     }
 }
 
-function listar(idsituacao) { 
-        app.callController({
-            method: 'GET',
-            url: base + '/getsolicitacoes',
-            params: { idsituacao: idsituacao },
-            onSuccess(res) {
+function listar(idsituacao) {
+    app.callController({
+        method: 'GET',
+        url: base + '/getsolicitacoes',
+        params: { idsituacao: idsituacao },
+        onSuccess(res) {
 
-                const dados = res[0].ret;
-                Table(dados, idsituacao); // Passar também a idsituacao para a tabela
-            },
-            onFailure(res) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Atenção!!",
-                    text: "Erro ao listar Agendamentos!"
-                });
-                return
-            }
-        })
+            const dados = res[0].ret;
+            Table(dados, idsituacao); // Passar também a idsituacao para a tabela
+        },
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar Agendamentos!"
+            });
+            return
+        }
+    })
 }
 
 const Table = function (dados, idsituacao) {
@@ -112,22 +112,22 @@ const Table = function (dados, idsituacao) {
             },
             {
                 extend: 'pdfHtml5',
-                orientation: 'landscape', 
-                pageSize: 'A3', 
+                orientation: 'landscape',
+                pageSize: 'A3',
                 title: 'SOLICITAÇÕES AGENDAMENTO',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 },
                 customize: function (doc) {
                     // Reduz as margens da página para expandir a tabela
-                    doc.pageMargins = [10, 10, 10, 10]; 
-            
+                    doc.pageMargins = [10, 10, 10, 10];
+
                     // Centraliza o título
                     doc.content[0].alignment = 'center';
-            
+
                     // Ajusta o tamanho da fonte do título
                     doc.content[0].fontSize = 14;
-            
+
                     // Aumenta o tamanho da tabela
                     doc.content[1].layout = {
                         hLineWidth: function () { return 0.5; },
@@ -137,7 +137,7 @@ const Table = function (dados, idsituacao) {
                         paddingTop: function () { return 5; },
                         paddingBottom: function () { return 5; }
                     };
-            
+
                     // Define o estilo do cabeçalho da tabela
                     doc.styles.tableHeader = {
                         alignment: 'center',
@@ -146,14 +146,14 @@ const Table = function (dados, idsituacao) {
                         bold: true,
                         fontSize: 12
                     };
-            
+
                     // Ajusta o conteúdo da tabela para centralizar
                     doc.styles.tableBodyEven = { alignment: 'center' };
                     doc.styles.tableBodyOdd = { alignment: 'center' };
-            
+
                     // Define o alinhamento padrão para todo o conteúdo
                     doc.defaultStyle.alignment = 'center';
-            
+
                     // Ajusta o tamanho das colunas para preencher mais a página
                     var table = doc.content[1].table;
                     table.widths = Array(table.body[0].length).fill('*'); // Define a largura de todas as colunas para distribuir igualmente
@@ -181,9 +181,9 @@ const Table = function (dados, idsituacao) {
             {
                 title: 'Placa',
                 data: 'placa',
-                render: function(data) {
+                render: function (data) {
                     const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
-                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                        .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
                     return placaMascara;
                 }
             },
@@ -258,7 +258,7 @@ const Table = function (dados, idsituacao) {
             }
         ],
         rowCallback: function (row, data) { },
-        initComplete: function(settings, json) {
+        initComplete: function (settings, json) {
             const column = this.api().column(8); // Índice da coluna "Ações"
             // Define a visibilidade da coluna "Ações"
             column.visible(idsituacao === 1 || idsituacao === 2);
@@ -287,36 +287,40 @@ const Table = function (dados, idsituacao) {
 // Modal Observacao
 
 function abrirModalObs(dados) {
-    let observacoes =    [] 
+    let observacoes = []
     let situacao_operacao = []
-    let dataoperacao      =[]
-   
+    let dataoperacao = []
+
     opp = $('.obshist');
     opp.html('');
 
-    // if(parseInt(dados.idsituacao) ==1){
-    //     $('#observacaoModal').modal('show');
-    //     opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
-    //     return
-        
-    // }
-    // console.log('aqui fora: ', dados)
 
-if(dados.observacoes){
-     observacoes =       dados.observacoes.split('|');
-     situacao_operacao = dados.situacao_operacao.split('|');
-     dataoperacao        = dados.dataoperacao.split('|');
-}
-    
-$('#observacaoModal').modal('show');
- 
-for (let i = 0; i < observacoes.length; i++) {
-    
-    let observacao = observacoes[i] ? observacoes[i] : '';
-    let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
-    let data = dataoperacao[i] ? dataoperacao[i] : '';
-    opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
-}
+    if (dados.observacoes) {
+        observacoes = dados.observacoes.split('|');
+        situacao_operacao = dados.situacao_operacao.split('|');
+        dataoperacao = dados.dataoperacao.split('|');
+    }
+
+    let registros = observacoes.map((obs, index) => ({
+        observacao: obs || '',
+        situacao: situacao_operacao[index] || '',
+        data: dataoperacao[index] || ''
+    }));
+
+    registros.sort((a, b) => {
+        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        return dateA - dateB;
+    });
+
+
+    $('#observacaoModal').modal('show');
+
+    for (let registro of registros) {
+        opp.append(
+            "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+        );
+    }
 }
 
 function fechaModalObs() {
@@ -326,38 +330,38 @@ function fechaModalObs() {
 }
 
 function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
-    let observacoes = [] 
+    let observacoes = []
     let situacao_operacao = []
-    let dataoperacao =[]
+    let dataoperacao = []
 
-        if(dados.observacoes){
-            observacoes =       dados.observacoes.split('|');
-            situacao_operacao = dados.situacao_operacao.split('|');
-            dataoperacao        = dados.dataoperacao.split('|');
-        }
+    if (dados.observacoes) {
+        observacoes = dados.observacoes.split('|');
+        situacao_operacao = dados.situacao_operacao.split('|');
+        dataoperacao = dados.dataoperacao.split('|');
+    }
 
-        let registros = observacoes.map((obs, index) => ({
-            observacao: obs || '',
-            situacao: situacao_operacao[index] || '',
-            data: dataoperacao[index] || ''
-        }));
-    
-        registros.sort((a, b) => {
-            let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
-            let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
-            return dateA - dateB;
-        });
-        
-        $('#modalAceitacao').modal('show');
-        $('#idsolicitacao').val(idsolicitacao);
-        $('#idsituacao').val(idsituacao);
-        opp = $('.obshist_act');
-        opp.html('');
-        for (let registro of registros) {
-            opp.append(
-                "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
-            );
-        }
+    let registros = observacoes.map((obs, index) => ({
+        observacao: obs || '',
+        situacao: situacao_operacao[index] || '',
+        data: dataoperacao[index] || ''
+    }));
+
+    registros.sort((a, b) => {
+        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        return dateA - dateB;
+    });
+
+    $('#modalAceitacao').modal('show');
+    $('#idsolicitacao').val(idsolicitacao);
+    $('#idsituacao').val(idsituacao);
+    opp = $('.obshist_act');
+    opp.html('');
+    for (let registro of registros) {
+        opp.append(
+            "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+        );
+    }
 }
 
 function fechaModalAceitar() {
@@ -374,7 +378,7 @@ function confimarSolicitacao() {
         idsituacao: $('#idsituacao').val()
     }
 
-    
+
     // Determina a ação (Aceitar, Recusar, Finalizar ou Cancelar)
     let textoslt;
     if (parseInt(dados.idsituacao) === 2) { // Aceitar

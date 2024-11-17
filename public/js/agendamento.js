@@ -538,7 +538,7 @@ function atualizarContador(idsituacao, count) {
             $('#recusadasCount').text(`${count} solicitações recusadas`);
             break;
         case 5:
-            $('#canceladasCount').text(`${count} solicitações recusadas`);
+            $('#canceladasCount').text(`${count} solicitações canceladas`);
             break;
     }
 }

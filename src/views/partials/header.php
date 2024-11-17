@@ -103,7 +103,7 @@ if (!isset($_SESSION['token'])) {
                 </li>
             <?php } ?>
             
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <?php if ( $_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'agendamento') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/agendamento">
                     <i class="fa-solid fa-clipboard-list" style="margin-right: 10px; font-size: 22px;"></i>Agendar

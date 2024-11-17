@@ -16,6 +16,10 @@ class AgendamentoController extends Controller {
     }
 
     public function index() {
+        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] == 3 ||  $_SESSION['idgrupo'] == 1) {
+            header("Location: " . Config::BASE_DIR . '/deslogar');
+            exit();
+        }
         $this->render('agendamento', ['base' => Config::BASE_DIR]);        
     }
 
