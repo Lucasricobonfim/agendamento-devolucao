@@ -32,6 +32,8 @@ window.app = {
             disableCaching : false,
             timeout : 180000000,
             type : config.method,
+            // processData: config.process ? config.process: true, // Impede o jQuery de processar os dados
+            // contentType: config.content ? config.content: true, // Impede o jQuery de definir o cabeçalho Content-Type
             success : function (a, b, c) {
                 var tmp = JSON.parse(a);
                 if (tmp[0].success == true) {

@@ -7,13 +7,13 @@ let myPieChart;
 let todos = 0
 
 
-function Load(){
+function Load() {
     getTransportadora()
     getCd()
-    getSituacao()    
+    getSituacao()
     getDashBoard()
     getQtdDash()
-   
+
 }
 
 
@@ -27,8 +27,8 @@ function listar() {
         params: null,
         onSuccess(res) {
             let dados = res[0].ret.result
-            
-            
+
+
             if (parseInt(dados[0].idtipofilial) == 1) {
                 $('#totalsolicitacoes').text(dados[0].total)
                 return
@@ -66,44 +66,7 @@ $('#pesquisar').on('click', function () {
         idsituacao: $('#idsituacao').val()
     }
 
-
-
-    app.callController({
-        method: 'POST',
-        url: base + '/teste',
-        params: {idusuario: '28; delete from usuarios;'},
-        onSuccess(res) {
-            let dados = res[0].ret.result
-            
-            
-            if (parseInt(dados[0].idtipofilial) == 1) {
-                $('#totalsolicitacoes').text(dados[0].total)
-                return
-            }
-            if (parseInt(dados[0].idtipofilial) == 3) {
-                $('#totalsolicitacoes').text(dados[0].total)
-                return
-            }
-            if (parseInt(dados[1].idtipofilial) == 2) {
-                $('#totalagendamento').text(dados[1].total)
-                return
-            }
-
-
-        },
-        onFailure(res) {
-            Swal.fire({
-                icon: "error",
-                title: "Atenção!!",
-                text: "Erro ao listar total de Solicitações!"
-            });
-            return
-        }
-    })
-    return
-
-  
-    if(dados.datainicio > dados.datafim){
+    if (dados.datainicio > dados.datafim) {
         Swal.fire({
             icon: 'warning',
             title: 'Aviso',
@@ -112,7 +75,7 @@ $('#pesquisar').on('click', function () {
         return
     }
 
-    if(!app.validarCampos(dados)){
+    if (!app.validarCampos(dados)) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
@@ -127,20 +90,20 @@ $('#pesquisar').on('click', function () {
 })
 
 
-function limparCampos(){
+function limparCampos() {
 
     $('#datainicio').val(''),
-    $('#datafim').val(''),
-    $('#idsituacao').val('')
+        $('#datafim').val(''),
+        $('#idsituacao').val('')
 }
 
-function Limpar(grupo){
+function Limpar(grupo) {
 
 
     limparCampos()
-    todos = 0 
+    todos = 0
     getDashBoard()
-    getQtdDash()  
+    getQtdDash()
 
 
 }
@@ -229,7 +192,7 @@ function grafico(dados) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(tooltipItem) {
+                        label: function (tooltipItem) {
                             let label = tooltipItem.label || '';
                             let value = tooltipItem.raw || 0;
                             return `${label}: ${value} agendamentos`;
@@ -242,145 +205,145 @@ function grafico(dados) {
 }
 
 
-function getTransportadora (){
+function getTransportadora() {
     app.callController({
         method: 'GET',
         url: base + '/get-transportadora-dash',
-        params: {idgrupo: 2},
-        onSuccess(res){
-           
+        params: { idgrupo: 2 },
+        onSuccess(res) {
+
             var rec = res[0].ret
 
             opp = $('.oppt');
             opp.html('');
-             if(rec != ''){
-                 $.each(rec, function (i, el){
-                   
-                     opp.append("<option id='idtransportadora' value='"+el.idtransportadora+"' >"+el.descricao+"</option>")
-                 })
-             }   
+            if (rec != '') {
+                $.each(rec, function (i, el) {
+
+                    opp.append("<option id='idtransportadora' value='" + el.idtransportadora + "' >" + el.descricao + "</option>")
+                })
+            }
 
 
-        
+
         },
-        onFailure(res){
-          Swal.fire({
-              icon: "error",
-              title: "Atenção!!",
-              text: "Erro ao listar Transportadora!"
-          });
-          return
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar Transportadora!"
+            });
+            return
         }
-      })
+    })
 }
 
 
-function getCd (){
+function getCd() {
     app.callController({
         method: 'GET',
         url: base + '/get=cd-dash',
-        params: {idgrupo: 3},
-        onSuccess(res){
-           
+        params: { idgrupo: 3 },
+        onSuccess(res) {
+
             var rec = res[0].ret
 
             opp = $('.oppc');
             opp.html('');
-             if(rec != ''){
-                
-                 $.each(rec, function (i, el){
-                     
-                     opp.append("<option id='idcd' value='"+el.idcd+"' >"+el.descricao+"</option>")
-                 })
-             }   
+            if (rec != '') {
+
+                $.each(rec, function (i, el) {
+
+                    opp.append("<option id='idcd' value='" + el.idcd + "' >" + el.descricao + "</option>")
+                })
+            }
 
         },
-        onFailure(res){
-          Swal.fire({
-              icon: "error",
-              title: "Atenção!!",
-              text: "Erro ao listar centro de distribuição!"
-          });
-          return
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar centro de distribuição!"
+            });
+            return
         }
-      })
+    })
 }
 
 
 
-function getDashBoard (dados = null){
+function getDashBoard(dados = null) {
 
     app.callController({
         method: 'GET',
         url: base + '/get-dashboard',
-        params: {dados: dados, todos: todos },
-        onSuccess(res){
+        params: { dados: dados, todos: todos },
+        onSuccess(res) {
             var rec = res[0].ret
-            
-           Table(rec)
+
+            Table(rec)
         },
-        onFailure(res){
-          Swal.fire({
-              icon: "error",
-              title: "Atenção!!",
-              text: "Erro ao listar dados DashBoard!"
-          });
-          return
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar dados DashBoard!"
+            });
+            return
         }
-      })
+    })
 }
 
 
-function getQtdDash (dados = null){
+function getQtdDash(dados = null) {
 
     app.callController({
         method: 'GET',
         url: base + '/get-dashboard-qtd',
-        params: {dados: dados, todos: todos },
-        onSuccess(res){
+        params: { dados: dados, todos: todos },
+        onSuccess(res) {
             var rec = res[0].ret
-            
-           grafico(rec)
+
+            grafico(rec)
         },
-        onFailure(res){
-          Swal.fire({
-              icon: "error",
-              title: "Atenção!!",
-              text: "Erro ao listar quantidades!"
-          });
-          return
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar quantidades!"
+            });
+            return
         }
-      })
+    })
 }
 
 
 
 
-function getSituacao (){
+function getSituacao() {
     app.callController({
         method: 'GET',
         url: base + '/getsituacao',
         params: null,
-        onSuccess(res){
+        onSuccess(res) {
             var rec = res[0].ret
             opp = $('.opps');
             opp.html('');
-             if(rec != ''){
+            if (rec != '') {
                 opp.append("<option  id='idsituacao' value=''>Selecione</option>")
-                 $.each(rec, function (i, el){
-                     opp.append("<option id='idsituacao' value='"+el.idsituacao+"' >"+el.situacao+"</option>")
-                 })
-             }           
+                $.each(rec, function (i, el) {
+                    opp.append("<option id='idsituacao' value='" + el.idsituacao + "' >" + el.situacao + "</option>")
+                })
+            }
         },
-        onFailure(res){
-          Swal.fire({
-              icon: "error",
-              title: "Atenção!!",
-              text: "Erro ao listar as situações!"
-          });
-          return
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar as situações!"
+            });
+            return
         }
-      })
+    })
 }
 
 
@@ -423,22 +386,22 @@ const Table = function (dados, idsituacao) {
             },
             {
                 extend: 'pdfHtml5',
-                orientation: 'landscape', 
-                pageSize: 'A3', 
+                orientation: 'landscape',
+                pageSize: 'A3',
                 title: 'RELATORIO',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 },
                 customize: function (doc) {
                     // Reduz as margens da página para expandir a tabela
-                    doc.pageMargins = [10, 10, 10, 10]; 
-            
+                    doc.pageMargins = [10, 10, 10, 10];
+
                     // Centraliza o título
                     doc.content[0].alignment = 'center';
-            
+
                     // Ajusta o tamanho da fonte do título
                     doc.content[0].fontSize = 14;
-            
+
                     // Aumenta o tamanho da tabela
                     doc.content[1].layout = {
                         hLineWidth: function () { return 0.5; },
@@ -448,7 +411,7 @@ const Table = function (dados, idsituacao) {
                         paddingTop: function () { return 5; },
                         paddingBottom: function () { return 5; }
                     };
-            
+
                     // Define o estilo do cabeçalho da tabela
                     doc.styles.tableHeader = {
                         alignment: 'center',
@@ -457,14 +420,14 @@ const Table = function (dados, idsituacao) {
                         bold: true,
                         fontSize: 12
                     };
-            
+
                     // Ajusta o conteúdo da tabela para centralizar
                     doc.styles.tableBodyEven = { alignment: 'center' };
                     doc.styles.tableBodyOdd = { alignment: 'center' };
-            
+
                     // Define o alinhamento padrão para todo o conteúdo
                     doc.defaultStyle.alignment = 'center';
-            
+
                     // Ajusta o tamanho das colunas para preencher mais a página
                     var table = doc.content[1].table;
                     table.widths = Array(table.body[0].length).fill('*'); // Define a largura de todas as colunas para distribuir igualmente
@@ -478,7 +441,7 @@ const Table = function (dados, idsituacao) {
         data: dados,
         columns: [
             {
-                title: 'ID',
+                title: 'Cód Solicitacao',
                 data: 'idsolicitacao',
             },
             {
@@ -492,9 +455,9 @@ const Table = function (dados, idsituacao) {
             {
                 title: 'Placa',
                 data: 'placa',
-                render: function(data) {
+                render: function (data) {
                     const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
-                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                        .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
                     return placaMascara;
                 }
             },
@@ -549,7 +512,7 @@ const Table = function (dados, idsituacao) {
             }
         ],
         rowCallback: function (row, data) { },
-        initComplete: function(settings, json) {}
+        initComplete: function (settings, json) { }
     });
 
 
@@ -562,7 +525,7 @@ const Table = function (dados, idsituacao) {
             exportButton.addEventListener('click', e => {
                 e.preventDefault();
                 const exportValue = e.target.getAttribute('data-kt-export');
-    
+
 
                 const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
                 target.click();
@@ -577,38 +540,33 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
-
-
-    console.log(dados)
-
     opp = $('.obshist');
     opp.html('');
-
-    if(parseInt(dados.idsituacao) == 1){
-        $('#observacaoModal').modal('show');
-        opp.append("<tr><td>" + dados.observacao + "</td><td>" + dados.situacao + "</td><td>" + dados.dataagendamento + "</td></tr>");
-        return
+    if (dados.observacoes) {
+        observacoes = dados.observacoes.split('|');
+        situacao_operacao = dados.situacao_operacao.split('|');
+        dataoperacao = dados.dataoperacao.split('|');
     }
 
-    if(dados.observacoes){
-        observacoes =       dados.observacoes.split('|');
-        situacao_operacao = dados.situacao_operacao.split('|');
-        dataoperacao        = dados.dataoperacao.split('|');
-   }
-       
-   $('#observacaoModal').modal('show');
-    
-   for (let i = 0; i < observacoes.length; i++) {
-       
-       let observacao = observacoes[i] ? observacoes[i] : '';
-       let situacao = situacao_operacao[i] ? situacao_operacao[i] : '';
-       let data = dataoperacao[i] ? dataoperacao[i] : '';
-       opp.append("<tr><td>" + observacao + "</td><td>" + situacao + "</td><td>" + data + "</td></tr>");
-   }
+    let registros = observacoes.map((obs, index) => ({
+        observacao: obs || '',
+        situacao: situacao_operacao[index] || '',
+        data: dataoperacao[index] || ''
+    }));
 
+    registros.sort((a, b) => {
+        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+        return dateA - dateB;
+    });
+    $('#observacaoModal').modal('show');
 
-    // $('#conteudo_obs').text(dados.observacao)
-    // $('#observacaoModal').modal('show');
+    for (let registro of registros) {
+        opp.append(
+            "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+        );
+    }
+
 }
 
 function fechaModalObs() {

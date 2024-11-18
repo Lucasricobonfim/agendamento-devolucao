@@ -84,6 +84,8 @@ $router->get('/get-transportadora-ativos', 'IndenizacaoCdController@getTransport
 $router->get('/get-negocio-ativos', 'IndenizacaoCdController@getNegocio');
 $router->get('/get-indenizacao-cd', 'IndenizacaoCdController@getindenizacao');
 
+$router->get('/get-anexos-solicitacao', 'IndenizacaoCdController@getanexo');
+
 //Indenização - Transportadora
 $router->get('/indenizacao-transportadora', 'IndenizacaoTransportadoraController@index');
 $router->get('/getindenizacao-transportadora', 'IndenizacaoTransportadoraController@getindenizacao');

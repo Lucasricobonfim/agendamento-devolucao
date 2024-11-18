@@ -146,6 +146,33 @@
     .dt-buttons {
         display: none !important;
     }
+
+    /* Modal Historico*/
+    @media (max-width: 768px) {
+        .modal-lg {
+            max-width: 90%;
+        }
+
+        .modal-body {
+            font-size: 0.8em;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .modal-lg {
+            max-width: 100%;
+        }
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .modal-lg {
+        max-width: 50%;
+        min-height: 500px;
+    }
 </style>
 <main class='main-div' style="width:100%;">
     <div class="cards">
@@ -190,23 +217,35 @@
         </div>
         <!-- Tabela -->
         <table id="mytable" class="table table-striped table-bordered display nowrap" style="width:100%">
-            
+
         </table>
     </div>
 
     <!-- MODAL  -->
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
+                    <h5 class="modal-title" id="observacaoModalLabel">Observacao</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <h4 id="conteudo_obs"></h4>
+                    <!-- <h4 id="conteudo_obs"></h4>  -->
 
+                    <table id="modal-media" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

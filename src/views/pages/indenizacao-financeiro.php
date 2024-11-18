@@ -185,16 +185,28 @@
     <!-- MODAL  -->
 
     <div class="modal fade" id="observacaoModal" tabindex="-1" aria-labelledby="observacaoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="observacaoModalLabel">Observação</h5>
+                    <h5 class="modal-title" id="observacaoModalLabel">Observacao</h5>
                     <button type="button" onclick="fechaModalObs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Conteúdo da observação -->
-                    <h4 id="conteudo_obs"></h4>
+                    <!-- <h4 id="conteudo_obs"></h4>  -->
 
+                    <table id="modal-media" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody class="obshist">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="fechaModalObs()" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -217,7 +229,7 @@
                     <!-- Conteúdo da observação -->
                     <input hidden name="" id="idsolicitacaoFaturar"></input>
                     <input hidden name="" id="idsituacao"></input>
-                    <textarea class="form-control" name="" id="observacaoFaturar"></textarea>
+                    <textarea class="form-control" name="" id="observacaoFaturar" placeholder="Digite uma observação"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="confimarFaturar()" class="btn btn-secondary">Confirmar</button>

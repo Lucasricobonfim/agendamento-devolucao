@@ -26,8 +26,10 @@ class IndenizacaoFinanceiro extends Model{
                 ft.nome AS nome_transportadora,
                 si.observacao,
                 DATE_FORMAT(si.data, '%d/%m/%Y') AS data,
-                si.anexo,
-                s.idsituacao,  
+                s.idsituacao, 
+                oi.observacoes,
+                oi.dataoperacao,
+                oi.situacao_operacao, 
                 s.situacao AS descricao_situacao
             FROM solicitacoes_indenizacao si
             LEFT JOIN filial fc ON si.idcd = fc.idfilial
@@ -35,6 +37,16 @@ class IndenizacaoFinanceiro extends Model{
             LEFT JOIN filial fn ON si.idnegocio = fn.idfilial -- Junção para pegar o idtipofilial
             LEFT JOIN grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
             LEFT JOIN situacao s ON s.idsituacao = si.idsituacao
+            left join(
+                    SELECT
+                        ms.idsolicitacao
+                        ,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
+                        ,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
+                        ,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                    from  movimento_solicitacoes ms 
+                    left join situacao sos on sos.idsituacao = ms.idsituacao
+                    GROUP BY ms.idsolicitacao
+                )  AS oi ON  oi.idsolicitacao = si.idsolicitacao
             where s.idsituacao = :idsituacao AND si.idnegocio = :idnegocio
         ";
         $sql = $this->switchParams($sql, $dados);
@@ -60,16 +72,26 @@ class IndenizacaoFinanceiro extends Model{
         $params = [
             "observacao" => $dados['observacao'],
             "idsolicitacao" => $dados['idsolicitacao'],
-            "idsituacao" => $dados['idsituacao']
+            "idsituacao" => $dados['idsituacao'],
         ];
 
         $sql = "
-          update solicitacoes_indenizacao
-            set idsituacao = :idsituacao
-           ,observacao = ':observacao'
-          where idsolicitacao = :idsolicitacao
+          update solicitacoes_indenizacao 
+          set idsituacao = :idsituacao,
+             observacao = ':observacao'               
+          WHERE idsolicitacao = :idsolicitacao;
+
+          insert into movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao )
+
+          SELECT
+             :idsolicitacao
+            ,:idsituacao
+            ,':observacao'
+            ,now();
         ";
         $sql = $this->switchParams($sql, $params );
+        // print_r($sql);
+        // exit;
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();

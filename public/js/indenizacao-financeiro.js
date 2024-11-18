@@ -255,7 +255,7 @@ const Table = function (dados, idsituacao) {
         },
         initComplete: function(settings, json) {
             console.log('Valor de idsituacao:', idsituacao); // Para verificar o valor
-            const column = this.api().column(11);
+            const column = this.api().column(12);
             column.visible(idsituacao === 7);
         }
     });
@@ -278,7 +278,39 @@ const Table = function (dados, idsituacao) {
 }
 
 function abrirModalObs(dados) {
-    $('#conteudo_obs').text(dados.observacao)
+    console.log('Dados recebidos:', dados);  // Verifique se os dados estão corretos
+    let opp = $('.obshist');
+    opp.html('');
+
+    if (dados.observacoes) {
+        console.log('Observações:', dados.observacoes);
+        let observacoes = dados.observacoes.split('|');
+        let situacao_operacao = dados.situacao_operacao.split('|');
+        let dataoperacao = dados.dataoperacao.split('|');
+
+        let registros = observacoes.map((obs, index) => ({
+            observacao: obs || 'Sem observação',
+            situacao: situacao_operacao[index] || 'Sem situação',
+            data: dataoperacao[index] || 'Sem data'
+        }));
+
+        console.log('Registros:', registros);
+
+        registros.sort((a, b) => {
+            let dateA = new Date(a.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
+            let dateB = new Date(b.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+            return dateA - dateB;
+        });
+
+        registros.forEach(registro => {
+            opp.append(
+                `<tr><td>${registro.observacao}</td><td>${registro.situacao}</td><td>${registro.data}</td></tr>`
+            );
+        });
+    } else {
+        opp.append("<tr><td colspan='3'>Nenhuma observação encontrada.</td></tr>");
+    }
+
     $('#observacaoModal').modal('show');
 }
 function fechaModalObs() {

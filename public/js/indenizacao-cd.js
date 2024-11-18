@@ -12,8 +12,9 @@ $(document).ready(function () {
 });
 
 $('#anexo').on('change', function() {
+    // Obtém o nome do arquivo selecionado
     const fileName = $(this).val().split('\\').pop() || "Nenhum arquivo escolhido";
-    $('#file-chosen').text(fileName);
+    $('#file-chosen').text(fileName); // Exibe o nome do arquivo no elemento correspondente
 });
 
 $('#solicitar').on('click', function () {
@@ -23,11 +24,11 @@ $('#solicitar').on('click', function () {
         idnegocio: $('#idnegocio').val(),
         tipo_indenizacao: $('#tipoindenizacao').val(),
         idfilial: $('#idfilial').val(),
-        anexo: $('#anexo').val(),
+        arquivo: $('#arquivo')[0].files,
         data: $('#data').val(),
         observacao: $('#observacao').val()
     }
-    console.log(dados)
+    
     if (!app.validarCampos(dados)) {
         Swal.fire({
             icon: "warning",
@@ -66,63 +67,74 @@ function limparCampos() {
     $('#idnegocio').val(''),
     $('#tipoindenizacao').val(''),
     $('#idfilial').val(''),
-    $('#anexo').val('')
+    $('#arquivo').val('')
     $('#data').val('')
     $('#observacao').val('')
 }
 
 function solicitar(dados) {
-    app.callController({
-        method: 'POST',
-        url: base + '/solicitar-indenizacao',
-        params: {
-            numero_nota: dados.numero_nota,
-            numero_nota2: dados.numero_nota2,
-            idnegocio: dados.idnegocio,
-            tipo_indenizacao: dados.tipo_indenizacao,
-            idfilial: dados.idfilial,
-            anexo: dados.anexo,
-            data: dados.data,
-            observacao: dados.observacao
-        },
-        onSuccess(res) {
-            
-            let rec = res[0]
+    const formData = new FormData();
+    
+    // Adiciona outros dados ao FormData
+    formData.append('numero_nota', dados.numero_nota);
+    formData.append('numero_nota2', dados.numero_nota2);
+    formData.append('idnegocio', dados.idnegocio);
+    formData.append('tipo_indenizacao', dados.tipo_indenizacao);
+    formData.append('idfilial', dados.idfilial);
+    formData.append('data', dados.data);
+    formData.append('observacao', dados.observacao);
 
-            if (rec.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Sucesso!",
-                    text: "Indenização solicitada com sucesso!"
-                });
-                limparCampos()
-                fechaModalIndenizacao()
-                listar()
+    // Adiciona os arquivos ao FormData
+    if (dados.arquivo.length > 0) {
+        Array.from(dados.arquivo).forEach((file, index) => {
+            // Verifica o tipo de arquivo antes de adicionar (exemplo: apenas PDF ou imagens)
+            if (file.type === "application/pdf" || file.type.startsWith("image/")) {
+                formData.append('anexo[]', file);
             } else {
                 Swal.fire({
-                    icon: "error",
+                    icon: "warning",
                     title: "Atenção!!",
-                    text: "Erro ao solicitar indenizações!"
+                    text: "Formato de arquivo não permitido. Selecione apenas PDF ou imagens!"
                 });
-                limparCampos()
-                return
+                return;
             }
+        });
+    } else {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Selecione pelo menos um arquivo para anexar!"
+        });
+        return;
+    }
+
+    // Realiza a solicitação AJAX
+    $.ajax({
+        method: 'POST',
+        url: base + '/solicitar-indenizacao',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            listar(); // Atualiza a lista de indenizações
+            fechaModalIndenizacao(); // Fecha o modal
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Solicitação Enviada com Sucesso!"
+            });
         },
-        onFailure(res) {
-            console.log(res)
+        error: function (xhr, status, error) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao solicitar!"
+                text: "Erro ao solicitar indenização!"
             });
-            limparCampos()
-            return
         }
-    })
+    });
 }
 
 function buscaNegocio() {
-    console.log('chego aq')
     app.callController({
         method: 'GET',
         url: base + '/get-negocio-ativos',
@@ -152,13 +164,11 @@ function buscaNegocio() {
 
 
 function buscaTransportadora() {
-    console.log('chego aq')
     app.callController({
         method: 'GET',
         url: base + '/get-transportadora-ativos',
         params: null,
         onSuccess(res) {
-            console.log(res)
             let rec = res[0].ret
             opp = $('.opp');
             opp.html('');
@@ -186,7 +196,9 @@ function listar() {
         url: base + '/get-indenizacao-cd',
         params: null,
         onSuccess(res) {
-            console.log(res)
+            console.log('res[0]:', res[0]);  // Verifique a estrutura do primeiro item da resposta
+            console.log('res[0].ret:', res[0].ret);  // Verifique o campo ret
+            console.log('res[0].ret.observacoes:', res[0].ret.observacoes);  // Verifique o campo observacoes
             Table(res[0].ret)
         },
         onFailure(res) {
@@ -296,7 +308,7 @@ const Table = function(ret){
             },
             {
                 title: 'Transportadora',
-                data: 'nome_transportadora'
+                data: 'transportadora'
             },
             {
                 title: 'NF',
@@ -408,12 +420,46 @@ const Table = function(ret){
 }
 
 function abrirModalObs(dados) {
-    $('#conteudo_obs').text(dados.observacao)
+    console.log('Dados recebidos:', dados);  // Verifique se os dados estão corretos
+    let opp = $('.obshist');
+    opp.html('');
+
+    if (dados.observacoes) {
+        console.log('Observações:', dados.observacoes);
+        let observacoes = dados.observacoes.split('|');
+        let situacao_operacao = dados.situacao_operacao.split('|');
+        let dataoperacao = dados.dataoperacao.split('|');
+
+        let registros = observacoes.map((obs, index) => ({
+            observacao: obs || 'Sem observação',
+            situacao: situacao_operacao[index] || 'Sem situação',
+            data: dataoperacao[index] || 'Sem data'
+        }));
+
+        console.log('Registros:', registros);
+
+        registros.sort((a, b) => {
+            let dateA = new Date(a.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
+            let dateB = new Date(b.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+            return dateA - dateB;
+        });
+
+        registros.forEach(registro => {
+            opp.append(
+                `<tr><td>${registro.observacao}</td><td>${registro.situacao}</td><td>${registro.data}</td></tr>`
+            );
+        });
+    } else {
+        opp.append("<tr><td colspan='3'>Nenhuma observação encontrada.</td></tr>");
+    }
+
     $('#observacaoModal').modal('show');
 }
+
 function fechaModalObs() {
     $('#conteudo_obs').text('')
     $('#observacaoModal').modal('hide');
+
 }
 function fechaModalIndenizacao() {
     $('#solicitarIndenizacaoModal').modal('hide'); // Fecha o modal
@@ -426,7 +472,67 @@ function fechaModalIndenizacao() {
     $('#idfilial').val('');
     $('#data').val('');
     $('#observacao').val('');
-    $('#anexo').val(''); // Limpar arquivo
+    $('#arquivo').val(''); // Limpar arquivo
     $('#file-chosen').text("Nenhum arquivo escolhido"); // Resetar texto
 }
 
+// Evento de clique no botão de anexo
+function abrirModalAnexo(dados) {
+    console.log(dados);
+    // Mostra o modal de anexos
+    $('#imageModal').modal('show');
+
+    // Limpa o conteúdo do modal antes de adicionar os anexos
+    $('#modalImage').html('');
+
+    // Requisição AJAX para buscar as imagens da solicitação
+    $.ajax({
+        method: 'GET',
+        url: base + '/get-anexos-solicitacao', // URL para buscar os anexos
+        data: { idsolicitacao: dados.idsolicitacao }, // Envia o ID da solicitação
+        success: function (res) {
+            console.log(res);  // Verifica a resposta da requisição
+            if (res.success && res.ret.length > 0) {
+                // Variáveis para navegação entre as imagens
+                let currentIndex = 0;
+
+                // Função para atualizar a imagem no modal
+                function updateImage() {
+                    console.log("Exibindo imagem: ", res.ret[currentIndex]);
+                    const imgSrc = baseUrl + res.ret[currentIndex];  // Ajuste o caminho da imagem
+                    console.log("Caminho da imagem: ", imgSrc);  // Verifica o caminho final
+                    const imgElement = `<img src="${imgSrc}" alt="Anexo" class="img-fluid" style="max-height: 70vh;">`;
+                    $('#modalImage').html(imgElement);
+                }
+
+                // Exibe a primeira imagem
+                updateImage();
+
+                // Navegar para a imagem anterior
+                $('#prevBtn').on('click', function() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateImage();  // Atualiza a imagem ao clicar no botão 'Anterior'
+                    }
+                });
+
+                // Navegar para a próxima imagem
+                $('#nextBtn').on('click', function() {
+                    if (currentIndex < res.ret.length - 1) {
+                        currentIndex++;
+                        updateImage();  // Atualiza a imagem ao clicar no botão 'Próximo'
+                    }
+                });
+            } else {
+                $('#modalImage').html('<p>Nenhum anexo encontrado.</p>');
+            }
+        },
+        error: function () {
+            Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text: "Falha ao carregar anexos."
+            });
+        }
+    });
+}
