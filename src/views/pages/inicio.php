@@ -109,12 +109,8 @@
             <div class="col-md-6 mb-3">
                 <label for="idtipofilial" class="form-label">Transportadora<span class="text-danger">*</span></label>
                 <select <?php if ($_SESSION['idgrupo'] == 2) { ?> disabled <?php }  ?> class="form-select oppt" id="idtransportadora" name="idtransportadora">
-
                 </select>
             </div>
-
-
-
             <div class="col-md-6 mb-3">
                 <label for="idtipofilial" class="form-label">CD<span class="text-danger">*</span></label>
                 <select <?php if ($_SESSION['idgrupo'] == 3) { ?> disabled <?php }  ?> class="form-select oppc" id="idcd" name="idcd">

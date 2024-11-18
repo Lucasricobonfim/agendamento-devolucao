@@ -13,7 +13,6 @@ function Load() {
     getSituacao()
     getDashBoard()
     getQtdDash()
-
 }
 
 
@@ -56,6 +55,7 @@ function listar() {
 }
 
 
+
 $('#pesquisar').on('click', function () {
     todos = 1
     let dados = {
@@ -65,7 +65,16 @@ $('#pesquisar').on('click', function () {
         datafim: $('#datafim').val(),
         idsituacao: $('#idsituacao').val()
     }
-
+    $('#datainicio').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#datafim').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#idsituacao').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    
     if (dados.datainicio > dados.datafim) {
         Swal.fire({
             icon: 'warning',
@@ -93,8 +102,12 @@ $('#pesquisar').on('click', function () {
 function limparCampos() {
 
     $('#datainicio').val(''),
-        $('#datafim').val(''),
-        $('#idsituacao').val('')
+    $('#datafim').val(''),
+    $('#idsituacao').val('')
+
+    $('#datainicio').removeClass('erro');
+    $('#datafim').removeClass('erro');
+    $('#idsituacao').removeClass('erro');
 }
 
 function Limpar(grupo) {
