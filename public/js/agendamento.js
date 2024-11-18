@@ -20,6 +20,9 @@ $('#placa').on('input', function () {
 $('#data').on('input', function () {
     $(this).removeClass('erro');
 });
+$('#dataReagendamento').on('input', function () {
+    $(this).removeClass('erro');
+});
 $('#qtdnota').on('input', function () {
     $(this).removeClass('erro');
 });
@@ -549,7 +552,7 @@ function abriModalReagendar(dados) {
 
     $('#modalReagendar').modal('show');
     $('#idsolicitacao').val(dados.idsolicitacao);
-
+    $('#observacao').val('')
 }
 
 function fecharModalReagendar(){
@@ -559,6 +562,8 @@ function fecharModalReagendar(){
     $('#dataReagendamento').val('');
     $('#observacao').val('')
     $('#modalReagendar').modal('hide');
+    $('#observacao').removeClass('erro'); // Remove a classe 'erro'
+    $('#dataReagendamento').removeClass('erro'); // Remove a classe 'erro'
 }
 
 
@@ -570,12 +575,19 @@ function reagendar(){
         observacao: $('#observacao').val(),
 
     }
-    
-    if (!app.validarCampos(dados)) {
+    if (!dados.observacao) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
-            text: "Preencha todos os campos!"
+            text: "Preencha com uma Observação!"
+        });
+        $('#observacao').toggleClass('erro');
+        return
+    } else if(!app.validarCampos(dados)) {
+        Swal.fire({
+            icon: "warning",
+            title: "Atenção!!",
+            text: "Preencha o campo data!"
         });
         return
     }

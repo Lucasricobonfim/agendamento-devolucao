@@ -28,7 +28,6 @@
     textarea#observacao {
         width: 100%;
         padding: 10px;
-        border: 1px solid #ced4da;
         border-radius: 4px;
         font-size: 16px;
         box-sizing: border-box;
@@ -272,7 +271,7 @@
                         <input type="text" disabled class="form-control" id="idsolicitacao" required style="display: none;">
 
                         <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>
-                        <textarea id="observacao" name="observacao" placeholder="Informe observações" maxlength="500"></textarea>
+                        <textarea id="observacao" name="observacaoReagendar" placeholder="Informe observações" maxlength="500"></textarea>
 
                         <label for="dataReagendamento" class="form-label">Data para Reagendar</label>
                         <input type="date" class="form-control" id="dataReagendamento" required>
