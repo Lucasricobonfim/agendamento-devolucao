@@ -8,11 +8,21 @@ use src\models\IndenizacaoCd;
 
 class IndenizacaoCdController extends Controller
 {
-
-    public function index()
-    {
-        $this->render('indenizacao-cd', ['base' => Config::BASE_DIR]);
+    public function __construct(){
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
     }
+    public function index() {
+        if($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 3){
+            $this->render('indenizacao-cd', ['base' => Config::BASE_DIR]);
+        }
+        else{
+            $this->render('404');
+        }        
+    }
+
 
     public function getTransportadora()
     {

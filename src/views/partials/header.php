@@ -115,7 +115,7 @@ if (!isset($_SESSION['token'])) {
             </li>
             <?php } ?>
             
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <?php if ($_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'agendamento') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/agendamento">
                     <i class="fa-solid fa-clipboard-list" style="margin-right: 10px; font-size: 22px;"></i>Agendar
@@ -123,7 +123,7 @@ if (!isset($_SESSION['token'])) {
             </li>
             <?php } ?>
 
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <?php if ($_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'agendamento-listar') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/agendamento-listar">
                     <i class="fa-solid fa-list-check" style="margin-right: 10px; font-size: 22px;"></i>Listar Agendamentos
@@ -147,7 +147,7 @@ if (!isset($_SESSION['token'])) {
             </li>
             <?php } ?>
 
-            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 2) { ?>
+            <?php if ($_SESSION['idgrupo'] == 2) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'indenizacao-transportadora') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/indenizacao-transportadora">
                     <i class="fas fa-hand-holding-usd" style="margin-right: 10px; font-size: 22px;"></i>Listar Indenizações
@@ -163,7 +163,7 @@ if (!isset($_SESSION['token'])) {
             </li>
             <?php } ?>
             
-            <?php if ($_SESSION['idgrupo'] == 4 || $_SESSION['idgrupo'] == 5) { ?>
+            <?php if ($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 4 || $_SESSION['idgrupo'] == 5) { ?>
             <li class="<?= (basename($_SERVER['REQUEST_URI']) == 'replica') ? 'active' : ''; ?>">
                 <a class="negrito" href="<?= $base; ?>/replica">
                 <i class="fa-solid fa-bullhorn" style="margin-right: 10px; font-size: 22px;"></i>Contestações

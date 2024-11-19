@@ -6,9 +6,20 @@ use \src\Config;
 use src\models\Replica;
 
 class ReplicaController extends Controller {
-
+    public function __construct() {
+        // Verifica se o usuário está autenticado e se pertence ao grupo 4 ou 5
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
+    }
     public function index() {
-        $this->render('replica', ['base' => Config::BASE_DIR]);        
+        if($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 4 || $_SESSION['idgrupo'] == 5){
+            $this->render('replica', ['base' => Config::BASE_DIR]);
+        }
+        else{
+            $this->render('404');
+        }        
     }
 
     public function getreplica(){

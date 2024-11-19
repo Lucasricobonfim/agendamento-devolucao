@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/11/2024 às 19:32
+-- Tempo de geração: 19/11/2024 às 19:08
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -22,6 +22,54 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `rdkaka` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `rdkaka`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `anexo`
+--
+
+DROP TABLE IF EXISTS `anexo`;
+CREATE TABLE `anexo` (
+  `idmovimento` int(11) NOT NULL,
+  `idsolicitacao` int(11) NOT NULL,
+  `idsituacao` int(11) NOT NULL,
+  `anexo` varchar(250) NOT NULL,
+  `data` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `anexo`
+--
+
+INSERT INTO `anexo` (`idmovimento`, `idsolicitacao`, `idsituacao`, `anexo`, `data`) VALUES
+(58, 77, 8, '897370 (8).jpeg', '2024-11-18 15:15:53'),
+(59, 77, 8, '897370 (2).jpeg', '2024-11-18 15:15:53'),
+(60, 78, 8, 'imagem - 2024-09-13T144508.768 - Copia.jpg', '2024-11-18 15:16:15'),
+(61, 79, 8, 'Imagem do WhatsApp de 2024-10-29 à(s) 14.59.46_b8740fff.jpg', '2024-11-18 15:16:34'),
+(62, 80, 8, '897370 (7).jpeg', '2024-11-18 15:16:50'),
+(63, 81, 8, 'imagem - 2024-09-13T144502.142.jpg', '2024-11-18 15:17:07'),
+(64, 82, 8, 'imagem - 2024-09-13T144501.379.jpg', '2024-11-18 15:17:28'),
+(65, 83, 8, 'imagem - 2024-09-13T144508.768.jpg', '2024-11-18 15:17:45'),
+(66, 84, 8, 'imagem (23).png', '2024-11-18 15:18:07'),
+(67, 85, 8, 'imagem - 2024-09-13T144508.768.jpg', '2024-11-18 15:18:32'),
+(68, 86, 8, 'imagem - 2024-09-13T144500.476.jpg', '2024-11-18 15:18:51'),
+(69, 87, 8, '897370 (2).jpeg', '2024-11-19 11:50:54'),
+(70, 87, 8, '897370 (3).jpeg', '2024-11-19 11:50:54'),
+(71, 88, 8, '897370 (7).jpeg', '2024-11-19 11:53:47'),
+(72, 88, 8, '897370 (5).jpeg', '2024-11-19 11:53:47'),
+(73, 88, 8, '897370 (9).jpeg', '2024-11-19 11:53:47'),
+(74, 88, 8, '897370 (8).jpeg', '2024-11-19 11:53:47'),
+(75, 89, 8, '897370 (5).jpeg', '2024-11-19 11:54:10'),
+(76, 89, 8, '897370 (9).jpeg', '2024-11-19 11:54:10'),
+(77, 89, 8, 'imagem - 2024-09-13T144508.768 - Copia - Copia.jpg', '2024-11-19 11:54:10'),
+(78, 90, 8, '897370 (7).jpeg', '2024-11-19 11:55:01'),
+(79, 90, 8, '897370 (5).jpeg', '2024-11-19 11:55:01'),
+(80, 90, 8, '897370 (9).jpeg', '2024-11-19 11:55:01'),
+(81, 90, 8, '897370 (8).jpeg', '2024-11-19 11:55:01'),
+(82, 91, 8, '897370 (9).jpeg', '2024-11-19 11:56:00'),
+(83, 91, 8, '897370 (8).jpeg', '2024-11-19 11:56:00'),
+(84, 91, 8, '897370 (2).jpeg', '2024-11-19 11:56:00');
 
 -- --------------------------------------------------------
 
@@ -94,7 +142,7 @@ CREATE TABLE `movimento_solicitacoes` (
   `idsolicitacao` int(11) NOT NULL,
   `idsituacao` int(11) NOT NULL,
   `observacao` varchar(500) NOT NULL,
-  `dataoperacao` date NOT NULL
+  `dataoperacao` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -102,9 +150,37 @@ CREATE TABLE `movimento_solicitacoes` (
 --
 
 INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituacao`, `observacao`, `dataoperacao`) VALUES
-(6, 28, 2, 'aceito', '2024-11-08'),
-(7, 29, 2, 'aceitado 2222', '2024-11-08'),
-(8, 28, 3, 'finalizado com sucesso tmj', '2024-11-08');
+(55, 77, 8, '12', '2024-11-18 15:15:53'),
+(56, 78, 8, '12', '2024-11-18 15:16:15'),
+(57, 79, 8, 'TESTANDO ID', '2024-11-18 15:16:34'),
+(58, 80, 8, 'TESTANDO ID', '2024-11-18 15:16:50'),
+(59, 81, 8, 'TESTANDO ID', '2024-11-18 15:17:07'),
+(60, 82, 8, 'TESTANDO ID', '2024-11-18 15:17:28'),
+(61, 83, 8, 'TESTANDO ID', '2024-11-18 15:17:45'),
+(62, 84, 8, 'TESTANDO ID', '2024-11-18 15:18:07'),
+(63, 85, 8, 'TESTANDO ID', '2024-11-18 15:18:32'),
+(64, 86, 8, 'TESTANDO ID', '2024-11-18 15:18:51'),
+(65, 77, 7, 'TESTANDO ID TRANSPORTADORA', '2024-11-18 15:19:21'),
+(66, 78, 7, 'TESTANDO ID TRANSPORTADORA', '2024-11-18 15:19:28'),
+(67, 82, 7, 'TESTANDO ID TRANSPORTADORA', '2024-11-18 15:19:34'),
+(68, 83, 7, 'TESTANDO ID TRANSPORTADORA', '2024-11-18 15:19:41'),
+(69, 79, 7, 'TESTANDO ID TRANSPORTADORA', '2024-11-18 15:19:49'),
+(70, 80, 6, 'TESTANDO ID CONTESTACAO', '2024-11-18 15:20:45'),
+(71, 81, 6, 'TESTANDO ID CONTESTACAO', '2024-11-18 15:20:48'),
+(72, 84, 6, 'TESTANDO ID CONTESTACAO', '2024-11-18 15:20:51'),
+(73, 85, 6, 'TESTANDO ID CONTESTACAO', '2024-11-18 15:20:54'),
+(74, 86, 6, 'TESTANDO ID CONTESTACAO', '2024-11-18 15:20:57'),
+(75, 82, 9, 'qwdq', '2024-11-18 15:36:27'),
+(76, 83, 9, 'FINALIZANDO INDENIZAÇÃO', '2024-11-18 15:37:33'),
+(77, 80, 8, 'COMO TRATADO VIA EMAIL FAVOR AUTORIZAR', '2024-11-18 15:45:44'),
+(78, 81, 10, 'CANCELANDO DEVIDO NAO PROCEDER', '2024-11-18 15:45:54'),
+(79, 80, 7, 'AUTORIZANDO CONFORME COMBINADO', '2024-11-18 15:50:45'),
+(80, 80, 9, 'FINALIZANDO INDENIZAÇÃO', '2024-11-18 15:51:35'),
+(81, 87, 8, '213', '2024-11-19 11:50:54'),
+(82, 88, 8, '12', '2024-11-19 11:53:47'),
+(83, 89, 8, '12', '2024-11-19 11:54:10'),
+(84, 90, 8, '12', '2024-11-19 11:55:01'),
+(85, 91, 8, '12', '2024-11-19 11:56:00');
 
 -- --------------------------------------------------------
 
@@ -159,8 +235,13 @@ CREATE TABLE `solicitacoes_agendamentos` (
 
 INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`, `dataoperacao`) VALUES
 (28, 25, 'SAA2321', 2, 'finalizado com sucesso tmj', 22, '2024-11-08', 3, '2024-11-08'),
-(29, 25, 'VAS2131', 2, 'aceitado 2222', 22, '2024-11-09', 2, '2024-11-08'),
-(30, 25, 'ASD2313', 2, 'teste', 22, '2024-11-09', 1, '2024-11-08');
+(29, 25, 'VAS2131', 2, 'Finalizando', 22, '2024-11-09', 3, '2024-11-08'),
+(30, 25, 'ASD2313', 2, 'CANCELADO, SOLICITAR REAGENDAMENTO', 22, '2024-11-09', 3, '2024-11-08'),
+(31, 25, 'WEQ2312', 12, 'CANCELANDO NOVAMENTE', 22, '2024-11-28', 5, '2024-11-18'),
+(38, 25, 'WEQ2131', 12, 'CANCELANDO NOVAMENTE', 22, '2024-11-21', 5, '2024-11-18'),
+(39, 25, 'EWQ2131', 12, 'CANCELANDO NOVAMENTE', 22, '2024-11-28', 5, '2024-11-18'),
+(40, 25, 'RQW3123', 12, 'BELEZA ZE', 22, '2024-11-21', 3, '2024-11-18'),
+(41, 25, 'WQW2131', 12, 'Cert', 22, '2024-11-28', 3, '2024-11-18');
 
 -- --------------------------------------------------------
 
@@ -175,9 +256,8 @@ CREATE TABLE `solicitacoes_indenizacao` (
   `tipo_indenizacao` enum('15%','30%','100%') NOT NULL,
   `idtransportadora` varchar(100) NOT NULL,
   `idcd` varchar(100) NOT NULL,
-  `observacao` varchar(50) NOT NULL,
   `data` date NOT NULL DEFAULT current_timestamp(),
-  `anexo` varchar(255) DEFAULT NULL,
+  `observacao` varchar(255) NOT NULL,
   `idsituacao` int(11) NOT NULL,
   `idnegocio` int(11) NOT NULL,
   `numero_nota2` varchar(50) NOT NULL,
@@ -188,26 +268,22 @@ CREATE TABLE `solicitacoes_indenizacao` (
 -- Despejando dados para a tabela `solicitacoes_indenizacao`
 --
 
-INSERT INTO `solicitacoes_indenizacao` (`idsolicitacao`, `numero_nota`, `tipo_indenizacao`, `idtransportadora`, `idcd`, `observacao`, `data`, `anexo`, `idsituacao`, `idnegocio`, `numero_nota2`, `cnpj`) VALUES
-(43, '12312', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144502.142.jpg', 7, 52, '123132', '11111111111111'),
-(44, '21312321', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 7, 52, '12321321', '11111111111111'),
-(45, '12312321', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 7, 52, '12312321', '11111111111111'),
-(46, '1231232', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144502.142.jpg', 7, 52, '1232131', '11111111111111'),
-(47, '12312312', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 7, 53, '33121223', '11111111111111'),
-(48, '2132213', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathAnotação 2024-11-04 171202.png', 7, 53, '12321311', '11111111111111'),
-(49, '12312', '30%', '22', '25', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144501.379.jpg', 7, 53, '121231', '11111111111111'),
-(50, '1232121', '30%', '22', '25', 'att', '2024-11-09', 'C:fakepathimagem - 2024-09-13T144500.476.jpg', 7, 53, '321213', '11111111111111'),
-(51, '21313213', '30%', '22', '26', 'att', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144502.142.jpg', 7, 53, '1322313', '11111111111111'),
-(52, '123132', '100%', '22', '26', 'att', '2024-11-14', 'C:fakepathimagem - 2024-09-13T144501.379.jpg', 7, 53, '123123', '11111111111111'),
-(53, '1231', '30%', '24', '25', '12', '2024-11-19', 'C:fakepathimagem - 2024-09-13T144501.379.jpg', 8, 53, '123123', NULL),
-(54, '13132', '30%', '22', '25', '213312321', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144501.379.jpg', 6, 52, '12313', NULL),
-(55, '312321', '15%', '22', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144500.476.jpg', 8, 52, '13212331', NULL),
-(56, '111111', '30%', '22', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 8, 52, '111111', NULL),
-(57, '1111111', '30%', '23', '1', '12', '2024-11-16', 'C:fakepathimagem - 2024-09-13T144502.142.jpg', 8, 52, '1111111', NULL),
-(58, '111111111', '30%', '22', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 8, 53, '111111111', NULL),
-(59, '111111111111', '100%', '23', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 8, 53, '111111111111', NULL),
-(60, '111111111', '100%', '22', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144501.379.jpg', 8, 53, '11111111', NULL),
-(61, '1231231', '100%', '22', '1', '12', '2024-11-15', 'C:fakepathimagem - 2024-09-13T144508.768.jpg', 8, 52, '1233121', NULL);
+INSERT INTO `solicitacoes_indenizacao` (`idsolicitacao`, `numero_nota`, `tipo_indenizacao`, `idtransportadora`, `idcd`, `data`, `observacao`, `idsituacao`, `idnegocio`, `numero_nota2`, `cnpj`) VALUES
+(77, '1232131', '100%', '22', '25', '2024-11-20', 'TESTANDO ID TRANSPORTADORA', 7, 52, '1231312', '11111111111111'),
+(78, '1321313', '100%', '22', '25', '2024-11-21', 'TESTANDO ID TRANSPORTADORA', 7, 52, '123131', '11111111111111'),
+(79, '232132131', '100%', '22', '25', '2024-11-20', 'TESTANDO ID TRANSPORTADORA', 7, 52, '1311313', '11111111111111'),
+(80, '12312311', '100%', '22', '25', '2024-11-21', 'FINALIZANDO INDENIZAÇÃO', 9, 52, '12132213', '11111111111111'),
+(81, '2131231', '100%', '22', '25', '2024-11-21', 'CANCELANDO DEVIDO NAO PROCEDER', 10, 52, '2131313', NULL),
+(82, '22313213', '100%', '22', '25', '2024-11-20', 'qwdq', 9, 53, '1231322', '11111111111111'),
+(83, '21321213', '100%', '22', '25', '2024-11-21', 'FINALIZANDO INDENIZAÇÃO', 9, 53, '2131323', '11111111111111'),
+(84, '21312312', '100%', '22', '25', '2024-11-21', 'TESTANDO ID CONTESTACAO', 6, 53, '23213321', NULL),
+(85, '23212', '100%', '22', '25', '2024-11-28', 'TESTANDO ID CONTESTACAO', 6, 53, '2323213', NULL),
+(86, '21323123', '100%', '22', '25', '2024-11-28', 'TESTANDO ID CONTESTACAO', 6, 53, '11131132', NULL),
+(87, '31232132', '30%', '24', '25', '2024-11-29', '213', 8, 53, '323233', NULL),
+(88, '1233321', '30%', '22', '26', '2024-11-21', '12', 8, 53, '23131', NULL),
+(89, '213123', '100%', '22', '26', '2024-11-27', '12', 8, 52, '123213', NULL),
+(90, '312312', '100%', '24', '25', '2024-11-28', '12', 8, 52, '321313', NULL),
+(91, '21323', '30%', '22', '25', '2024-11-21', '12', 8, 52, '232313', NULL);
 
 -- --------------------------------------------------------
 
@@ -239,15 +315,22 @@ INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfil
 (33, 'Altair Neves', 'altair.neves', '7e246b7e60e825d99c65351fdd25752d', 3, 25, 1),
 (34, 'Tenisson Ben', 'ben.tenisson', '7e246b7e60e825d99c65351fdd25752d', 3, 26, 1),
 (35, 'Tailan Loro', 'tailan.loro', '7e246b7e60e825d99c65351fdd25752d', 3, 27, 1),
-(42, 'Kevelyn', 'kevelyn.123', '7e246b7e60e825d99c65351fdd25752d', 4, 52, 1),
+(42, 'Jurandir', 'jurandir.123', '7e246b7e60e825d99c65351fdd25752d', 4, 52, 1),
 (43, 'Vitoria', 'vitoria.xavier', '7e246b7e60e825d99c65351fdd25752d', 5, 53, 1),
 (44, 'Claudia', 'claudia.lira', '7e246b7e60e825d99c65351fdd25752d', 6, 54, 1),
 (45, 'Bianca', 'bianca.campos', '7e246b7e60e825d99c65351fdd25752d', 7, 55, 1),
-(46, 'Amanda', 'amanda.123', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1);
+(46, 'Amanda', 'amanda.123', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1),
+(47, 'Ketson', 'ketson.alfa', '7e246b7e60e825d99c65351fdd25752d', 2, 23, 1);
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `anexo`
+--
+ALTER TABLE `anexo`
+  ADD PRIMARY KEY (`idmovimento`);
 
 --
 -- Índices de tabela `filial`
@@ -284,28 +367,40 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `anexo`
+--
+ALTER TABLE `anexo`
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+
+--
 -- AUTO_INCREMENT de tabela `filial`
 --
 ALTER TABLE `filial`
   MODIFY `idfilial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
+-- AUTO_INCREMENT de tabela `movimento_solicitacoes`
+--
+ALTER TABLE `movimento_solicitacoes`
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+
+--
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_indenizacao`
 --
 ALTER TABLE `solicitacoes_indenizacao`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `idusuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

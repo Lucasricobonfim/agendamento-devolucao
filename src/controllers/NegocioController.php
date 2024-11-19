@@ -6,9 +6,21 @@ use \src\Config;
 use src\models\Negocio;
 
 class NegocioController extends Controller{
+    public function __construct() {
+        // Verifica se o usuário está autenticado e se pertence ao grupo 4 ou 5
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
+    }
 
-    public function index(){
-        $this->render('negocio', ['base' => Config::BASE_DIR]);
+    public function index() {
+        if($_SESSION['idgrupo'] == 1){
+            $this->render('negocio', ['base' => Config::BASE_DIR]);
+        }
+        else{
+            $this->render('404');
+        }        
     }
 
     public function cadastro() {

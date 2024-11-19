@@ -24,36 +24,49 @@ $(document).ready(function () {
 })
 
 function logar(dados) {
+    console.log('Chegando no logar', dados); 
 
     app.callController({
         method: 'POST',
         url: base + '/logar',
         params: dados,
-        onSuccess(res){
-        var rec = res[0]
-        if(rec.idtipo == 1){
-            window.location.href = base+'/inicio';
-        }
+        onSuccess(res) {
+            console.log('Resposta recebida do servidor:', res); 
+            var rec = res[0];
+            console.log('rec:', rec);
 
-        if(rec.idtipo == 2){
-            Swal.fire({
-                icon: "warning",
-                title: "Atenção!!",
-                text: "Usuario ou senha invalidos!"
-            });
-            return
-        }   
+            if (rec.idtipo == 1) {
+                const idGrupo = parseInt(rec.idgrupo, 10);
+
+                if (idGrupo === 4 || idGrupo === 5) {
+                    window.location.href = base + '/replica';
+                } 
+                else if (idGrupo === 1 || idGrupo === 2 || idGrupo === 3) {
+                    window.location.href = base + '/inicio';
+                } 
+                else {
+                    window.location.href = base + '/indenizacao-financeiro';
+                }
+            }
+
+            if (rec.idtipo == 2) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Atenção!!",
+                    text: "Usuário ou senha inválidos!"
+                });
+                return;
+            }
         },
-        onFailure(res){
-            
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
-                text: "Erro ao Logar Tente novmente mais tarde!"
+                text: "Erro ao logar, tente novamente mais tarde!"
             });
-            return
+            return;
         }
-    })
+    });
 }
 function mostrarSenha(){
     let inputSenha = $('#senha')

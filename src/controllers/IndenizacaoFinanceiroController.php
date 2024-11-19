@@ -6,9 +6,19 @@ use \src\Config;
 use src\models\IndenizacaoFinanceiro;
 
 class IndenizacaoFinanceiroController extends Controller {
-
+    public function __construct(){
+        if (!isset($_SESSION['token'])) {
+            header("Location: " . Config::BASE_DIR . '/');
+            exit();
+        }
+    }
     public function index() {
-        $this->render('indenizacao-financeiro', ['base' => Config::BASE_DIR]);        
+        if($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 6 || $_SESSION['idgrupo'] == 7){
+            $this->render('indenizacao-financeiro', ['base' => Config::BASE_DIR]);
+        }
+        else{
+            $this->render('404');
+        }        
     }
 
     public function getindenizacao (){
