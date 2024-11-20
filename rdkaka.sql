@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15/11/2024 às 13:58
+-- Tempo de geração: 20/11/2024 às 17:27
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `rdkaka`
 --
-CREATE DATABASE IF NOT EXISTS `rdkaka` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `rdkaka`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +27,6 @@ USE `rdkaka`;
 -- Estrutura para tabela `filial`
 --
 
-DROP TABLE IF EXISTS `filial`;
 CREATE TABLE `filial` (
   `idfilial` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
@@ -59,7 +56,6 @@ INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsi
 -- Estrutura para tabela `grupos`
 --
 
-DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE `grupos` (
   `idgrupo` int(11) NOT NULL,
   `descricao` varchar(200) NOT NULL
@@ -80,7 +76,6 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- Estrutura para tabela `movimento_solicitacoes`
 --
 
-DROP TABLE IF EXISTS `movimento_solicitacoes`;
 CREATE TABLE `movimento_solicitacoes` (
   `idmovimento` int(11) NOT NULL,
   `idsolicitacao` int(11) NOT NULL,
@@ -113,7 +108,6 @@ INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituaca
 -- Estrutura para tabela `situacao`
 --
 
-DROP TABLE IF EXISTS `situacao`;
 CREATE TABLE `situacao` (
   `idsituacao` int(11) NOT NULL,
   `situacao` varchar(200) NOT NULL
@@ -136,7 +130,6 @@ INSERT INTO `situacao` (`idsituacao`, `situacao`) VALUES
 -- Estrutura para tabela `solicitacoes_agendamentos`
 --
 
-DROP TABLE IF EXISTS `solicitacoes_agendamentos`;
 CREATE TABLE `solicitacoes_agendamentos` (
   `idsolicitacao` int(11) NOT NULL,
   `idcd` int(11) NOT NULL,
@@ -164,7 +157,6 @@ INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quan
 -- Estrutura para tabela `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `idusuario` bigint(20) UNSIGNED NOT NULL,
   `nome` varchar(200) NOT NULL,
@@ -172,22 +164,23 @@ CREATE TABLE `usuarios` (
   `senha` varchar(300) NOT NULL,
   `idgrupo` int(11) NOT NULL COMMENT '1 - admin\r\n2 - Transportadora\r\n3 - CD',
   `idfilial` int(11) NOT NULL,
-  `idsituacao` int(11) NOT NULL COMMENT '1 - Ativo, 2 - Inativo'
+  `idsituacao` int(11) NOT NULL COMMENT '1 - Ativo, 2 - Inativo',
+  `email` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`, `idsituacao`) VALUES
-(28, 'Lucas Gabriel', 'lucas.gabriel', '28284886917f9a2fa6952251e64ebea3', 1, 1, 1),
-(29, 'Lucas Rico', 'lucas.bonfim', '7e246b7e60e825d99c65351fdd25752d', 1, 1, 1),
-(30, 'Robson Alves', 'robson.alves', '7e246b7e60e825d99c65351fdd25752d', 2, 22, 1),
-(31, 'Amanda Dias', 'amanda.dias', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1),
-(32, 'Luana Delgado', 'luana.delgado', '28284886917f9a2fa6952251e64ebea3', 2, 23, 1),
-(33, 'Altair Neves', 'altair.neves', '7e246b7e60e825d99c65351fdd25752d', 3, 25, 1),
-(34, 'Tenisson Ben', 'ben.tenisson', '7e246b7e60e825d99c65351fdd25752d', 3, 26, 1),
-(35, 'Tailan Loro', 'tailan.loro', '7e246b7e60e825d99c65351fdd25752d', 3, 27, 1);
+INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`, `idsituacao`, `email`) VALUES
+(28, 'Lucas Gabriel', 'lucas.gabriel', 'd90446dfb40239c2ce08a478a423e7d7', 1, 1, 1, 'agendamentodevolucoes@gmail.com'),
+(29, 'Lucas Rico', 'lucas.bonfim', '7e246b7e60e825d99c65351fdd25752d', 1, 1, 1, 'lucasricobonfim@gmail.com'),
+(30, 'Robson Alves', 'robson.alves', '7e246b7e60e825d99c65351fdd25752d', 2, 22, 1, ''),
+(31, 'Amanda Dias', 'amanda.dias', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1, ''),
+(32, 'Luana Delgado', 'luana.delgado', '28284886917f9a2fa6952251e64ebea3', 2, 23, 1, ''),
+(33, 'Altair Neves', 'altair.neves', '7e246b7e60e825d99c65351fdd25752d', 3, 25, 1, ''),
+(34, 'Tenisson Ben', 'ben.tenisson', '7e246b7e60e825d99c65351fdd25752d', 3, 26, 1, ''),
+(35, 'Tailan Loro', 'tailan.loro', '7e246b7e60e825d99c65351fdd25752d', 3, 27, 1, '');
 
 --
 -- Índices para tabelas despejadas

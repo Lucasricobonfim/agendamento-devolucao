@@ -10,6 +10,12 @@ $router->post('/logar', 'LoginController@logar');
 
 $router->get('/deslogar', 'LoginController@deslogar');
 
+$router->get('/trocar-senha', 'EsqueceuSenhaController@index');
+$router->post('/enviarcod', 'EsqueceuSenhaController@enviarcod');
+$router->get('/nova-senha', 'EsqueceuSenhaController@rendernovasenha');
+$router->post('/cadastrar-novasenha', 'EsqueceuSenhaController@novasenha');
+
+
 //inicio
 $router->get('/inicio', 'InicioController@index');
 $router->get('/getsituacao', 'InicioController@getSituacao');
@@ -66,6 +72,3 @@ $router->get('/solicitacoes', 'SolicitacoesController@index');
 $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
 $router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao');
 
-
-
-$router->post('/teste', 'SolicitacoesController@teste');

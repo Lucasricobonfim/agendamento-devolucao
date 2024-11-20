@@ -11,6 +11,13 @@ class LoginController extends Controller {
     public function index() {
         $this->render('login', ['base' => Config::BASE_DIR]);
     }
+
+    
+    public function trocarsenha() {
+        $this->render('trocar-senha', ['base' => Config::BASE_DIR]);
+    }
+
+
     public function logar() {
 
         $dados = [];

@@ -124,7 +124,7 @@
       <input type="button" value="Acessar" id="logar" class="btn btn-custom w-100">
 
       <div class="forgot-password mt-3">
-        <a href="#" class="text-decoration-none">Esqueceu a senha?</a>
+        <a href="<?= $base; ?>/trocar-senha" class="text-decoration-none">Esqueceu a senha?</a>
       </div>
     </div>
 
