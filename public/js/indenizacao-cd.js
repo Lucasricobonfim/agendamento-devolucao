@@ -307,6 +307,10 @@ const Table = function(ret){
                 data: 'nome_negocio',
             },
             {
+                title: 'Negocio',
+                data: 'nome_negocio',
+            },
+            {
                 title: 'Transportadora',
                 data: 'transportadora'
             },

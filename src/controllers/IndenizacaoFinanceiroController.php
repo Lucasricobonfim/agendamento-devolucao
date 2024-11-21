@@ -7,18 +7,13 @@ use src\models\IndenizacaoFinanceiro;
 
 class IndenizacaoFinanceiroController extends Controller {
     public function __construct(){
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || !in_array($_SESSION['idgrupo'], [1,6,7] )) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
     }
     public function index() {
-        if($_SESSION['idgrupo'] == 1 || $_SESSION['idgrupo'] == 6 || $_SESSION['idgrupo'] == 7){
-            $this->render('indenizacao-financeiro', ['base' => Config::BASE_DIR]);
-        }
-        else{
-            $this->render('404');
-        }        
+        $this->render('indenizacao-financeiro', ['base' => Config::BASE_DIR]);     
     }
 
     public function getindenizacao (){

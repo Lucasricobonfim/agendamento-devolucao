@@ -255,7 +255,13 @@ const Table = function (dados, idsituacao) {
             {
                 targets: [4], // Índice da coluna "Cód Solicitacao"
                 width: '1px' // Definindo a largura desejada
-            }
+            },
+            // {
+            //     targets: [8], // Índice da coluna "Ações"
+            //     visible: userType !== 'admin', // Esconde a coluna para o admin
+            //     searchable: false, // Desabilita buscas na coluna oculta
+            // },
+            
         ],
         rowCallback: function (row, data) { },
         initComplete: function (settings, json) {

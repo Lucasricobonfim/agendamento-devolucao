@@ -8,7 +8,7 @@ use src\models\Solicitacoes;
 class SolicitacoesController extends Controller {
 
     public function __construct(){
-        if ( !isset($_SESSION['token']) || $_SESSION['idgrupo'] == 2     )  {
+        if ( !isset($_SESSION['token']) || !in_array($_SESSION['idgrupo'], [1, 3]))  {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
@@ -16,8 +16,11 @@ class SolicitacoesController extends Controller {
 
 
     public function index() {
-        
-        $this->render('solicitacoes', ['base' => Config::BASE_DIR]);        
+        $idgrupo = $_SESSION['idgrupo']; // Obtém o grupo do usuário logado
+        $this->render('solicitacoes', [
+            'base' => Config::BASE_DIR,
+            'idgrupo' => $idgrupo // Envia o idgrupo para a View
+        ]);
     }
 
     public function getsolicitacoes() {

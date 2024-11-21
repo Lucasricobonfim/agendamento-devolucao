@@ -22,7 +22,6 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        /* ajuste conforme necessário */
     }
 
 
@@ -132,7 +131,6 @@
 
 </body>
 <script src="<?= $base; ?>/js/transportadoras.js"></script>
-<!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
 </script>

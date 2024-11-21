@@ -77,7 +77,6 @@ class IndenizacaoCd extends Model
             VALUES (:idcd, :numero_nota, :numero_nota2, :idnegocio, :tipo_indenizacao, :idtransportadora, :data, :observacao, 8)
         ";
 
-            // Prepara e executa a primeira query
             $stmt1 = $db->prepare($sql1);
             $stmt1->execute([
                 ':idcd' => $dados['idcd'],
@@ -91,7 +90,7 @@ class IndenizacaoCd extends Model
             ]);
 
             // Obtém o idsolicitacao gerado (correto)
-            $idsolicitacao = $db->lastInsertId(); // Este é o ID da solicitação, que deve ser usado nas inserções subsequentes
+            $idsolicitacao = $db->lastInsertId();
 
             // SQL para a segunda inserção (anexo)
             $sql2 = "
@@ -110,16 +109,15 @@ class IndenizacaoCd extends Model
                 ]);
             }
 
-            // SQL para a terceira inserção (movimento_solicitacoes)
+            // SQL para a terceira inserção
             $sql3 = "
             INSERT INTO movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao)
             VALUES (:idsolicitacao, :idsituacao, :observacao, NOW())
         ";
 
-            // Prepara e executa a terceira query
             $stmt3 = $db->prepare($sql3);
             $stmt3->execute([
-                ':idsolicitacao' => $idsolicitacao, // Usa o idsolicitacao correto
+                ':idsolicitacao' => $idsolicitacao, 
                 ':idsituacao' => 8,
                 ':observacao' => $dados['observacao'],
             ]);
@@ -127,18 +125,15 @@ class IndenizacaoCd extends Model
             // Confirma a transação
             $db->commit();
 
-            // Retorna sucesso
             return [
                 'sucesso' => true,
                 'result' => 'Solicitação de indenização realizada com sucesso!'
             ];
         } catch (Throwable $error) {
-            // Em caso de erro, desfaz a transação
             if (isset($db)) {
                 $db->rollBack();
             }
 
-            // Retorna o erro
             return [
                 'sucesso' => false,
                 'result' => 'Falha ao solicitar indenização: ' . $error->getMessage()
@@ -149,7 +144,6 @@ class IndenizacaoCd extends Model
     public function getanexo($dados)
     {
         try {
-            // Preparando a consulta SQL para buscar os anexos
             $sql = Database::getInstance()->prepare("SELECT anexo FROM anexo WHERE idsolicitacao = :idsolicitacao");
             $sql->bindParam(':idsolicitacao', $dados['idsolicitacao'], PDO::PARAM_INT);  // Assume que você vai passar o id da solicitação
             $sql->execute();
@@ -230,7 +224,7 @@ class IndenizacaoCd extends Model
                         ms.idsolicitacao
                 ) AS oi ON oi.idsolicitacao = si.idsolicitacao
                 WHERE 
-                    si.idsituacao IN (4,6,7,8,9,10)
+                    si.idsituacao IN (4,6,7,8,9,10) AND idcd = :idcd
         ";
         $sql = $this->switchParams($sql, $dados);
         // print_r($sql);exit;

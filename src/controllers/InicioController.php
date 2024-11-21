@@ -9,7 +9,7 @@ class InicioController extends Controller {
 
     
     public function __construct(){
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] == 6 || $_SESSION['idgrupo'] == 7) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
