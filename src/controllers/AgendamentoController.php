@@ -9,27 +9,18 @@ class AgendamentoController extends Controller {
 
 
     public function __construct(){
-        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] == 3) {
+        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] != 2) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
     }
 
     public function index() {
-        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] == 3 ||  $_SESSION['idgrupo'] == 1) {
-            header("Location: " . Config::BASE_DIR . '/deslogar');
-            exit();
-        }
         $this->render('agendamento', ['base' => Config::BASE_DIR]);        
     }
 
     public function listagem() {
-        if($_SESSION['idgrupo'] == 2){
-            $this->render('lista-agendamento', ['base' => Config::BASE_DIR]);
-        }
-        else{
-            $this->render('404');
-        }      
+        $this->render('lista-agendamento', ['base' => Config::BASE_DIR]);
     }
 
     public function getCd() {
