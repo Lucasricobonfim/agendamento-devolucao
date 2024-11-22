@@ -25,7 +25,7 @@ class LoginController extends Controller {
             if (!empty($result['result'])) {
                 if (md5($dados['senha']) === $result['result'][0]['senha']) {
                     // Criação da sessão
-                    $_SESSION['token'] = '123456';
+                    $_SESSION['token'] = bin2hex(random_bytes(32));
                     $_SESSION['usuario'] = $result['result'][0]['nome'] ? $result['result'][0]['nome'] : '';
                     $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ? $result['result'][0]['idgrupo'] : '';
                     $_SESSION['idfilial'] = $result['result'][0]['idfilial'];

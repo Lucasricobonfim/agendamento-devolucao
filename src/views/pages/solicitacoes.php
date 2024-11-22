@@ -314,5 +314,5 @@
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
-    const idGrupoUsuario = <?= json_encode($idgrupo); ?>;
+    const grupoid = <?= json_encode($idgrupo); ?>;
 </script>

@@ -3,7 +3,7 @@ $(document).ready(function () {
     listar(idsituacao);
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
-
+    console.log(grupoid); // Mostra o ID do grupo
     // Adicionar evento de clique para os cards
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
@@ -80,7 +80,7 @@ function listar(idsituacao) {
 }
 
 const Table = function (dados, idsituacao) {
-
+    
     //var dados = JSON.parse(ret)
     $('#mytable').DataTable({
         dom: 'Bfrtip',
@@ -227,6 +227,7 @@ const Table = function (dados, idsituacao) {
                 data: null,
                 render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
+                    if (grupoid === 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
                     if (idsituacao === 1) {
                         return `
                         <button style="width: 49%; " class="btn btn-success btn-sm" onclick="abrirModalAceitar('${row.idsolicitacao}', 2,${dados})">Aceitar</button>
@@ -240,7 +241,7 @@ const Table = function (dados, idsituacao) {
                     }
                     return ''; // Retorna vazio se não houver ações para o estado atual
                 },
-                visible: idsituacao === 1 || idsituacao === 2 // <--- Esta linha foi adicionada
+                visible: grupoid !== 1 && (idsituacao === 1 || idsituacao === 2) // Oculta a coluna inteira se for o administrador
             }
         ],
         columnDefs: [
@@ -256,18 +257,12 @@ const Table = function (dados, idsituacao) {
                 targets: [4], // Índice da coluna "Cód Solicitacao"
                 width: '1px' // Definindo a largura desejada
             },
-            // {
-            //     targets: [8], // Índice da coluna "Ações"
-            //     visible: userType !== 'admin', // Esconde a coluna para o admin
-            //     searchable: false, // Desabilita buscas na coluna oculta
-            // },
-            
         ],
         rowCallback: function (row, data) { },
         initComplete: function (settings, json) {
             const column = this.api().column(8); // Índice da coluna "Ações"
             // Define a visibilidade da coluna "Ações"
-            column.visible(idsituacao === 1 || idsituacao === 2);
+            column.visible(grupoid !== 1 && (idsituacao === 1 || idsituacao === 2));
         }
     });
 
