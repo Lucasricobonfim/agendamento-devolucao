@@ -35,7 +35,7 @@
     }
 
     .form-container1 {
-        max-width: 80%;
+        max-width: 90%;
         margin: 40px auto;
         padding: 20px;
         background-color: #fff;
@@ -46,7 +46,7 @@
     }
 
     .form-container {
-        max-width: 80%;
+        max-width: 90%;
         margin: 40px auto;
         padding: 20px;
         background-color: #fff;

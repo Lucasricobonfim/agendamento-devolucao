@@ -16,8 +16,13 @@ class SolicitacoesController extends Controller {
 
 
     public function index() {
-        
-        $this->render('solicitacoes', ['base' => Config::BASE_DIR]);        
+        $idgrupo = $_SESSION['idgrupo']; // Obtém o grupo do usuário logado
+        // print_r($_SESSION);
+        // exit;
+        $this->render('solicitacoes', [
+            'base' => Config::BASE_DIR,
+            'idgrupo' => $idgrupo // Envia o idgrupo para a View
+        ]);
     }
 
     public function getsolicitacoes() {

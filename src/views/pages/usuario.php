@@ -18,13 +18,11 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        /* ajuste conforme necessário */
     }
 
 
     h5 {
         margin: 0;
-        /* remove o espaçamento padrão */
     }
 
     .form-cad {
