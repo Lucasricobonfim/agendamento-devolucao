@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="qtd" class="form-label">QTD de notas<span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="qtdnota" name="qtd" value="0" min="1" required>
+                    <input type="number" class="form-control" id="qtdnota" name="qtd" value="0" min="1"  placeholder="QTD" required>
                 </div>
                 <div class="mb-3">
                     <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>

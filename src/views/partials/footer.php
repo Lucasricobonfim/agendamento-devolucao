@@ -8,7 +8,7 @@
   </style>
 <footer class="fixed-bottom bg-success">
     <div class="container">
-        <p>Desenvolvido por Pioneira Progaming</p>
+        <p>Desenvolvido por Lucas Gabriel e Lucas Bonfim</p>
     </div>
 </footer>
 </body>

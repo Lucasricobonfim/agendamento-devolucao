@@ -3,7 +3,7 @@ $(document).ready(function () {
     listar(idsituacao);
     // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
-
+    console.log(grupoid); // Mostra o ID do grupo
     // Adicionar evento de clique para os cards
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
@@ -226,6 +226,7 @@ const Table = function (dados, idsituacao) {
                 title: 'Ações',
                 data: null,
                 render: function (data, type, row) {
+                    if (grupoid === 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     if (idsituacao === 1) {
                         return `
@@ -240,7 +241,7 @@ const Table = function (dados, idsituacao) {
                     }
                     return ''; // Retorna vazio se não houver ações para o estado atual
                 },
-                visible: idsituacao === 1 || idsituacao === 2 // <--- Esta linha foi adicionada
+                visible: grupoid !== 1 && (idsituacao === 1 || idsituacao === 2) // Oculta a coluna inteira se for o administrador
             }
         ],
         columnDefs: [
@@ -261,7 +262,7 @@ const Table = function (dados, idsituacao) {
         initComplete: function (settings, json) {
             const column = this.api().column(8); // Índice da coluna "Ações"
             // Define a visibilidade da coluna "Ações"
-            column.visible(idsituacao === 1 || idsituacao === 2);
+            column.visible(grupoid !== 1 && (idsituacao === 1 || idsituacao === 2));
         }
     });
 

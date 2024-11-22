@@ -9,19 +9,14 @@ class CentroDistribuicaoController extends Controller {
 
     
     public function __construct(){
-        if (!isset($_SESSION['token'])) {
+        if (!isset($_SESSION['token']) || $_SESSION['idgrupo'] != 1) {
             header("Location: " . Config::BASE_DIR . '/');
             exit();
         }
     }
 
     public function index() {
-
-        if($_SESSION['idgrupo'] == 1){
-            $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
-        }else{
-            $this->render('404');
-        }
+        $this->render('centro-distribuicao', ['base' => Config::BASE_DIR]);
     }
 
     public function getCentroDistribuicao (){

@@ -17,12 +17,10 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 80px;
-        /* ajuste conforme necessário */
     }
 
     h5 {
         margin: 0;
-        /* remove o espaçamento padrão */
     }
 
     textarea#observacao {
@@ -96,7 +94,6 @@
         height: 4px;
         width: 70%;
         background-color: #007bff;
-        /* Azul padrão */
         animation: loadBar 1.5s ease forwards;
     }
 

@@ -17,12 +17,10 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 80px;
-        /* ajuste conforme necessário */
     }
 
     h5 {
         margin: 0;
-        /* remove o espaçamento padrão */
     }
 
     textarea#observacao {
@@ -97,7 +95,6 @@
         height: 4px;
         width: 70%;
         background-color: #007bff;
-        /* Azul padrão */
         animation: loadBar 1.5s ease forwards;
     }
 
@@ -111,7 +108,6 @@
         }
     }
 
-    /* Efeito hover leve */
     .card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -243,20 +239,6 @@
                         </thead>
                         <tbody class="obshist">
 
-                            <!-- <tr >
-
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr>
-                        <tr >
-
-                             <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td> 
-
-                        </tr> -->
                         </tbody>
                     </table>
                     <h4 id="conteudo_obs"></h4>
@@ -317,4 +299,5 @@
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
+    const grupoid = <?= json_encode($idgrupo); ?>;
 </script>

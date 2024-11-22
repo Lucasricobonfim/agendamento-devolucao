@@ -87,7 +87,6 @@ class Agendamento extends Model{
             // Confirma a transação
             $db->commit();
         
-            // Retorna sucesso
             return [
                 'sucesso' => true,
                 'result' => 'Solicitação de agendamento realizada com sucesso!'
@@ -98,7 +97,6 @@ class Agendamento extends Model{
                 $db->rollBack();
             }
         
-            // Retorna o erro
             return [
                 'sucesso' => false,
                 'result' => 'Falha ao solicitar o agendamento: ' . $error->getMessage()

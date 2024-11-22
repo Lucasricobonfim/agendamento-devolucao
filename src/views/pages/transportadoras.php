@@ -22,7 +22,6 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        /* ajuste conforme necessário */
     }
 
 
@@ -74,12 +73,12 @@
     @media (max-width: 900px) {
         .form-cad {
             font-size: 0.99rem;
-            margin-left: 20px;
+            margin-left: 15px;
         }
 
         .media-h5 {
             font-size: 0.99rem;
-            margin-left: 10px;
+            margin-left: 8px;
         }
     }
 </style>
