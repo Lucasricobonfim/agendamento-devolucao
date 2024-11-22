@@ -1,6 +1,13 @@
-MELHORES MOMENTOS
+QTD AGENDAMENTO
 
 - Esta permitindo digitar numero 0 e colocar 1 letra
 - Não permitir solicitar agendamento para CDs inativos
 - Só podemos invativar uma transportadora caso não tenha agendamentos pendentes ou em andamento
 - Tirar o listar da transportadora do ADM, e tirar permissao de ver a tela
+- Setando a transportadora errada quando vai editar o usuario
+-
+-
+-
+-
+-
+-
