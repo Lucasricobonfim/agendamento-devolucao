@@ -176,10 +176,60 @@ class IndenizacaoCd extends Model
 
 
     public function getindenizacao($dados)
-    {
-        $sql =
+    { 
+        $params = [
+            "idfilial" => $_SESSION['idfilial'],
+        ];
+        
+        $sql = $_SESSION['idgrupo'] == 1 ?
+        "
+                SELECT 
+                    CONCAT(fc.idfilial, ' - ', fc.nome) AS centro_distribuicao,
+                    CONCAT(f.idfilial, ' - ', f.nome) AS transportadora,
+                    si.idcd,
+                    si.idsolicitacao,
+                    si.numero_nota,
+                    si.numero_nota2,
+                    si.idnegocio,
+                    g.descricao AS nome_negocio,
+                    si.tipo_indenizacao,
+                    si.idtransportadora, 
+                    si.observacao,
+                    DATE_FORMAT(si.data, '%d/%m/%Y') AS data,
+                    s.idsituacao,  
+                    s.situacao AS descricao_situacao,
+                    oi.observacoes,
+                    oi.dataoperacao,
+                    oi.situacao_operacao
+                FROM 
+                    solicitacoes_indenizacao si
+                LEFT JOIN 
+                    filial fc ON si.idcd = fc.idfilial
+                LEFT JOIN 
+                    filial f ON si.idtransportadora = f.idfilial
+                LEFT JOIN 
+                    filial fn ON si.idnegocio = fn.idfilial -- Filial correspondente ao idnegocio
+                LEFT JOIN 
+                    grupos g ON g.idgrupo = fn.idtipofilial -- Pega a descrição do grupo correto
+                LEFT JOIN 
+                    situacao s ON s.idsituacao = si.idsituacao
+                LEFT JOIN (
+                    SELECT
+                        ms.idsolicitacao,
+                        GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes,
+                        GROUP_CONCAT(DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao,
+                        GROUP_CONCAT(s.situacao SEPARATOR '|') AS situacao_operacao
+                    FROM  
+                        movimento_solicitacoes ms
+                    LEFT JOIN 
+                        situacao s ON s.idsituacao = ms.idsituacao
+                    GROUP BY 
+                        ms.idsolicitacao
+                ) AS oi ON oi.idsolicitacao = si.idsolicitacao
+                WHERE 
+                    si.idsituacao IN (4,6,7,8,9,10)"
+            :
             "
-
                 SELECT 
                     CONCAT(fc.idfilial, ' - ', fc.nome) AS centro_distribuicao,
                     CONCAT(f.idfilial, ' - ', f.nome) AS transportadora,
@@ -226,7 +276,7 @@ class IndenizacaoCd extends Model
                 WHERE 
                     si.idsituacao IN (4,6,7,8,9,10) AND idcd = :idcd
         ";
-        $sql = $this->switchParams($sql, $dados);
+        $sql = $this->switchParams($sql, $dados, $params);
         // print_r($sql);exit;
         try {
             $sql = Database::getInstance()->prepare($sql);

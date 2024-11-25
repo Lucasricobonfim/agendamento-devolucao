@@ -2,6 +2,7 @@ $(document).ready(function () {
     let idsituacao = 7
     listar(idsituacao);
     contarIndenizacoes()
+    console.log(grupoid); // Mostra o ID do grupo
 
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
@@ -232,12 +233,13 @@ const Table = function (dados, idsituacao) {
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
+                    if (grupoid === 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
                     return `
                             <button class="btn btn-success btn-sm" onclick="abrirModalFaturar('${row.idsolicitacao}', 9)">Faturado</button>
                         `;
 
                 },
-                visible: idsituacao === 7
+                visible: grupoid !== 1 && idsituacao === 7
             },
         ],
         columnDefs: [
@@ -256,7 +258,7 @@ const Table = function (dados, idsituacao) {
         initComplete: function(settings, json) {
             console.log('Valor de idsituacao:', idsituacao); // Para verificar o valor
             const column = this.api().column(12);
-            column.visible(idsituacao === 7);
+            column.visible(grupoid !== 1 && idsituacao === 7);
         }
     });
 
@@ -375,5 +377,3 @@ function  confimarFaturar(){
     })
 
 }
-
-

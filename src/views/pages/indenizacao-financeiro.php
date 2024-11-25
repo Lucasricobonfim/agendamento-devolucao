@@ -2,7 +2,7 @@
 
 <style>
     .form-container {
-        max-width: 99%;
+        max-width: 100%;
         margin: 20px auto;
         padding: 20px;
         background-color: #fff;
@@ -245,4 +245,5 @@
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
+    const grupoid = <?= json_encode($idgrupo); ?>;
 </script>

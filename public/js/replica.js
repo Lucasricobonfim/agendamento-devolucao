@@ -226,13 +226,14 @@ const Table = function (dados, idsituacao) {
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
+                    if (grupoid === 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
                     return `
                             <button style="width: 50%;" class="btn btn-warning btn-sm" onclick="abrirModalReplica('${row.idsolicitacao}', 8)">Replica</button>
                             <button style="width: 50%;" class="btn btn-danger btn-sm" onclick="abrirModalReplica('${row.idsolicitacao}', 10)">Cancelar</button>
                         `;
 
                 },
-                visible: idsituacao === 6
+                visible: grupoid !== 1 && idsituacao === 6
             },
         ],
         columnDefs: [
@@ -259,7 +260,7 @@ const Table = function (dados, idsituacao) {
         initComplete: function(settings, json) {
             console.log('Valor de idsituacao:', idsituacao); // Para verificar o valor
             const column = this.api().column(11);
-            column.visible(idsituacao === 6);
+            column.visible(grupoid !== 1 && idsituacao === 6);
         }
     });
 

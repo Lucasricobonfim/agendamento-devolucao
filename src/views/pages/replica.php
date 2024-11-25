@@ -246,4 +246,5 @@
 <!-- Bootstrap JS -->
 <script>
     const base = '<?= $base; ?>';
+    const grupoid = <?= json_encode($idgrupo); ?>;
 </script>

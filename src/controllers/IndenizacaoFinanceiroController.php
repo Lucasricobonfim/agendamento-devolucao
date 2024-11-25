@@ -13,7 +13,13 @@ class IndenizacaoFinanceiroController extends Controller {
         }
     }
     public function index() {
-        $this->render('indenizacao-financeiro', ['base' => Config::BASE_DIR]);     
+        $idgrupo = $_SESSION['idgrupo']; // Obtém o grupo do usuário logado
+        // print_r($_SESSION);
+        // exit;
+        $this->render('indenizacao-financeiro', [
+            'base' => Config::BASE_DIR,
+            'idgrupo' => $idgrupo // Envia o idgrupo para a View
+        ]);     
     }
 
     public function getindenizacao (){

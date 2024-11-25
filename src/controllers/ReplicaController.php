@@ -14,7 +14,13 @@ class ReplicaController extends Controller {
         }
     }
     public function index() {
-        $this->render('replica', ['base' => Config::BASE_DIR]);
+        $idgrupo = $_SESSION['idgrupo'];
+        // print_r($_SESSION);
+        // exit;
+        $this->render('replica', [
+            'base' => Config::BASE_DIR,
+            'idgrupo' => $idgrupo // Envia o idgrupo para a View
+        ]);    
     }
 
     public function getreplica(){
