@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     let idsituacao = 1
     listar(idsituacao);
     // Contar as solicitações para todos os cards ao carregar a página
@@ -330,39 +332,84 @@ function fechaModalObs() {
 
 }
 
-function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
-    let observacoes = []
-    let situacao_operacao = []
-    let dataoperacao = []
 
-    if (dados.observacoes) {
-        observacoes = dados.observacoes.split('|');
-        situacao_operacao = dados.situacao_operacao.split('|');
-        dataoperacao = dados.dataoperacao.split('|');
-    }
+function verificaFilialInativa() {
+    return new Promise((resolve, reject) => {
+        app.callController({
+            method: 'GET',
+            url: base + '/verifica/filial/inativa',
+            params: null,
+            onSuccess(res) {
+                let dados = res[0].ret;
 
-    let registros = observacoes.map((obs, index) => ({
-        observacao: obs || '',
-        situacao: situacao_operacao[index] || '',
-        data: dataoperacao[index] || ''
-    }));
-
-    registros.sort((a, b) => {
-        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
-        let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
-        return dateA - dateB;
+                if (dados.length > 0 && dados[0].idfilial) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Atenção!!",
+                        text: "Filial " + dados[0].nome + " que está vinculada ao seu usuário está inativa, entre em contato com o administrador do sistema!"
+                    });
+                    resolve(false); // Filial inativa
+                } else {
+                    resolve(true); // Sem filial inativa
+                }
+            },
+            onFailure(res) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro!!",
+                    text: "Erro ao verificar Filial!"
+                });
+                reject(false); // Erro na verificação
+            }
+        });
     });
+}
 
-    $('#modalAceitacao').modal('show');
-    $('#idsolicitacao').val(idsolicitacao);
-    $('#idsituacao').val(idsituacao);
-    opp = $('.obshist_act');
-    opp.html('');
-    for (let registro of registros) {
-        opp.append(
-            "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
-        );
-    }
+
+
+function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
+
+
+    verificaFilialInativa().then((filailinativa) => {
+        if (!filailinativa) {
+            return; 
+        }
+
+
+        let observacoes = []
+        let situacao_operacao = []
+        let dataoperacao = []
+
+        if (dados.observacoes) {
+            observacoes = dados.observacoes.split('|');
+            situacao_operacao = dados.situacao_operacao.split('|');
+            dataoperacao = dados.dataoperacao.split('|');
+        }
+
+        let registros = observacoes.map((obs, index) => ({
+            observacao: obs || '',
+            situacao: situacao_operacao[index] || '',
+            data: dataoperacao[index] || ''
+        }));
+
+        registros.sort((a, b) => {
+            let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+            let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
+            return dateA - dateB;
+        });
+
+        $('#modalAceitacao').modal('show');
+        $('#idsolicitacao').val(idsolicitacao);
+        $('#idsituacao').val(idsituacao);
+        opp = $('.obshist_act');
+        opp.html('');
+        for (let registro of registros) {
+            opp.append(
+                "<tr><td>" + registro.observacao + "</td><td>" + registro.situacao + "</td><td>" + registro.data + "</td></tr>"
+            );
+        }
+
+    })
 }
 
 function fechaModalAceitar() {

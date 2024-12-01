@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     listar()
-    
+
     // Máscara para telefone e CNPJ aplicadas corretamente
     $('#telefone').mask('(00) 00000-0000', { placeholder: '(  ) _____-____' });
     $('#cnpj_cpf').mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' });
@@ -14,11 +14,11 @@ $(document).ready(function () {
             email: $('#email').val(),
             telefone: $('#telefone').val().replace(/[^\d]/g, '') // Removendo máscara antes de enviar
         }
-        
-     
-        if(idfilial){
+
+
+        if (idfilial) {
             dados.idfilial = idfilial
-            
+
             if (!app.validarCampos(dados)) {
                 Swal.fire({
                     icon: "warning",
@@ -28,9 +28,9 @@ $(document).ready(function () {
                 return
             }
             if (!validarNome(dados.nome)) {
-                return; 
+                return;
             }
-            if(!app.validarCNPJ(dados.cnpj_cpf)){
+            if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
                     icon: "warning",
                     title: "Atenção!!",
@@ -49,12 +49,12 @@ $(document).ready(function () {
             if (!validarTelefone(dados.telefone)) {
                 return false;
             }
-            
+
             editar(dados)
 
 
 
-        }else{ 
+        } else {
             if (!app.validarCampos(dados)) {
                 Swal.fire({
                     icon: "warning",
@@ -64,9 +64,9 @@ $(document).ready(function () {
                 return
             }
             if (!validarNome(dados.nome)) {
-                return; 
+                return;
             }
-            if(!app.validarCNPJ(dados.cnpj_cpf)){
+            if (!app.validarCNPJ(dados.cnpj_cpf)) {
                 Swal.fire({
                     icon: "warning",
                     title: "Atenção!!",
@@ -88,45 +88,45 @@ $(document).ready(function () {
 
             cadastro(dados)
         }
-        
+
     })
 
-    $('#nome').on('input', function() {
+    $('#nome').on('input', function () {
         $(this).removeClass('erro');
     });
 
-    $('#cnpj_cpf').on('input', function() {
+    $('#cnpj_cpf').on('input', function () {
         $(this).removeClass('erro');
     });
 
-    $('#email').on('input', function() {
+    $('#email').on('input', function () {
         $(this).removeClass('erro');
     });
 
-    $('#telefone').on('input', function() {
+    $('#telefone').on('input', function () {
         $(this).removeClass('erro');
     });
 
-    
+
 })
 function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
     const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
-    
+
     // Verifica se o nome é válido e se respeita o limite de caracteres
     if (!nomeRegex.test(nome) || nome.length > 25) {
         if (nome.length > 25) {
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!!",
-            text: `O nome deve ter no máximo ${25} caracteres.`
-        });
+            Swal.fire({
+                icon: "warning",
+                title: "Atenção!!",
+                text: `O nome deve ter no máximo ${25} caracteres.`
+            });
         } else {
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!!",
-            text: "O nome pode conter apenas letras e espaços."
-        });
+            Swal.fire({
+                icon: "warning",
+                title: "Atenção!!",
+                text: "O nome pode conter apenas letras e espaços."
+            });
         }
         return false;
     }
@@ -153,27 +153,27 @@ function validarTelefone(telefone) {
     return true;
 }
 
-function listar(ret){
+function listar(ret) {
     app.callController({
-      method: 'GET',
-      url: base + '/gettransportadoras',
-      params: null,
-      onSuccess(res){
-         
-         Table(res[0].ret)
-      },
-      onFailure(res){
-        Swal.fire({
-            icon: "error",
-            title: "Atenção!!",
-            text: "Erro ao listar Transportadora!"
-        });
-        return
-      }
-    })
- }
+        method: 'GET',
+        url: base + '/gettransportadoras',
+        params: null,
+        onSuccess(res) {
 
-function limparForm(){
+            Table(res[0].ret)
+        },
+        onFailure(res) {
+            Swal.fire({
+                icon: "error",
+                title: "Atenção!!",
+                text: "Erro ao listar Transportadora!"
+            });
+            return
+        }
+    })
+}
+
+function limparForm() {
     $('#form-title').text('Cadastrando Transportadora').css('color', 'blue');;
     $('#nome').val('');
     $('#cnpj_cpf').val('');
@@ -188,23 +188,23 @@ function limparForm(){
     $('#telefone').removeClass('erro'); // Remove a classe 'erro'
 }
 
-function cadastro(dados){  
-    
+function cadastro(dados) {
+
     app.callController({
         method: 'POST',
         url: base + '/cadtransportadoras',
         params: dados,
-        onSuccess(res){         
-                limparForm()
-                listar()
-                Swal.fire({
-                    icon: "success",
-                    title: "Sucesso!",
-                    text: "Cadastrado com sucesso!"
-                });
+        onSuccess(res) {
+            limparForm()
+            listar()
+            Swal.fire({
+                icon: "success",
+                title: "Sucesso!",
+                text: "Cadastrado com sucesso!"
+            });
         },
-        onFailure(res){
-            
+        onFailure(res) {
+
             if (res[0]['ret']['result'][0]['existecpf'] == 1) {
                 Swal.fire({
                     icon: "warning",
@@ -225,15 +225,15 @@ function cadastro(dados){
 }
 
 
-const Table = function(ret){
+const Table = function (ret) {
     var dados = ret
     $('#mytable').DataTable({
         dom: 'Bfrtip',
         responsive: true,
         stateSave: true,
-       "bDestroy": true,
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        "bDestroy": true,
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
         },
         buttons: [
             /*
@@ -272,14 +272,14 @@ const Table = function(ret){
             {
                 title: 'Nome',
                 data: 'nome',
-                render: function(data) {
+                render: function (data) {
                     return `<strong>${data}</strong>`; // Coloca o nome em negrito
                 }
             },
             {
                 title: 'CNPJ',
                 data: 'cnpj_cpf',
-                render: function(data) {
+                render: function (data) {
                     // Aplicando máscara no CNPJ
                     const cnpjMascara = data.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
                     return cnpjMascara;
@@ -292,7 +292,7 @@ const Table = function(ret){
             {
                 title: 'Telefone',
                 data: 'telefone',
-                render: function(data) {
+                render: function (data) {
                     if (data.length === 10) {
                         // Telefone fixo sem o nono dígito
                         return data.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
@@ -311,7 +311,7 @@ const Table = function(ret){
             {
                 title: 'Status',
                 data: 'descricao',
-                render: function(data) {
+                render: function (data) {
                     // Adicione uma classe de status com base no valor
                     const statusClass = data === 'Ativo' ? 'status-ativo' : 'status-inativo';
                     return `<span class="${statusClass}">${data}</span>`;
@@ -320,66 +320,80 @@ const Table = function(ret){
             {
                 title: 'Ações',
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                    
+
                     return '<div class="dropdown" style="display: inline-block; cursor: pointer;">' +
-                                '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
-                                    '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
-                                '</a>' +
-                                '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
-                                    '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
-                                    '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
-                                    '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
-                                '</ul>' +
-                            '</div>';
+                        '<a class="text-secondary" id="actionsDropdown' + row.idfilial + '" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none; cursor: pointer;">' +
+                        '<i class="fas fa-ellipsis-h"></i>' + // Ícone horizontal de 3 pontos
+                        '</a>' +
+                        '<ul class="dropdown-menu" aria-labelledby="actionsDropdown' + row.idfilial + '">' +
+                        '<li><a class="dropdown-item text-primary" onclick="setEditar(' + dados + ')">Editar</a></li>' + // Azul para "Editar"
+                        '<li><a class="dropdown-item text-danger" onclick="confirmUpdateSituacao(' + row.idfilial + ', 2, ' + row.idsituacao + ', \'Inativar\')">Inativar</a></li>' + // Vermelho para "Inativar"
+                        '<li><a class="dropdown-item text-success" onclick="confirmUpdateSituacao(' + row.idfilial + ', 1, ' + row.idsituacao + ', \'Ativar\')">Ativar</a></li>' + // Verde para "Ativar"
+                        '</ul>' +
+                        '</div>';
                 }
             }
         ],
-        rowCallback: function(row, data) {
+        rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
         }
     });
 
 }
 function confirmUpdateSituacao(id, idsituacao, atualsituacao, acao) {
-    var situacaoAtual = atualsituacao == 2 ? 'Inativa' : 'Ativa';
-    // Verifica se o centro de distribuição já está na situação desejada
+
+
+    verificaAgendamentoPendente(id).then((res) => {
+
+        if (!res) {
+            return;
+        }
+
+
+
+
+
+        var situacaoAtual = atualsituacao == 2 ? 'Inativa' : 'Ativa';
+        // Verifica se o centro de distribuição já está na situação desejada
+        if (idsituacao == atualsituacao) {
+            Swal.fire({
+                icon: "warning",
+                title: "Atenção!",
+                text: "Transportadora já está " + situacaoAtual
+            });
+            return; // Não continua com a confirmação
+        }
+        var mensagem = "Você tem certeza que deseja " + acao.toLowerCase() + " a transportadora?";
+        Swal.fire({
+            title: 'Confirmação',
+            text: mensagem,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Não',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Se o usuário confirmar, a função de update é chamada
+                updateSituacao(id, idsituacao, atualsituacao);
+            } else {
+                Swal.fire('Ação cancelada', '', 'info');
+            }
+        });
+
+    })
+}
+
+function updateSituacao(id, idsituacao, atualsituacao) {
+
+    var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
     if (idsituacao == atualsituacao) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!",
-            text: "Transportadora já está " + situacaoAtual
-        });
-        return; // Não continua com a confirmação
-    }
-    var mensagem = "Você tem certeza que deseja " + acao.toLowerCase() + " a transportadora?";
-    Swal.fire({
-        title: 'Confirmação',
-        text: mensagem,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sim',
-        cancelButtonText: 'Não',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Se o usuário confirmar, a função de update é chamada
-            updateSituacao(id, idsituacao, atualsituacao);
-        } else {
-            Swal.fire('Ação cancelada', '', 'info');
-        }
-    });
-}
-
-function updateSituacao(id, idsituacao, atualsituacao){
-   
-    var situacao = atualsituacao == 2 ? 'Inativa' : 'Ativa'
-    if(idsituacao == atualsituacao){
-        Swal.fire({
-            icon: "warning",
-            title: "Atenção!",
-            text: "Transportadora já está " +  situacao
+            text: "Transportadora já está " + situacao
         });
         return
     }
@@ -390,17 +404,17 @@ function updateSituacao(id, idsituacao, atualsituacao){
             id: id,
             idsituacao: idsituacao
         },
-        onSuccess(res){
-            listar(); 
+        onSuccess(res) {
+            listar();
             // Terceiro alerta de sucesso
             var novaSituacao = idsituacao == 2 ? 'inativado' : 'ativado';
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
                 text: "Transportadora " + novaSituacao + " com sucesso."
-            });  
+            });
         },
-        onFailure(res){
+        onFailure(res) {
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
@@ -420,34 +434,34 @@ function setEditar(row) {
     // Remover máscaras antes de setar novos valores
     $('#cnpj_cpf').unmask();
     $('#telefone').unmask();
-    
+
     // Setando o valor no campo CNPJ e Telefone
     $('#cnpj_cpf').val(row.cnpj_cpf);
     $('#email').val(row.email);
     $('#telefone').val(row.telefone);
 
     // Reaplicar as máscaras após os valores serem inseridos
-    $('#telefone').mask('(00) 00000-0000'); 
+    $('#telefone').mask('(00) 00000-0000');
     $('#cnpj_cpf').mask('00.000.000/0000-00');
-    
+
     // Rolagem suave para o formulário
     $('html, body').animate({
         scrollTop: $(".form-container").offset().top
-    }, 100); 
+    }, 100);
 }
-function editar(dados){
+function editar(dados) {
 
     app.callController({
         method: 'GET',
         url: base + '/editartransportadora',
         params: {
-           nome: dados.nome,
-           cnpj_cpf: dados.cnpj_cpf,
-           email: dados.email,
-           telefone: dados.telefone,
-           idfilial: dados.idfilial
+            nome: dados.nome,
+            cnpj_cpf: dados.cnpj_cpf,
+            email: dados.email,
+            telefone: dados.telefone,
+            idfilial: dados.idfilial
         },
-        onSuccess(res){
+        onSuccess(res) {
             listar(); // Atualiza a lista após o cadastro
             // Limpar os campos do formulário
             limparForm()
@@ -458,15 +472,51 @@ function editar(dados){
                 text: "Editado com sucesso!"
             });
         },
-        onFailure(res){
-             
+        onFailure(res) {
+
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
                 text: "Erro ao editar Transportadora!"
             });
             return
-           
+
         }
     })
+}
+
+function verificaAgendamentoPendente(id) {
+
+
+    return new Promise((resolve, reject) => {
+        app.callController({
+            method: 'GET',
+            url: base + '/verifica/agendamento/pendente',
+            params: {
+                idtipo: 2,
+                idfilial: id
+            },
+            onSuccess(res) {
+                let dados = res[0].ret;
+                if (dados.length > 0) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Atenção!!",
+                        text: "Existe um agendamento pendente ou em andamento para essa transportadora!"
+                    });
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            },
+            onFailure(res) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro!!",
+                    text: "Erro ao verificar se existe agendamento pendente ou em andamento!"
+                });
+                reject(false); // Erro na verificação
+            }
+        });
+    });
 }

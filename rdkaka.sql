@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15/11/2024 às 13:58
+-- Tempo de geração: 01/12/2024 às 22:58
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -29,7 +29,6 @@ USE `rdkaka`;
 -- Estrutura para tabela `filial`
 --
 
-DROP TABLE IF EXISTS `filial`;
 CREATE TABLE `filial` (
   `idfilial` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
@@ -46,10 +45,10 @@ CREATE TABLE `filial` (
 
 INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsituacao`, `idtipofilial`) VALUES
 (1, 'Matriz', '11331494990123', 'lucas.dossantos@gazin.com.br', '44998487185', 1, 1),
-(22, 'IDH', '11111111111111', 'idh@transportes.com', '44111111111', 1, 2),
-(23, 'ALFA', '22222222222222', 'alfa@transportes.com', '44222222222', 2, 2),
+(22, 'IDH', '11111111111111', 'idh@transportes.com', '44111111111', 2, 2),
+(23, 'ALFA', '22222222222222', 'alfa@transportes.com', '44222222222', 1, 2),
 (24, 'RODONAVES', '33333333333333', 'rodonaves@transportes.com', '44333333333', 1, 2),
-(25, 'DOURADINA', '44444444444444', 'douradina@transportes.com', '44444444444', 1, 3),
+(25, 'DOURADINA', '44444444444444', 'douradina@transportes.com', '44444444444', 2, 3),
 (26, 'IPAMERI', '55555555555555', 'ipameri@transportes.com', '55555555555', 1, 3),
 (27, 'FEIRA DE SANTANA', '66666666666666', 'feira@transportes.com', '66666666666', 1, 3);
 
@@ -59,7 +58,6 @@ INSERT INTO `filial` (`idfilial`, `nome`, `cnpj_cpf`, `email`, `telefone`, `idsi
 -- Estrutura para tabela `grupos`
 --
 
-DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE `grupos` (
   `idgrupo` int(11) NOT NULL,
   `descricao` varchar(200) NOT NULL
@@ -80,7 +78,6 @@ INSERT INTO `grupos` (`idgrupo`, `descricao`) VALUES
 -- Estrutura para tabela `movimento_solicitacoes`
 --
 
-DROP TABLE IF EXISTS `movimento_solicitacoes`;
 CREATE TABLE `movimento_solicitacoes` (
   `idmovimento` int(11) NOT NULL,
   `idsolicitacao` int(11) NOT NULL,
@@ -105,7 +102,16 @@ INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituaca
 (33, 38, 4, 'recusar', '2024-11-15 12:54:01'),
 (34, 37, 5, 'cancelar', '2024-11-15 12:54:07'),
 (35, 37, 1, 'quero reagendar essa solicitacao', '2024-11-15 12:54:50'),
-(36, 38, 1, 'rewagendar recusada', '2024-11-15 12:56:44');
+(36, 38, 1, 'rewagendar recusada', '2024-11-15 12:56:44'),
+(37, 39, 1, 'teste', '2024-11-23 12:38:34'),
+(38, 39, 4, 'estou recusando pq n ta filé', '2024-11-23 12:39:23'),
+(39, 39, 1, 'estou reagendando isso pq tal', '2024-11-23 12:40:01'),
+(40, 39, 2, 'estou aceitando tmj', '2024-11-23 12:40:24'),
+(41, 39, 3, 'finalizado com sucessosooo', '2024-11-23 12:40:53'),
+(42, 40, 1, 'teste', '2024-12-01 21:23:52'),
+(43, 37, 4, 'recusar para teste', '2024-12-01 21:25:34'),
+(44, 38, 2, 'aceitar', '2024-12-01 21:26:04'),
+(45, 38, 5, 'cancelado', '2024-12-01 21:26:10');
 
 -- --------------------------------------------------------
 
@@ -113,7 +119,6 @@ INSERT INTO `movimento_solicitacoes` (`idmovimento`, `idsolicitacao`, `idsituaca
 -- Estrutura para tabela `situacao`
 --
 
-DROP TABLE IF EXISTS `situacao`;
 CREATE TABLE `situacao` (
   `idsituacao` int(11) NOT NULL,
   `situacao` varchar(200) NOT NULL
@@ -136,7 +141,6 @@ INSERT INTO `situacao` (`idsituacao`, `situacao`) VALUES
 -- Estrutura para tabela `solicitacoes_agendamentos`
 --
 
-DROP TABLE IF EXISTS `solicitacoes_agendamentos`;
 CREATE TABLE `solicitacoes_agendamentos` (
   `idsolicitacao` int(11) NOT NULL,
   `idcd` int(11) NOT NULL,
@@ -155,8 +159,10 @@ CREATE TABLE `solicitacoes_agendamentos` (
 
 INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quantidadenota`, `observacao`, `idtransportadora`, `data`, `idsituacao`, `dataoperacao`) VALUES
 (36, 25, 'ACA1231', 2, 'finalizado', 22, '2024-11-25', 3, '2024-11-15'),
-(37, 25, 'ACA1231', 2, 'quero reagendar essa solicitacao', 22, '2024-11-16', 1, '2024-11-15'),
-(38, 25, 'ACA2314', 3, 'rewagendar recusada', 22, '2024-11-16', 1, '2024-11-15');
+(37, 25, 'ACA1231', 2, 'recusar para teste', 22, '2024-11-16', 2, '2024-11-15'),
+(38, 25, 'ACA2314', 3, 'cancelado', 22, '2024-11-16', 5, '2024-11-15'),
+(39, 25, 'ASD2313', 2, 'finalizado com sucessosooo', 22, '2024-11-26', 3, '2024-11-23'),
+(40, 26, 'ASD2131', 2, 'teste', 22, '2024-12-02', 1, '2024-12-01');
 
 -- --------------------------------------------------------
 
@@ -164,7 +170,6 @@ INSERT INTO `solicitacoes_agendamentos` (`idsolicitacao`, `idcd`, `placa`, `quan
 -- Estrutura para tabela `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `idusuario` bigint(20) UNSIGNED NOT NULL,
   `nome` varchar(200) NOT NULL,
@@ -180,7 +185,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`idusuario`, `nome`, `login`, `senha`, `idgrupo`, `idfilial`, `idsituacao`) VALUES
-(28, 'Lucas Gabriel', 'lucas.gabriel', '28284886917f9a2fa6952251e64ebea3', 1, 1, 1),
+(28, 'Lucas Gabriel', 'lucas.gabriel', 'd90446dfb40239c2ce08a478a423e7d7', 1, 1, 1),
 (29, 'Lucas Rico', 'lucas.bonfim', '7e246b7e60e825d99c65351fdd25752d', 1, 1, 1),
 (30, 'Robson Alves', 'robson.alves', '7e246b7e60e825d99c65351fdd25752d', 2, 22, 1),
 (31, 'Amanda Dias', 'amanda.dias', '7e246b7e60e825d99c65351fdd25752d', 2, 24, 1),
@@ -231,13 +236,13 @@ ALTER TABLE `filial`
 -- AUTO_INCREMENT de tabela `movimento_solicitacoes`
 --
 ALTER TABLE `movimento_solicitacoes`
-  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idmovimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de tabela `solicitacoes_agendamentos`
 --
 ALTER TABLE `solicitacoes_agendamentos`
-  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idsolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

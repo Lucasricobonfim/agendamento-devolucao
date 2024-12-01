@@ -1,11 +1,11 @@
 QTD AGENDAMENTO
 
-- Esta permitindo digitar numero 0 e colocar 1 letra
-- Não permitir solicitar agendamento para CDs inativos
-- Só podemos invativar uma transportadora caso não tenha agendamentos pendentes ou em andamento
+- Esta permitindo digitar numero 0 e colocar 1 letra -- ok
+- Não permitir solicitar agendamento para CDs inativos -- ok 
+- Só podemos invativar uma transportadora ou cd caso não tenha agendamentos pendentes ou em andamento -- ok
 - Tirar o listar da transportadora do ADM, e tirar permissao de ver a tela
-- Setando a transportadora errada quando vai editar o usuario
--
+- Setando a transportadora errada quando vai editar o usuario -- ok
+-caso o usuario estiver vincluado a um cd ou transportadora inativo n pode deixar ele agendar / solicitar ,aceitar -- ok
 -
 -
 -

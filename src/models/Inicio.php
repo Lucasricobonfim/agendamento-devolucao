@@ -366,4 +366,56 @@ class Inicio extends Model
             ];
         }
     }
+
+    public function verificaFilialInativa($dados)
+    {
+        try {
+            $sql = Database::getInstance()->prepare("select idfilial, nome from filial f where f.idfilial = :idfilial and f.idsituacao = 2");
+            $sql->bindParam(':idfilial', $dados['idfilial']);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao verificar filial Inativa: ' . $error->getMessage()
+            ];
+        }
+    }
+
+    public function verificaAgendamentoPendente($dados)
+    {
+        // 2 transportadora, 3 cd
+        if($dados['idtipo'] == 2) {
+
+            $sql = "select sa.idsolicitacao  from solicitacoes_agendamentos sa where sa.idtransportadora = :idfilial and sa.idsituacao in (1, 2)";
+        }
+        else{
+
+            $sql = "select sa.idsolicitacao  from solicitacoes_agendamentos sa where sa.idcd = :idfilial and sa.idsituacao in (1, 2)";
+        }
+
+
+        // print_r($sql);exit;
+
+
+        try {
+            $sql = Database::getInstance()->prepare($sql);
+            $sql->bindParam(':idfilial', $dados['idfilial']);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao verificar agendamento pendente: ' . $error->getMessage()
+            ];
+        }
+    }
 }
