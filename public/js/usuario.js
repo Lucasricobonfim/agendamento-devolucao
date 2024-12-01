@@ -445,17 +445,18 @@ function updateSituacao(id, idsituacao, atualsituacao){
 
 function setEditar(row){
 
-
+$('#form-title').text('Editando Usuário').css('color', 'blue');;
     buscaFilial(row.idgrupo)
 
-    $('#form-title').text('Editando Usuário').css('color', 'blue');;
 
-    $('#idfilial').val(row.idfilial),
-
+    $('#idgrupo').val(row.idgrupo)
+    
+    setTimeout(() => {
+        $('#idfilial').val(row.idfilial)
+    }, 300);
     $('#idusuario').val(row.idusuario),
     $('#nome').val(row.nome),
     $('#login').val(row.login),    
-    $('#idgrupo').val(row.idgrupo)
     // formatarCNPJ()
 
     $('html, body').animate({

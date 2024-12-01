@@ -19,6 +19,11 @@ $router->get('/get=cd-dash', 'InicioController@getCdDash');
 $router->get('/get-dashboard', 'InicioController@getDashBoard');
 $router->get('/get-dashboard-qtd', 'InicioController@getTotalSolicitaces');
 
+
+$router->get('/verifica/filial/inativa', 'InicioController@verificaInativa');
+
+$router->get('/verifica/agendamento/pendente', 'InicioController@verificaAgendamentoPendente');
+
 // dashboard
 $router->get('/dashboard', 'DashboardController@index');
 
@@ -67,5 +72,3 @@ $router->get('/getsolicitacoes', 'SolicitacoesController@getsolicitacoes');
 $router->post('/updatesolicitacao', 'SolicitacoesController@updateSolicitacao'); // PAGINA NAO ENCONTRADA
 
 
-
-$router->post('/teste', 'SolicitacoesController@teste'); // PAGINA NAO ENCONTRADA

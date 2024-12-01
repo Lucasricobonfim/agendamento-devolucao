@@ -91,8 +91,8 @@ $('#solicitar').on('click', function () {
         return;
     }
 
-     // Verifica se a quantidade de notas é negativa
-     if (dados.quantidadenota < 0) {
+    // Verifica se a quantidade de notas é negativa
+    if (dados.quantidadenota < 0) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
@@ -140,64 +140,75 @@ function validarPlaca(placa) {
 
 function limparCampos() {
     $('#idfilial').val(''),
-    $('#placa').val(''),
-    $('#data').val(''),
-    $('#qtdnota').val(''),
-    $('#observacao').val('')
+        $('#placa').val(''),
+        $('#data').val(''),
+        $('#qtdnota').val(''),
+        $('#observacao').val('')
 }
 
 function solicitar(dados) {
-    app.callController({
-        method: 'POST',
-        url: base + '/solicitar-agendamento',
-        params: {
-            idfilial: dados.idfilial,
-            placa: dados.placa,
-            data: dados.data,
-            quantidadenota: dados.quantidadenota,
-            observacao: dados.observacao
-        },
-        onSuccess(res) {
-            let rec = res[0]
 
 
-            if (rec.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Sucesso!",
-                    text: "Agendamento Solicitado com sucesso!"
-                });
-                limparCampos()
-            } else {
+    verificaFilialInativa().then((filailinativa) => {
+        if (!filailinativa) {
+            limparCampos()
+            return;
+        }
+
+
+        app.callController({
+            method: 'POST',
+            url: base + '/solicitar-agendamento',
+            params: {
+                idfilial: dados.idfilial,
+                placa: dados.placa,
+                data: dados.data,
+                quantidadenota: dados.quantidadenota,
+                observacao: dados.observacao
+            },
+            onSuccess(res) {
+                let rec = res[0]
+
+
+                if (rec.success) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso!",
+                        text: "Agendamento Solicitado com sucesso!"
+                    });
+                    limparCampos()
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Atenção!!",
+                        text: "Erro ao solicitar agendamento!"
+                    });
+                    limparCampos()
+                    return
+                }
+            },
+            onFailure(res) {
+                let rec = res[0].ret[0]
+
+
+                if (rec.existeplaca == 1) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Atenção!!",
+                        text: "Já existe um agendamento para essa data com essa Placa"
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     icon: "error",
                     title: "Atenção!!",
-                    text: "Erro ao solicitar agendamento!"
+                    text: "Erro ao solicitar!"
                 });
-                limparCampos()
                 return
             }
-        },
-        onFailure(res) {
-            let rec = res[0].ret[0]
+        })
 
-
-            if (rec.existeplaca == 1) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "Atenção!!",
-                    text: "Já existe um agendamento para essa data com essa Placa"
-                });
-                return;
-            }
-
-            Swal.fire({
-                icon: "error",
-                title: "Atenção!!",
-                text: "Erro ao solicitar!"
-            });
-            return
-        }
     })
 }
 
@@ -294,22 +305,22 @@ const Table = function (dados, idsituacao) {
             },
             {
                 extend: 'pdfHtml5',
-                orientation: 'landscape', 
-                pageSize: 'A3', 
+                orientation: 'landscape',
+                pageSize: 'A3',
                 title: 'AGENDAMENTO',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6]
                 },
                 customize: function (doc) {
                     // Reduz as margens da página para expandir a tabela
-                    doc.pageMargins = [10, 10, 10, 10]; 
-            
+                    doc.pageMargins = [10, 10, 10, 10];
+
                     // Centraliza o título
                     doc.content[0].alignment = 'center';
-            
+
                     // Ajusta o tamanho da fonte do título
                     doc.content[0].fontSize = 14;
-            
+
                     // Aumenta o tamanho da tabela
                     doc.content[1].layout = {
                         hLineWidth: function () { return 0.5; },
@@ -319,7 +330,7 @@ const Table = function (dados, idsituacao) {
                         paddingTop: function () { return 5; },
                         paddingBottom: function () { return 5; }
                     };
-            
+
                     // Define o estilo do cabeçalho da tabela
                     doc.styles.tableHeader = {
                         alignment: 'center',
@@ -328,14 +339,14 @@ const Table = function (dados, idsituacao) {
                         bold: true,
                         fontSize: 12
                     };
-            
+
                     // Ajusta o conteúdo da tabela para centralizar
                     doc.styles.tableBodyEven = { alignment: 'center' };
                     doc.styles.tableBodyOdd = { alignment: 'center' };
-            
+
                     // Define o alinhamento padrão para todo o conteúdo
                     doc.defaultStyle.alignment = 'center';
-            
+
                     // Ajusta o tamanho das colunas para preencher mais a página
                     var table = doc.content[1].table;
                     table.widths = Array(table.body[0].length).fill('*'); // Define a largura de todas as colunas para distribuir igualmente
@@ -363,9 +374,9 @@ const Table = function (dados, idsituacao) {
             {
                 title: 'Placa',
                 data: 'placa',
-                render: function(data) {
+                render: function (data) {
                     const placaMascara = data.replace(/^([A-Z]{3})(\d{1}[A-Z]\d{2})$/, "$1-$2") // Para o formato ABC-1A34
-                    .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
+                        .replace(/^([A-Z]{3})(\d{4})$/, "$1-$2"); // Para o formato ABC-1234
                     return placaMascara;
                 }
             },
@@ -409,10 +420,10 @@ const Table = function (dados, idsituacao) {
                 data: null, // Usamos `null` se não há uma propriedade específica para essa coluna no objeto de dados.
                 render: function (data, type, row) {
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
-                   
+
                     return '<button style="width: 100%;" class="btn btn-primary btn-sm" onclick="abriModalReagendar(' + dados + ')">Reagendar</button> '
                 },
-                visible: idsituacao === 4 || idsituacao ===5  
+                visible: idsituacao === 4 || idsituacao === 5
             }
         ],
         columnDefs: [
@@ -432,7 +443,7 @@ const Table = function (dados, idsituacao) {
         rowCallback: function (row, data) {
             $(row).addClass('linha' + data.idfilial);
         },
-        initComplete: function(settings, json) {
+        initComplete: function (settings, json) {
             const column = this.api().column(8); // Índice da coluna "Ações"
             // Define a visibilidade da coluna "Ações"
             column.visible(idsituacao === 4 || idsituacao === 5);
@@ -450,7 +461,7 @@ const Table = function (dados, idsituacao) {
                 console.clear()
 
                 const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
-                target.click(); 
+                target.click();
             });
         });
     }
@@ -462,17 +473,17 @@ const Table = function (dados, idsituacao) {
 
 function abrirModalObs(dados) {
 
-   
+
     opp = $('.obshist');
     opp.html('');
 
 
-    if(dados.observacoes){
-        observacoes =       dados.observacoes.split('|');
+    if (dados.observacoes) {
+        observacoes = dados.observacoes.split('|');
         situacao_operacao = dados.situacao_operacao.split('|');
-        dataoperacao        = dados.dataoperacao.split('|');
+        dataoperacao = dados.dataoperacao.split('|');
     }
-       
+
     $('#observacaoModal').modal('show');
 
     let registros = observacoes.map((obs, index) => ({
@@ -482,7 +493,7 @@ function abrirModalObs(dados) {
     }));
 
     registros.sort((a, b) => {
-        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1')); 
+        let dateA = new Date(a.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
         let dateB = new Date(b.data.trim().replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1'));
         return dateA - dateB;
     });
@@ -550,12 +561,20 @@ function atualizarContador(idsituacao, count) {
 
 function abriModalReagendar(dados) {
 
-    $('#modalReagendar').modal('show');
-    $('#idsolicitacao').val(dados.idsolicitacao);
-    $('#observacao').val('')
+    verificaFilialInativa().then((filailinativa) => {
+        if (!filailinativa) {
+            limparCampos()
+            return;
+        }
+
+        $('#modalReagendar').modal('show');
+        $('#idsolicitacao').val(dados.idsolicitacao);
+        $('#observacao').val('')
+
+    })
 }
 
-function fecharModalReagendar(){
+function fecharModalReagendar() {
 
 
     $('#idsolicitacao').val('');
@@ -567,7 +586,7 @@ function fecharModalReagendar(){
 }
 
 
-function reagendar(){
+function reagendar() {
 
     let dados = {
         idsolicitacao: $('#idsolicitacao').val(),
@@ -583,7 +602,7 @@ function reagendar(){
         });
         $('#observacao').toggleClass('erro');
         return
-    } else if(!app.validarCampos(dados)) {
+    } else if (!app.validarCampos(dados)) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
@@ -591,10 +610,10 @@ function reagendar(){
         });
         return
     }
-    
-    let dataReagendar = new Date(dados.dataReagendamento + 'T00:00:00'); 
+
+    let dataReagendar = new Date(dados.dataReagendamento + 'T00:00:00');
     let hoje = new Date();
-    hoje.setHours(0, 0, 0, 0); 
+    hoje.setHours(0, 0, 0, 0);
 
     if (dataReagendar < hoje) {
         Swal.fire({
@@ -621,15 +640,15 @@ function reagendar(){
 
     Swal.fire({
         title: "Tem certeza?",
-        text: "Deseja Reagendar essa solicitação para a data " + dataFormatada+ " ?",
+        text: "Deseja Reagendar essa solicitação para a data " + dataFormatada + " ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Sim, Reagendar!"
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-         
+
             app.callController({
                 method: 'POST',
                 url: base + '/reagendar',
@@ -657,12 +676,45 @@ function reagendar(){
                     return;
                 }
             });
-        
 
 
-         
-       
+
+
+
         }
-      })
+    })
 
+
+}
+
+function verificaFilialInativa() {
+    return new Promise((resolve, reject) => {
+        app.callController({
+            method: 'GET',
+            url: base + '/verifica/filial/inativa',
+            params: null,
+            onSuccess(res) {
+                let dados = res[0].ret;
+
+                if (dados.length > 0 && dados[0].idfilial) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Atenção!!",
+                        text: "Filial " + dados[0].nome + " que está vinculada ao seu usuário está inativa, entre em contato com o administrador do sistema!"
+                    });
+                    resolve(false); // Filial inativa
+                } else {
+                    resolve(true); // Sem filial inativa
+                }
+            },
+            onFailure(res) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro!!",
+                    text: "Erro ao verificar Filial!"
+                });
+                reject(false); // Erro na verificação
+            }
+        });
+    });
 }
