@@ -123,9 +123,9 @@
 
       <input type="button" value="Acessar" id="logar" class="btn btn-custom w-100">
 
-      <div class="forgot-password mt-3">
+      <!-- <div class="forgot-password mt-3">
         <a href="#" class="text-decoration-none">Esqueceu a senha?</a>
-      </div>
+      </div> -->
     </div>
 
     <script src="<?= $base; ?>/js/login.js" defer></script>
