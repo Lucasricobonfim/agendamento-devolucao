@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    erroClass()
     listar()
 
     // Máscara para telefone e CNPJ aplicadas corretamente
@@ -91,23 +91,6 @@ $(document).ready(function () {
 
     })
 
-    $('#nome').on('input', function () {
-        $(this).removeClass('erro');
-    });
-
-    $('#cnpj_cpf').on('input', function () {
-        $(this).removeClass('erro');
-    });
-
-    $('#email').on('input', function () {
-        $(this).removeClass('erro');
-    });
-
-    $('#telefone').on('input', function () {
-        $(this).removeClass('erro');
-    });
-
-
 })
 function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
@@ -153,6 +136,24 @@ function validarTelefone(telefone) {
     return true;
 }
 
+function erroClass(){
+    $('#nome').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#cnpj_cpf').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#email').on('input', function () {
+        $(this).removeClass('erro');
+    });
+
+    $('#telefone').on('input', function () {
+        $(this).removeClass('erro');
+    });
+}
+
 function listar(ret) {
     app.callController({
         method: 'GET',
@@ -180,6 +181,9 @@ function limparForm() {
     $('#email').val('');
     $('#telefone').val('');
     $('#idfilial').val('');
+    
+    $('#telefone').mask('(00) 00000-0000', { placeholder: '(  ) _____-____' });
+    $('#cnpj_cpf').mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' });
 
     //Para remover erro do preenchimento
     $('#nome').removeClass('erro'); // Remove a classe 'erro'
@@ -430,11 +434,9 @@ function setEditar(row) {
     $('#form-title').text('Editando CD').css('color', 'blue');
     $('#idfilial').val(row.idfilial);
     $('#nome').val(row.nome);
-
     // Remover máscaras antes de setar novos valores
     $('#cnpj_cpf').unmask();
     $('#telefone').unmask();
-
     // Setando o valor no campo CNPJ e Telefone
     $('#cnpj_cpf').val(row.cnpj_cpf);
     $('#email').val(row.email);

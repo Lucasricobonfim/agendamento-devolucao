@@ -369,8 +369,9 @@ function verificaFilialInativa() {
 
 
 function abrirModalAceitar(idsolicitacao, idsituacao, dados) {
-
-
+    $('#observacaoact').val(''); // Limpa o campo de observação ao fechar o modal
+    $('#observacaoact').removeClass('erro'); // Remove a classe 'erro'
+    
     verificaFilialInativa().then((filailinativa) => {
         if (!filailinativa) {
             return; 

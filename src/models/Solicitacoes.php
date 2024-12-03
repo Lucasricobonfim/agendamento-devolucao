@@ -11,20 +11,14 @@ use Throwable;
 class Solicitacoes extends Model{
    
     public function getsolicitacoes($dados){
-
-        
-        
         $params = [
             "idfilial" => $_SESSION['idfilial'],
             "idsituacao" => $dados['idsituacao']
         ];
 
-
-
-        $sql =
-          $_SESSION['idgrupo'] == 1 ?
-
-          "SELECT 
+        $sql = $_SESSION['idgrupo'] == 1 ? 
+        "
+            SELECT 
                 s.idsolicitacao, 
                 s.idcd, 
                 s.placa, 
@@ -40,22 +34,22 @@ class Solicitacoes extends Model{
                 oi.dataoperacao,
                 oi.situacao_operacao,
                 DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
-                
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
-            inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
-            left join situacao st on st.idsituacao = s.idsituacao
-            left join(
+            INNER JOIN filial fd ON fd.idtipofilial = 3 AND fd.idfilial = s.idcd
+            LEFT JOIN situacao st ON st.idsituacao = s.idsituacao
+            LEFT JOIN (
                 SELECT
-                	ms.idsolicitacao
-                	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                	,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
-                	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
-                from  movimento_solicitacoes ms 
-                left join situacao sos on sos.idsituacao = ms.idsituacao
+                    ms.idsolicitacao,
+                    GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes,
+                    GROUP_CONCAT(DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao,
+                    GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                FROM movimento_solicitacoes ms 
+                LEFT JOIN situacao sos ON sos.idsituacao = ms.idsituacao
                 GROUP BY ms.idsolicitacao
-            )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
-            where s.idsituacao = :idsituacao"
+            ) AS oi ON oi.idsolicitacao = s.idsolicitacao
+            WHERE s.idsituacao = :idsituacao
+        "
         :
         "
             SELECT 
@@ -69,32 +63,29 @@ class Solicitacoes extends Model{
                 st.situacao,
                 f.nome AS nome_transportadora,
                 fd.nome as nome_cd,
-
                 oi.observacoes,
                 oi.dataoperacao,
                 oi.situacao_operacao,
                 DATE_FORMAT(s.dataoperacao, '%d/%m/%Y') as dataagendamento
             FROM solicitacoes_agendamentos s
             INNER JOIN filial f ON f.idtipofilial = 2 AND f.idfilial = s.idtransportadora
-            inner join filial fd on fd.idtipofilial = 3 and fd.idfilial = s.idcd
-            left join situacao st on st.idsituacao = s.idsituacao
-            left join(
+            INNER JOIN filial fd ON fd.idtipofilial = 3 AND fd.idfilial = s.idcd
+            LEFT JOIN situacao st ON st.idsituacao = s.idsituacao
+            LEFT JOIN (
                 SELECT
-                	ms.idsolicitacao
-                	,GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes
-                	,GROUP_CONCAT( DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao
-                	,GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
-                from  movimento_solicitacoes ms 
-                left join situacao sos on sos.idsituacao = ms.idsituacao
+                    ms.idsolicitacao,
+                    GROUP_CONCAT(ms.observacao SEPARATOR '|') AS observacoes,
+                    GROUP_CONCAT(DATE_FORMAT(ms.dataoperacao, '%d/%m/%Y %H:%i:%s') SEPARATOR '|') AS dataoperacao,
+                    GROUP_CONCAT(sos.situacao SEPARATOR '|') AS situacao_operacao
+                FROM movimento_solicitacoes ms 
+                LEFT JOIN situacao sos ON sos.idsituacao = ms.idsituacao
                 GROUP BY ms.idsolicitacao
-            )  AS oi ON  oi.idsolicitacao = s.idsolicitacao
-            where s.idcd = :idfilial
-              and s.idsituacao = :idsituacao
+            ) AS oi ON oi.idsolicitacao = s.idsolicitacao
+            WHERE s.idcd = :idfilial
+              AND s.idsituacao = :idsituacao
         ";
 
-
         $sql = $this->switchParams($sql, $params );
-
 
         try {
             $sql = Database::getInstance()->prepare($sql);
@@ -108,83 +99,57 @@ class Solicitacoes extends Model{
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' =>'Falha ao buscar solicitações: ' . $error->getMessage()
+                'result' => 'Falha ao buscar solicitações: ' . $error->getMessage()
             ];
         }
     }
 
     public function updatesolicitacao($dados){
-
+        // Preparando os parâmetros
         $params = [
             "observacao" => $dados['observacao'],
             "idsolicitacao" => $dados['idsolicitacao'],
             "idsituacao" => $dados['idsituacao']
         ];
-
+    
+        // SQL para atualizar a solicitação e inserir na tabela de movimentações
         $sql = "
-          update solicitacoes_agendamentos 
-            set idsituacao = :idsituacao
-           ,observacao = ':observacao'
-          where idsolicitacao = :idsolicitacao;
-
-
-          insert into movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao )
-
-          SELECT
-             :idsolicitacao
-            ,:idsituacao
-            ,':observacao'
-            ,now();
+            UPDATE solicitacoes_agendamentos
+            SET idsituacao = :idsituacao,
+                observacao = :observacao
+            WHERE idsolicitacao = :idsolicitacao;
+    
+            INSERT INTO movimento_solicitacoes (idsolicitacao, idsituacao, observacao, dataoperacao)
+            SELECT
+                :idsolicitacao,
+                :idsituacao,
+                :observacao,
+                NOW();
         ";
-        $sql = $this->switchParams($sql, $params );
-
-        // print_r($sql);exit;
-
+    
         try {
+            // Preparando a query
             $sql = Database::getInstance()->prepare($sql);
+    
+            // Bind dos parâmetros
+            $sql->bindParam(':observacao', $params['observacao'], PDO::PARAM_STR);
+            $sql->bindParam(':idsolicitacao', $params['idsolicitacao'], PDO::PARAM_INT);
+            $sql->bindParam(':idsituacao', $params['idsituacao'], PDO::PARAM_INT);
+    
+            // Executando a query
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            // Retornando sucesso
             return [
                 'sucesso' => true,
                 'result' => $result
             ];
     
         } catch (Throwable $error) {
+            // Em caso de erro, retornando falha
             return  [
                 'sucesso' => false,
-                'result' =>'Falha ao buscar solicitações: ' . $error->getMessage()
-            ];
-        }
-    }
-
-
-    public function teste($dados){
-        
-        // print_r($dados);exit;
-        // $params = [
-        //     "idusuario" => $dados['idusuario']
-        // ];
-
-        // $sql = "
-        //   select * from usuarios a where a.idusuario = :idusuario 
-        // ";
-        // // $sql = $this->switchParams($sql, $dados );
-        // print_r($sql);
-        // exit;
-        try {
-            $sql = Database::getInstance()->prepare('select * from usuarios a where a.idusuario = :idusuario');
-            $sql->bindValue(':idusuario', $dados['idusuario']);
-            $sql->execute();
-            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            return [
-                'sucesso' => true,
-                'result' => $result
-            ];
-    
-        } catch (Throwable $error) {
-            return  [
-                'sucesso' => false,
-                'result' =>'Falha ao buscar solicitações: ' . $error->getMessage()
+                'result' => 'Falha ao atualizar solicitação: ' . $error->getMessage()
             ];
         }
     }

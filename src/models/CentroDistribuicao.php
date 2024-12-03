@@ -48,8 +48,9 @@ class CentroDistribuicao extends Model
     {
         try {
             $sql = Database::getInstance()->prepare("
-                SELECT CASE WHEN EXISTS(select 1 from filial where cnpj_cpf='$cnpj_cpf') then 1 else 0 end as existecpf
-           ");
+                SELECT CASE WHEN EXISTS(SELECT 1 FROM filial WHERE cnpj_cpf = :cnpj_cpf) THEN 1 ELSE 0 END AS existecpf
+            ");
+            $sql->bindValue(':cnpj_cpf', $cnpj_cpf);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
@@ -60,7 +61,7 @@ class CentroDistribuicao extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' =>'Falha ao verificar Cnpj existente: ' .$error->getMessage()
+                'result' => 'Falha ao verificar CNPJ existente: ' . $error->getMessage()
             ];
         }
     }
@@ -97,12 +98,17 @@ class CentroDistribuicao extends Model
           try {
             $sql = Database::getInstance()->prepare("
                 update filial
-                    set nome = '$nome',
-                    cnpj_cpf = '$cnpj_cpf',
-                    email = '$email',
-                    telefone = '$telefone'
-                where idfilial = $idfilial;
+                    set nome = :nome,
+                    cnpj_cpf = :cnpj_cpf,
+                    email = :email,
+                    telefone = :telefone
+                where idfilial = :idfilial;
             ");
+            $sql->bindValue(':nome', $nome);
+            $sql->bindValue(':cnpj_cpf', $cnpj_cpf);
+            $sql->bindValue(':email', $email);
+            $sql->bindValue(':telefone', $telefone);
+            $sql->bindValue(':idfilial', $idfilial);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             return [
@@ -123,10 +129,12 @@ class CentroDistribuicao extends Model
          try {
             $sql = Database::getInstance()->prepare("
                 update filial
-                    set idsituacao = $idsituacao
-                where idfilial = $id;
+                    set idsituacao = :idsituacao
+                where idfilial = :id;
            ");
-            
+            $sql->bindValue(':idsituacao', $idsituacao, PDO::PARAM_INT);
+            $sql->bindValue(':id', $id, PDO::PARAM_INT);
+
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             return [
@@ -136,7 +144,7 @@ class CentroDistribuicao extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao atualizar situacao da transportadora ' .$error->getMessage()
+                'result' => 'Falha ao atualizar situacao do CD ' .$error->getMessage()
             ];
             
         }

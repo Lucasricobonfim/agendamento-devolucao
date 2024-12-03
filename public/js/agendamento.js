@@ -1,8 +1,8 @@
 $(document).ready(function () {
+    erroClass()
     buscaCd()
     let idsituacao = 1;
     listar(idsituacao);
-    // Contar as solicitações para todos os cards ao carregar a página
     contarSolicitacoes();
     $('.card').on('click', function () {
         const idsituacao = $(this).data('idsituacao');
@@ -10,25 +10,6 @@ $(document).ready(function () {
         listar(idsituacao);
     });
 })
-
-$('#idfilial').on('input', function () {
-    $(this).removeClass('erro');
-});
-$('#placa').on('input', function () {
-    $(this).removeClass('erro');
-});
-$('#data').on('input', function () {
-    $(this).removeClass('erro');
-});
-$('#dataReagendamento').on('input', function () {
-    $(this).removeClass('erro');
-});
-$('#qtdnota').on('input', function () {
-    $(this).removeClass('erro');
-});
-$('#observacao').on('input', function () {
-    $(this).removeClass('erro');
-});
 
 $("#placa").inputmask({
     mask: ["AAA-9*99"], // Formato Mercosul
@@ -91,12 +72,12 @@ $('#solicitar').on('click', function () {
         return;
     }
 
-    // Verifica se a quantidade de notas é negativa
-    if (dados.quantidadenota < 0) {
+    // Verifica se a quantidade de notas é negativa ou maior que 0
+    if (dados.quantidadenota < 0 || dados.quantidadenota == 0) {
         Swal.fire({
             icon: "warning",
             title: "Atenção!!",
-            text: "O número de notas não pode ser negativo!"
+            text: "O número de notas não pode ser negativo ou igual a 0!"
         });
         return;
     }
@@ -130,7 +111,26 @@ $('#solicitar').on('click', function () {
 
 })
 
-
+function erroClass(){
+    $('#idfilial').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#placa').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#data').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#dataReagendamento').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#qtdnota').on('input', function () {
+        $(this).removeClass('erro');
+    });
+    $('#observacao').on('input', function () {
+        $(this).removeClass('erro');
+    });
+}
 function validarPlaca(placa) {
     placa = placa.replace(/\s+/g, '');
     const padraoAntigo = /^[A-Z]{3}-?[0-9]{4}$/;
@@ -560,6 +560,8 @@ function atualizarContador(idsituacao, count) {
 
 
 function abriModalReagendar(dados) {
+    $('#observacao').removeClass('erro'); // Remove a classe 'erro'
+    $('#dataReagendamento').removeClass('erro'); // Remove a classe 'erro'
 
     verificaFilialInativa().then((filailinativa) => {
         if (!filailinativa) {
@@ -570,13 +572,12 @@ function abriModalReagendar(dados) {
         $('#modalReagendar').modal('show');
         $('#idsolicitacao').val(dados.idsolicitacao);
         $('#observacao').val('')
+        $('#dataReagendamento').val('');
 
     })
 }
 
 function fecharModalReagendar() {
-
-
     $('#idsolicitacao').val('');
     $('#dataReagendamento').val('');
     $('#observacao').val('')
@@ -601,6 +602,7 @@ function reagendar() {
             text: "Preencha com uma Observação!"
         });
         $('#observacao').toggleClass('erro');
+        $('#dataReagendamento').toggleClass('erro');
         return
     } else if (!app.validarCampos(dados)) {
         Swal.fire({

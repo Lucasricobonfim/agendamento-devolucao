@@ -29,7 +29,7 @@ class UsuarioController extends Controller {
 
 
         $cad = new Usuario();
-        $hashedSenha = md5($dados['senha']); 
+        $hashedSenha = password_hash($dados['senha'], PASSWORD_DEFAULT);
         // $hashedSenha = password_hash($dados['senha'], PASSWORD_DEFAULT);  
         $dados['senha'] = $hashedSenha;
         
@@ -80,9 +80,8 @@ class UsuarioController extends Controller {
         $dados['nome'] = $_GET['nome'];
 
         if(!empty($_GET['senha'])){
-            
-            $hashedSenha = md5($_GET['senha']); 
-            $dados['senha'] =  $hashedSenha;
+            $hashedSenha = password_hash($_GET['senha'], PASSWORD_DEFAULT);
+            $dados['senha'] = $hashedSenha;
         }
 
         $editar = new Usuario();
