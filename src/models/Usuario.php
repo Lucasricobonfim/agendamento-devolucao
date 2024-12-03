@@ -22,7 +22,7 @@ class Usuario extends Model
                     ,:idfilial
                     ,1
                     ";
-        $sql = $this->switchParams($sql, $dados);       
+        $sql = $this->switchParams($sql, $dados);
         try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
@@ -31,16 +31,16 @@ class Usuario extends Model
                 'sucesso' => true,
                 'result' => $result
             ];
-
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao cadastrar: ' . $error->getMessage()         
-            ] ;
+                'result' => 'Falha ao cadastrar: ' . $error->getMessage()
+            ];
         }
     }
 
-    public function getusuarios(){
+    public function getusuarios()
+    {
         try {
             $sql = Database::getInstance()->prepare("
             select 
@@ -64,30 +64,40 @@ class Usuario extends Model
                 'sucesso' => true,
                 'result' => $result
             ];
-
         } catch (Throwable $error) {
-          
+
             return  [
                 'sucesso' => false,
-                'result' =>'Falha ao cadastrar: ' . $error->getMessage()
-            ] ;
+                'result' => 'Falha ao cadastrar: ' . $error->getMessage()
+            ];
         }
     }
 
-    public function editar($dados){
+    public function editar($dados)
+    {
+
+        if (!empty($dados['senha'] )) {
+            $sql = "update usuarios 
+            set nome     = ':nome'
+               ,login    = ':login'
+               ,senha    = ':senha'
+               ,idgrupo  = :idgrupo
+               ,idfilial = :idfilial
+              where idusuario =:idusuario";
+        } else {
+            $sql = "update usuarios 
+            set nome     = ':nome'
+               ,login    = ':login'
+               ,idgrupo  = :idgrupo
+               ,idfilial = :idfilial
+             where idusuario =:idusuario";
+        }
 
 
-        $sql = "update usuarios 
-                     set nome     = ':nome'
-                        ,login    = ':login'
-                        ,senha    = ':senha'
-                        ,idgrupo  = :idgrupo
-                        ,idfilial = :idfilial
-                where idusuario =:idusuario";
 
         $sql = $this->switchParams($sql, $dados);
 
-          try {
+        try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -98,12 +108,13 @@ class Usuario extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao atualizar a usuario  ' .$error->getMessage()
+                'result' => 'Falha ao atualizar a usuario  ' . $error->getMessage()
             ];
         }
     }
 
-    public function getFilialPorGrupo($dados){
+    public function getFilialPorGrupo($dados)
+    {
 
 
         $sql = "	
@@ -114,9 +125,9 @@ class Usuario extends Model
                 from filial f where f.idtipofilial = :idgrupo and f.idsituacao =1
                 ";
 
-          $sql = $this->switchParams($sql, $dados);
+        $sql = $this->switchParams($sql, $dados);
 
-          try {
+        try {
             $sql = Database::getInstance()->prepare($sql);
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -127,7 +138,7 @@ class Usuario extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao bucar filial  ' .$error->getMessage()
+                'result' => 'Falha ao bucar filial  ' . $error->getMessage()
             ];
         }
     }
@@ -135,13 +146,13 @@ class Usuario extends Model
     public function updateSituacao($id, $idsituacao)
     {
 
-         try {
+        try {
             $sql = Database::getInstance()->prepare("
                 update usuarios
                     set idsituacao = $idsituacao
                 where idusuario = $id;
            ");
-            
+
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
             return [
@@ -151,11 +162,29 @@ class Usuario extends Model
         } catch (Throwable $error) {
             return  [
                 'sucesso' => false,
-                'result' => 'Falha ao atualizar situacao do usuario ' .$error->getMessage()
+                'result' => 'Falha ao atualizar situacao do usuario ' . $error->getMessage()
             ];
-            
         }
     }
 
-    
+
+    public function verificaLogin($dados)
+    {
+
+        try {
+            $sql = Database::getInstance()->prepare("select u.idusuario, u.nome, u.idgrupo, u.idfilial, u.senha FROM usuarios u WHERE u.login = :login");
+            $sql->bindParam(':login', $dados['login']);
+            $sql->execute();
+            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            return [
+                'sucesso' => true,
+                'result' => $result
+            ];
+        } catch (Throwable $error) {
+            return  [
+                'sucesso' => false,
+                'result' => 'Falha ao verificar se existe login: ' . $error->getMessage()
+            ];
+        }
+    }
 }

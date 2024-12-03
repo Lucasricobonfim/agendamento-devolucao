@@ -79,9 +79,11 @@ class UsuarioController extends Controller {
         $dados['login'] = $_GET['login'];
         $dados['nome'] = $_GET['nome'];
 
-        $hashedSenha = md5($_GET['senha']); 
-
-        $dados['senha'] =  $hashedSenha;
+        if(!empty($_GET['senha'])){
+            
+            $hashedSenha = md5($_GET['senha']); 
+            $dados['senha'] =  $hashedSenha;
+        }
 
         $editar = new Usuario();
         $result = $editar->editar($dados);
@@ -142,6 +144,32 @@ class UsuarioController extends Controller {
            echo json_encode(array([
                "success" => true,
                "ret" => $ret
+           ]));
+           die;
+       }
+        
+    }
+
+    public function verificaLogin() {
+        
+        $dados =[];
+        $dados['login'] = $_GET['login'];
+
+        $cad = new Usuario();
+        $ret = $cad->verificaLogin($dados);
+
+        
+        if (!$ret['sucesso']) {
+            echo json_encode(array([
+                "success" => false,
+                "ret" => $ret['result']
+           ]));
+           die;
+       }
+       else{
+           echo json_encode(array([
+               "success" => true,
+               "ret" => $ret['result']
            ]));
            die;
        }

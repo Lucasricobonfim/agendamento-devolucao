@@ -28,7 +28,7 @@
     textarea#observacao {
         width: 100%;
         padding: 10px;
-        border: 1px solid #ced4da;
+        /* border: 1px solid #ced4da; */
         border-radius: 4px;
         font-size: 16px;
         box-sizing: border-box;
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="qtd" class="form-label">QTD de notas<span class="text-danger">*</span></label>
-                    <input type="number" class="form-control" id="qtdnota" name="qtd" value="0" min="1"  placeholder="QTD" required>
+                    <input type="number" class="form-control" id="quantidadenota" name="qtd" min="1"  placeholder="QTD" required>
                 </div>
                 <div class="mb-3">
                     <label for="obs" class="form-label">OBS<span class="text-danger">*</span></label>
