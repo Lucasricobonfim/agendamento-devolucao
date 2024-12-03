@@ -8,7 +8,7 @@ $(document).ready(function () {
         const idsituacao = $(this).data('idsituacao');
 
         listar(idsituacao);
-    });
+    });   
 })
 
 $("#placa").inputmask({
