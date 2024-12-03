@@ -10,23 +10,29 @@ use Throwable;
 
 class Usuario extends Model
 {
+
     public function cadastro($dados)
     {
-
+        // Usar placeholders sem as aspas para as variáveis
         $sql = "insert into usuarios (nome, login, senha, idgrupo, idfilial, idsituacao)
-                select 
-                     ':nome'
-                    ,':login'
-                    ,':senha'
-                    ,:idgrupo
-                    ,:idfilial
-                    ,1
-                    ";
-        $sql = $this->switchParams($sql, $dados);
+            values 
+                (:nome, :login, :senha, :idgrupo, :idfilial, 1)";
+
         try {
+            // Preparar a consulta
             $sql = Database::getInstance()->prepare($sql);
+
+            // Bind dos parâmetros
+            $sql->bindParam(':nome', $dados['nome']);
+            $sql->bindParam(':login', $dados['login']);
+            $sql->bindParam(':senha', $dados['senha']);
+            $sql->bindParam(':idgrupo', $dados['idgrupo']);
+            $sql->bindParam(':idfilial', $dados['idfilial']);
+
+            // Executar a consulta
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+
             return [
                 'sucesso' => true,
                 'result' => $result
@@ -75,32 +81,44 @@ class Usuario extends Model
 
     public function editar($dados)
     {
-
-        if (!empty($dados['senha'] )) {
-            $sql = "update usuarios 
-            set nome     = ':nome'
-               ,login    = ':login'
-               ,senha    = ':senha'
-               ,idgrupo  = :idgrupo
-               ,idfilial = :idfilial
-              where idusuario =:idusuario";
-        } else {
-            $sql = "update usuarios 
-            set nome     = ':nome'
-               ,login    = ':login'
-               ,idgrupo  = :idgrupo
-               ,idfilial = :idfilial
-             where idusuario =:idusuario";
-        }
-
-
-
-        $sql = $this->switchParams($sql, $dados);
-
         try {
-            $sql = Database::getInstance()->prepare($sql);
-            $sql->execute();
-            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            // Prepara a consulta SQL com placeholders
+            if (!empty($dados['senha'])) {
+                $sql = "UPDATE usuarios 
+                     SET nome     = :nome,
+                         login    = :login,
+                         senha    = :senha,
+                         idgrupo  = :idgrupo,
+                         idfilial = :idfilial
+                     WHERE idusuario = :idusuario";
+            } else {
+                $sql = "UPDATE usuarios 
+                     SET nome     = :nome,
+                         login    = :login,
+                         idgrupo  = :idgrupo,
+                         idfilial = :idfilial
+                     WHERE idusuario = :idusuario";
+            }
+
+            // Prepara a consulta SQL
+            $stmt = Database::getInstance()->prepare($sql);
+
+            // Vincula os parâmetros de forma segura
+            $stmt->bindParam(':nome', $dados['nome'], PDO::PARAM_STR);
+            $stmt->bindParam(':login', $dados['login'], PDO::PARAM_STR);
+            $stmt->bindParam(':idgrupo', $dados['idgrupo'], PDO::PARAM_INT);
+            $stmt->bindParam(':idfilial', $dados['idfilial'], PDO::PARAM_INT);
+            $stmt->bindParam(':idusuario', $dados['idusuario'], PDO::PARAM_INT);
+
+            // Se houver senha, vincula também
+            if (!empty($dados['senha'])) {
+                $stmt->bindParam(':senha', $dados['senha'], PDO::PARAM_STR);
+            }
+
+            // Executa a consulta
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             return [
                 'sucesso' => true,
                 'result' => $result
@@ -115,22 +133,24 @@ class Usuario extends Model
 
     public function getFilialPorGrupo($dados)
     {
-
-
-        $sql = "	
-            	select 
-	                 f.idfilial
-                    ,f.nome as filial
-                    ,concat(f.idfilial, ' - ', f.nome) as descricao
-                from filial f where f.idtipofilial = :idgrupo and f.idsituacao =1
-                ";
-
-        $sql = $this->switchParams($sql, $dados);
-
         try {
-            $sql = Database::getInstance()->prepare($sql);
-            $sql->execute();
-            $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "
+            SELECT 
+                f.idfilial,
+                f.nome AS filial,
+                CONCAT(f.idfilial, ' - ', f.nome) AS descricao
+            FROM filial f
+            WHERE f.idtipofilial = :idgrupo 
+            AND f.idsituacao = 1
+        ";
+
+            $stmt = Database::getInstance()->prepare($sql);
+            // Bind do parâmetro com validação
+            $stmt->bindParam(':idgrupo', $dados['idgrupo'], PDO::PARAM_INT);
+
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             return [
                 'sucesso' => true,
                 'result' => $result
@@ -145,28 +165,31 @@ class Usuario extends Model
 
     public function updateSituacao($id, $idsituacao)
     {
-
         try {
             $sql = Database::getInstance()->prepare("
-                update usuarios
-                    set idsituacao = $idsituacao
-                where idusuario = $id;
-           ");
+            UPDATE usuarios
+            SET idsituacao = :idsituacao
+            WHERE idusuario = :id
+        ");
+
+            // Bind dos parâmetros com validação
+            $sql->bindParam(':idsituacao', $idsituacao, PDO::PARAM_INT);
+            $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+            // Retorno de sucesso
             return [
                 'sucesso' => true,
                 'result' => $result
             ];
         } catch (Throwable $error) {
-            return  [
+            return [
                 'sucesso' => false,
-                'result' => 'Falha ao atualizar situacao do usuario ' . $error->getMessage()
+                'result' => 'Falha ao atualizar situação do usuário.' . $error->getMessage()
             ];
         }
     }
-
 
     public function verificaLogin($dados)
     {

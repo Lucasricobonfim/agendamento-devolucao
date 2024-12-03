@@ -166,18 +166,23 @@ function listar() {
 }
 
 function limparForm() {
-    $('#form-title').text('Cadastrando CD').css('color', 'blue');;
+    $('#form-title').text('Cadastrando CD').css('color', 'blue');
 
+    // Limpa os valores dos campos
     $('#nome').val('');
-    $('#cnpj_cpf').val('');
+    $('#cnpj_cpf').val('').trigger('input'); // Reativa a máscara
     $('#email').val('');
-    $('#telefone').val('');
+    $('#telefone').val('').trigger('input'); // Reativa a máscara
     $('#idfilial').val('');
-    //Para remover erro do preenchimento
-    $('#nome').removeClass('erro'); // Remove a classe 'erro'
-    $('#cnpj_cpf').removeClass('erro'); // Remove a classe 'erro'
-    $('#email').removeClass('erro'); // Remove a classe 'erro'
-    $('#telefone').removeClass('erro'); // Remove a classe 'erro'
+
+    $('#telefone').mask('(00) 00000-0000', { placeholder: '(  ) _____-____' });
+    $('#cnpj_cpf').mask('00.000.000/0000-00', { placeholder: '__.___.___/____-__' });
+
+    // Remove a classe 'erro' dos campos
+    $('#nome').removeClass('erro');
+    $('#cnpj_cpf').removeClass('erro');
+    $('#email').removeClass('erro');
+    $('#telefone').removeClass('erro');
 }
 
 function cadastro(dados) {
@@ -434,6 +439,7 @@ function setEditar(row) {
         scrollTop: $(".form-container").offset().top
     }, 100);
 }
+
 function editar(dados) {
     app.callController({
         method: 'GET',

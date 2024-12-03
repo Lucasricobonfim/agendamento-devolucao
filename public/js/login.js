@@ -45,7 +45,7 @@ function logar(dados) {
         }   
         },
         onFailure(res){
-            
+            console.log(res)
             Swal.fire({
                 icon: "error",
                 title: "Atenção!!",
