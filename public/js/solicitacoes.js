@@ -228,7 +228,7 @@ const Table = function (dados, idsituacao) {
                 title: 'Ações',
                 data: null,
                 render: function (data, type, row) {
-                    if (grupoid === 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
+                    if (grupoid == 1) return ''; // Oculta ações para o administrador (idgrupo = 1)
                     dados = JSON.stringify(row).replace(/"/g, '&quot;');
                     if (idsituacao === 1) {
                         return `
@@ -261,10 +261,11 @@ const Table = function (dados, idsituacao) {
             }
         ],
         rowCallback: function (row, data) { },
+     
         initComplete: function (settings, json) {
             const column = this.api().column(8); // Índice da coluna "Ações"
             // Define a visibilidade da coluna "Ações"
-            column.visible(grupoid !== 1 && (idsituacao === 1 || idsituacao === 2));
+            column.visible(grupoid != 1 && (idsituacao === 1 || idsituacao === 2));
         }
     });
 
@@ -430,13 +431,13 @@ function confimarSolicitacao() {
     // Determina a ação (Aceitar, Recusar, Finalizar ou Cancelar)
     let textoslt;
     if (parseInt(dados.idsituacao) === 2) { // Aceitar
-        textoslt = 'Aceitar';
-    } else if (parseInt(dados.idsituacao) === 4) { // Cancelar
-        textoslt = 'Cancelar';
+        textoslt = 'Aceita';
+    } else if (parseInt(dados.idsituacao) === 4) { // Recusada
+        textoslt = 'Recusada';
     } else if (parseInt(dados.idsituacao) === 3) { // Finalizar
-        textoslt = 'Finalizar';
+        textoslt = 'Finalizada';
     } else { // Recusar
-        textoslt = 'Recusar';
+        textoslt = 'Cancelada';
     }
 
     if (!dados.observacao) {
@@ -460,7 +461,7 @@ function confimarSolicitacao() {
             Swal.fire({
                 icon: "success",
                 title: "Sucesso!",
-                text: "Solicitação Confirmada com Sucesso!"
+                text: "Solicitação "+textoslt+" com Sucesso!"
             });
             return
         },

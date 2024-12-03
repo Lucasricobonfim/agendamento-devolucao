@@ -55,6 +55,9 @@ $router->get('/updatesituacaousuario', 'UsuarioController@updateSituacaoUsuario'
 $router->get('/editarusuario', 'UsuarioController@editar');
 $router->get('/getfilialporgrupo', 'UsuarioController@getFilialPorGrupo');
 
+$router->get('/verifica/existe/login', 'UsuarioController@verificaLogin');
+
+
 // Solicitação Agendamento
 $router->get('/agendamento', 'AgendamentoController@index');
 $router->get('/getcentro-distribuicao-ativos', 'AgendamentoController@getCd');

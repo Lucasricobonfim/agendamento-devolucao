@@ -20,7 +20,7 @@ body {
 }
 
 .erro::after {
-    content: 'Este campo é obrigatório';
+    /* content: 'Este campo é obrigatório'; */
     /* Mensagem de erro */
     color: red;
     font-size: 12px;

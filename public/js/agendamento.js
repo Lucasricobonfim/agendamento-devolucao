@@ -56,7 +56,7 @@ $('#solicitar').on('click', function () {
         idfilial: $('#idfilial').val(),
         placa: $('#placa').val(),
         data: $('#data').val(),
-        quantidadenota: $('#qtdnota').val(),
+        quantidadenota: $('#quantidadenota').val(),
         observacao: $('#observacao').val()
     }
     if (!app.validarCampos(dados)) {
@@ -139,10 +139,10 @@ function validarPlaca(placa) {
 }
 
 function limparCampos() {
-    $('#idfilial').val(''),
+        $('#idfilial').val(''),
         $('#placa').val(''),
         $('#data').val(''),
-        $('#qtdnota').val(''),
+        $('#quantidadenota').val(''),
         $('#observacao').val('')
 }
 
