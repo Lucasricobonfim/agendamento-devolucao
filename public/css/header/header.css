@@ -126,7 +126,6 @@ hr{
     }
 }      
 
-
 @media (max-width: 768px) {
     .sidebar {
         left: -250px; /* Oculta a sidebar no mobile */

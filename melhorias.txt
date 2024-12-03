@@ -1,16 +1,4 @@
 - Campo ficando vermelho quando seta editar - 
-- Esta deixando solicitar o agendamento com o 0 - OK
-- Ao Apertar esc a informação permanece - OK
-- Data ultrapassando o limite de numero quando digitado, tanto no agendamento quanto no reagendar - 
 - Arrumar a responsividade do inicio na tela do celular - 
 - Corrigir a quebra de linha do observações -
-- Validação CNPJ -
-
-
-Verificar
-- token de autenticação
-- Jwt
-- formatters dos campos
-
-Validações simples;
-Verificar campos de numero se aceita letras, colocar limite onde for possivel. 
+- Corrigir mascara da data - 
