@@ -4,3 +4,13 @@
 - Data ultrapassando o limite de numero quando digitado, tanto no agendamento quanto no reagendar - 
 - Arrumar a responsividade do inicio na tela do celular - 
 - Corrigir a quebra de linha do observações -
+- Validação CNPJ -
+
+
+Verificar
+- token de autenticação
+- Jwt
+- formatters dos campos
+
+Validações simples;
+Verificar campos de numero se aceita letras, colocar limite onde for possivel. 
