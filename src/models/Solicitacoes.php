@@ -105,14 +105,12 @@ class Solicitacoes extends Model{
     }
 
     public function updatesolicitacao($dados){
-        // Preparando os parâmetros
         $params = [
             "observacao" => $dados['observacao'],
             "idsolicitacao" => $dados['idsolicitacao'],
             "idsituacao" => $dados['idsituacao']
         ];
     
-        // SQL para atualizar a solicitação e inserir na tabela de movimentações
         $sql = "
             UPDATE solicitacoes_agendamentos
             SET idsituacao = :idsituacao,
@@ -128,25 +126,20 @@ class Solicitacoes extends Model{
         ";
     
         try {
-            // Preparando a query
             $sql = Database::getInstance()->prepare($sql);
     
-            // Bind dos parâmetros
             $sql->bindParam(':observacao', $params['observacao'], PDO::PARAM_STR);
             $sql->bindParam(':idsolicitacao', $params['idsolicitacao'], PDO::PARAM_INT);
             $sql->bindParam(':idsituacao', $params['idsituacao'], PDO::PARAM_INT);
-    
-            // Executando a query
+
             $sql->execute();
             $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-            // Retornando sucesso
             return [
                 'sucesso' => true,
                 'result' => $result
             ];
     
         } catch (Throwable $error) {
-            // Em caso de erro, retornando falha
             return  [
                 'sucesso' => false,
                 'result' => 'Falha ao atualizar solicitação: ' . $error->getMessage()

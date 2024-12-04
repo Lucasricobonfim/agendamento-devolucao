@@ -16,7 +16,7 @@ class SolicitacoesController extends Controller {
 
 
     public function index() {
-        $idgrupo = $_SESSION['idgrupo']; // Obtém o grupo do usuário logado
+        $idgrupo = $_SESSION['idgrupo']; 
         // print_r($_SESSION);
         // exit;
         $this->render('solicitacoes', [
@@ -34,7 +34,6 @@ class SolicitacoesController extends Controller {
 
     
         
-        // Retorne em JSON corretamente
         if ($ret['sucesso'] == false) {
             echo json_encode(array([
                 "success" => false,

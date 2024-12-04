@@ -1,5 +1,6 @@
 $(document).ready(function () {
     listar();
+    erroClass()
 
     // Máscara para telefone e CNPJ aplicadas corretamente
     $('#telefone').mask('(00) 00000-0000', { placeholder: '(  ) _____-____' });
@@ -85,7 +86,9 @@ $(document).ready(function () {
             cadastro(dados);
         }
     });
-
+    
+});
+function erroClass(){
     $('#nome').on('input', function () {
         $(this).removeClass('erro');
     });
@@ -101,7 +104,7 @@ $(document).ready(function () {
     $('#telefone').on('input', function () {
         $(this).removeClass('erro');
     });
-});
+}
 function validarNome(nome) {
     // Verifica se o nome contém apenas letras e espaços
     const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
@@ -424,7 +427,7 @@ function setEditar(row) {
     // Remover máscaras antes de setar novos valores
     $('#cnpj_cpf').unmask();
     $('#telefone').unmask();
-
+    erroClass()
     // Setando o valor no campo CNPJ e Telefone
     $('#cnpj_cpf').val(row.cnpj_cpf);
     $('#email').val(row.email);
