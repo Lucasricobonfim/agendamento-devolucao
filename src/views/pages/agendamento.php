@@ -17,12 +17,10 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0;
-        /* ajuste conforme necessário */
     }
 
     h5 {
         margin: 0;
-        /* remove o espaçamento padrão */
     }
 
     textarea#observacao {

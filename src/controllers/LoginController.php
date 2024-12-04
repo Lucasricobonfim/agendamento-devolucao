@@ -39,7 +39,6 @@ class LoginController extends Controller
 
                 }
                 if (password_verify($dados['senha'], $senhaBanco)) { //password_verify() para verificar se uma senha corresponde ao hash armazenado.
-                    // Continua o fluxo normal
                     $_SESSION['token'] = bin2hex(random_bytes(32));
                     $_SESSION['usuario'] = $result['result'][0]['nome'] ?? '';
                     $_SESSION['idgrupo'] = $result['result'][0]['idgrupo'] ?? '';
