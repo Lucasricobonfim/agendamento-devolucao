@@ -83,5 +83,30 @@ window.app = {
     
         // Formata a data no padrão "DD/MM/YYYY"
         return `${String(dataObj.getDate()).padStart(2, '0')}/${String(dataObj.getMonth() + 1).padStart(2, '0')}/${dataObj.getFullYear()}`;
+    },
+    limparEValidarData(dataInvalida) {
+        // Limpa a data para encontrar o formato correto (YYYY-MM-DD)
+        const dateMatch = dataInvalida.match(/\d{4}-\d{2}-\d{2}/);
+        if (!dateMatch) {
+            return { dataLimpa: null, isValid: false }; // Retorna inválido se não encontrar formato correto
+        }
+    
+        const dataLimpa = dateMatch[0]; // Extrai a data limpa
+        const [year, month, day] = dataLimpa.split('-').map(Number);
+    
+        // Valida limites básicos de ano, mês e dia
+        if (year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1 || day > 31) {
+            return   false ;
+        }
+    
+        // Verifica se a data é válida usando o objeto Date
+        const date = new Date(year, month - 1, day);
+        const isValid =
+            date.getFullYear() === year &&
+            date.getMonth() + 1 === month &&
+            date.getDate() === day;
+    
+        return  isValid
     }
+    
 }

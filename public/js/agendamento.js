@@ -40,6 +40,16 @@ $('#solicitar').on('click', function () {
         quantidadenota: $('#quantidadenota').val(),
         observacao: $('#observacao').val()
     }
+
+    if(!app.limparEValidarData(dados.data)){
+        Swal.fire({
+            icon: "warning",
+            title: "Data inválida!",
+            text: "Por favor, insira uma data válida!"
+        });
+        return;
+    }
+
     if (!app.validarCampos(dados)) {
         Swal.fire({
             icon: "warning",
@@ -49,6 +59,10 @@ $('#solicitar').on('click', function () {
         return
     }
 
+
+
+
+    
     // Validação de placa
     if (!validarPlaca(dados.placa)) {
         Swal.fire({
@@ -595,6 +609,18 @@ function reagendar() {
         observacao: $('#observacao').val(),
 
     }
+
+    if(!app.limparEValidarData(dados.dataReagendamento)){
+        Swal.fire({
+            icon: "warning",
+            title: "Data inválida!",
+            text: "Por favor, insira uma data válida!"
+        });
+        return;
+    }
+
+
+
     if (!dados.observacao) {
         Swal.fire({
             icon: "warning",
